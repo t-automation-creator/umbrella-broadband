@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.umbrella-broadband.co.uk/sitemap.xml
