@@ -6,7 +6,7 @@ import { Award, Layers, Users } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+    <div className="min-h-screen bg-gray-50 flex flex-col pt-20 font-sans">
       <SEO 
         title="About Us" 
         description="Learn about Umbrella Broadband's mission to deliver seamless, high-speed internet and security solutions. We are dedicated to keeping you connected."
