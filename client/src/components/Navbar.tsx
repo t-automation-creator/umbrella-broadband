@@ -8,7 +8,7 @@ export default function Navbar() {
   return (
     <nav className="bg-primary shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between h-20">
+        <div className="flex justify-between md:justify-start items-center h-20">
           <div className="flex items-center">
             <Link href="/">
               <img 
@@ -20,7 +20,7 @@ export default function Navbar() {
           </div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 text-white">
+          <div className="hidden md:flex items-center space-x-8 text-white ml-12">
             <Link href="/">
               <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Home</span>
             </Link>
