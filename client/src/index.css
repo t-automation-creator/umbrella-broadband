@@ -206,3 +206,11 @@
     @apply border-2 border-white text-white bg-transparent hover:bg-white hover:text-primary;
   }
 }
+
+:root {
+  --header-height: 80px; /* Fallback */
+}
+
+body {
+  padding-top: var(--header-height);
+}
