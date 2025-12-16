@@ -33,6 +33,9 @@ export default function Navbar() {
             <Link href="/solutions">
               <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Solutions</span>
             </Link>
+            <Link href="/blog">
+              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Blog</span>
+            </Link>
             <Link href="/contact">
               <span className="btn btn-primary ml-4 cursor-pointer">Contact</span>
             </Link>
@@ -62,6 +65,9 @@ export default function Navbar() {
             </Link>
             <Link href="/solutions">
               <span className="block text-white hover:text-secondary cursor-pointer py-2">Solutions</span>
+            </Link>
+            <Link href="/blog">
+              <span className="block text-white hover:text-secondary cursor-pointer py-2">Blog</span>
             </Link>
             <Link href="/contact">
               <span className="block text-white hover:text-secondary cursor-pointer py-2">Contact</span>
