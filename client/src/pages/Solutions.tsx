@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Wifi, ShieldCheck, Phone, Server, Lock, KeyRound } from "lucide-react";
+import { Wifi, ShieldCheck, Phone, Server, Lock, Settings } from "lucide-react";
 
 export default function Solutions() {
   const solutions = [
@@ -31,9 +31,9 @@ export default function Solutions() {
       description: "Robust structured cabling and network design that forms the backbone of your digital operations, built for scalability."
     },
     {
-      icon: <KeyRound className="w-10 h-10" />,
-      title: "Door Entry Systems",
-      description: "Modern video intercom and keyless entry systems that provide secure, convenient access for residents and staff."
+      icon: <Settings className="w-10 h-10" />,
+      title: "Management Services",
+      description: "Comprehensive support and maintenance for all your systems. We ensure your broadband, security, and networks run smoothly 24/7."
     }
   ];
 
@@ -41,7 +41,7 @@ export default function Solutions() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
         title="Our Solutions" 
-        description="Explore our comprehensive range of services including Managed Broadband, VoIP Telephony, CCTV Security, and Door Entry Systems."
+        description="Explore our comprehensive range of services including Managed Broadband, VoIP Telephony, CCTV Security, and Management Services."
       />
       <Navbar />
       <main className="flex-grow">

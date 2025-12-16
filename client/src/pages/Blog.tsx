@@ -8,8 +8,8 @@ export default function Blog() {
   const posts = [
     {
       id: 1,
-      title: "The Future of Secure Access: Modern Door Entry Systems",
-      excerpt: "Discover how modern video intercoms and keyless entry systems are transforming security and convenience for residential and commercial properties.",
+      title: "The Importance of Proactive Network Management",
+      excerpt: "Why waiting for something to break isn't an option. Learn how managed services keep your business connected and secure 24/7.",
       date: "October 15, 2024",
       author: "Tech Team",
       category: "Technology",
