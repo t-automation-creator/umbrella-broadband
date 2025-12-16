@@ -24,39 +24,42 @@ export default function Navbar() {
   return (
     <nav ref={navRef} className="bg-primary shadow-md fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
+        {/* navbar-inner: flex row, align-center, justify-between, height 72px */}
+        <div className="flex justify-between items-center h-[72px]">
+          
           {/* Left Side: Logo + Navigation Links */}
-          <div className="flex items-center flex-1">
+          <div className="flex items-center h-full">
             <Link href="/">
+              {/* Logo: block, height 44px, width auto */}
               <img 
                 src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_White-Large.png" 
                 alt="Umbrella Broadband" 
-                className="h-12 w-auto cursor-pointer mr-12" 
+                className="block h-[44px] w-auto cursor-pointer mr-12" 
               />
             </Link>
             
-            {/* Desktop Navigation Links - Left Aligned */}
-            <div className="hidden md:flex items-center space-x-8 text-white">
+            {/* Desktop Navigation Links: flex, align-center, height 100%, no margin/padding issues */}
+            <div className="hidden md:flex items-center h-full text-white">
               <Link href="/">
-                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Home</span>
+                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Home</span>
               </Link>
               <Link href="/about">
-                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">About Us</span>
+                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">About Us</span>
               </Link>
               <Link href="/sectors">
-                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Sectors</span>
+                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Sectors</span>
               </Link>
               <Link href="/solutions">
-                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Solutions</span>
+                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Solutions</span>
               </Link>
               <Link href="/blog">
-                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Blog</span>
+                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Blog</span>
               </Link>
             </div>
           </div>
           
           {/* Right Side: Contact Button */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center h-full">
             <Link href="/contact">
               <span className="btn btn-primary cursor-pointer">Contact</span>
             </Link>
