@@ -1,10 +1,15 @@
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with Umbrella Broadband for expert advice on your connectivity needs. Call us, email us, or visit our office in Leamington Spa."
+      />
       <Navbar />
       <main className="flex-grow">
         <section className="py-16 bg-primary text-white text-center">

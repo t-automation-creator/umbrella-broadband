@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { Link } from "wouter";
 import { Award, Layers, Users } from "lucide-react";
@@ -6,6 +7,10 @@ import { Award, Layers, Users } from "lucide-react";
 export default function About() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <SEO 
+        title="About Us" 
+        description="Learn about Umbrella Broadband's mission to deliver seamless, high-speed internet and security solutions. We are dedicated to keeping you connected."
+      />
       <Navbar />
       <main className="flex-grow">
         {/* About Hero */}

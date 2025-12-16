@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { Wifi, ShieldCheck, Phone, Server, Lock, Activity } from "lucide-react";
 
@@ -38,6 +39,10 @@ export default function Solutions() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <SEO 
+        title="Our Solutions" 
+        description="Explore our comprehensive range of services including Managed Broadband, VoIP Telephony, CCTV Security, and Door Entry Systems."
+      />
       <Navbar />
       <main className="flex-grow">
         <section className="py-16 bg-primary text-white text-center">

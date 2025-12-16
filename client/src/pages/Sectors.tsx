@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { CheckCircle } from "lucide-react";
 
@@ -32,6 +33,10 @@ export default function Sectors() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <SEO 
+        title="Sectors We Serve" 
+        description="Tailored broadband and security solutions for Landlords, Developers, Businesses, and Student Accommodation. Find the right fit for your sector."
+      />
       <Navbar />
       <main className="flex-grow">
         <section className="py-16 bg-primary text-white text-center">

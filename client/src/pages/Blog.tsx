@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
@@ -63,6 +64,10 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      <SEO 
+        title="Latest News & Insights" 
+        description="Stay updated with the latest news, industry trends, and insights from Umbrella Broadband. Read our blog for expert advice."
+      />
       <Navbar />
       <main className="flex-grow">
         <section className="py-16 bg-primary text-white text-center">
