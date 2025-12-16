@@ -7,25 +7,25 @@ export default function Sectors() {
     {
       title: "Landlords & HMOs",
       description: "Reliable, high-speed internet is a top priority for tenants. We provide fully managed broadband solutions that eliminate connectivity headaches for landlords, ensuring happy tenants and higher retention rates.",
-      image: "https://umbrella-broadband.co.uk/wp-content/uploads/2023/07/UB_Landlords_Hero.png",
+      image: "/images/sectors/landlords.png",
       features: ["Zero downtime guarantee", "24/7 tenant support", "Seamless installation"]
     },
     {
       title: "Property Developers",
       description: "Future-proof your developments with our pre-installed network infrastructure. We work with developers from the planning stage to ensure every unit is connectivity-ready from day one.",
-      image: "https://umbrella-broadband.co.uk/wp-content/uploads/2023/07/UB_Developers_Hero.png",
+      image: "/images/sectors/developers.png",
       features: ["Infrastructure planning", "Smart building integration", "Value-added connectivity"]
     },
     {
       title: "SME Businesses",
       description: "Business continuity relies on robust connectivity. Our enterprise-grade broadband and VoIP solutions are designed to keep your business running smoothly, with dedicated support when you need it.",
-      image: "https://umbrella-broadband.co.uk/wp-content/uploads/2023/07/UB_Business_Hero.png",
+      image: "/images/sectors/business.png",
       features: ["Dedicated leased lines", "VoIP telephony systems", "Cyber security packages"]
     },
     {
       title: "Purpose Built Student Accommodation (PBSA)",
       description: "Students demand fast, reliable internet for study and entertainment. Our managed service ensures high-density coverage and secure access for hundreds of users simultaneously.",
-      image: "https://umbrella-broadband.co.uk/wp-content/uploads/2023/07/UB_Student_Hero.png",
+      image: "/images/sectors/student.png",
       features: ["High-density Wi-Fi", "Secure personal networks", "Content filtering options"]
     }
   ];
