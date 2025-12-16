@@ -2,7 +2,7 @@ import { Link } from "wouter";
 
 export default function Hero() {
   return (
-    <section className="relative bg-primary text-white py-20 lg:py-32">
+    <section className="relative bg-primary text-white pb-20 pt-10 lg:pb-32 lg:pt-16">
       <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight font-heading">
