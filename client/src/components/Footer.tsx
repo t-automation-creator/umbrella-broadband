@@ -1,70 +1,56 @@
 import { Link } from "wouter";
+import { MapPin, Phone, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#050C1F] border-t border-white/10 pt-16 pb-8">
-      <div className="container">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          {/* Brand Column */}
-          <div className="col-span-1 md:col-span-2 space-y-6">
-            <div className="flex items-center gap-2">
-              <div className="relative w-8 h-8">
-                <svg 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className="w-8 h-8 text-primary"
-                >
-                  <path d="M12 2a10 10 0 0 1 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-                  <path d="M8.5 8.5a4 4 0 0 1 7 0" />
-                  <path d="M12 12v10" />
-                  <path d="M8 17h8" />
-                </svg>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-heading font-bold text-lg leading-none tracking-wider text-white">UMBRELLA</span>
-                <span className="font-sans text-[10px] tracking-[0.2em] text-primary-foreground/70">BROADBAND</span>
-              </div>
-            </div>
-            <p className="text-muted-foreground max-w-sm">
-              Empowering businesses and communities with next-generation connectivity and security solutions.
+    <footer className="bg-primary text-white py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <Link href="/">
+              <img 
+                src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_White-Large.png" 
+                alt="Logo" 
+                className="h-12 w-auto mb-6 cursor-pointer" 
+              />
+            </Link>
+            <p className="text-gray-300 max-w-sm mb-6 font-sans">
+              Leading provider of tailored Connectivity, Technology and Security Solutions for homes and businesses across the UK.
             </p>
           </div>
-
-          {/* Links Column 1 */}
-          <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Company</h4>
-            <ul className="space-y-2">
-              <li><Link href="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/careers" className="text-muted-foreground hover:text-primary transition-colors">Careers</Link></li>
-              <li><Link href="/news" className="text-muted-foreground hover:text-primary transition-colors">News & Insights</Link></li>
-              <li><Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
+          
+          <div>
+            <h4 className="text-lg font-bold mb-4 font-heading">Quick Links</h4>
+            <ul className="space-y-2 text-gray-300 font-sans">
+              <li><Link href="/"><span className="hover:text-secondary cursor-pointer">Home</span></Link></li>
+              <li><Link href="/about"><span className="hover:text-secondary cursor-pointer">About Us</span></Link></li>
+              <li><Link href="/sectors"><span className="hover:text-secondary cursor-pointer">Sectors</span></Link></li>
+              <li><Link href="/solutions"><span className="hover:text-secondary cursor-pointer">Solutions</span></Link></li>
+              <li><Link href="/contact"><span className="hover:text-secondary cursor-pointer">Contact</span></Link></li>
             </ul>
           </div>
-
-          {/* Links Column 2 */}
-          <div className="space-y-4">
-            <h4 className="text-white font-bold text-lg">Solutions</h4>
-            <ul className="space-y-2">
-              <li><Link href="/broadband" className="text-muted-foreground hover:text-primary transition-colors">Business Broadband</Link></li>
-              <li><Link href="/voip" className="text-muted-foreground hover:text-primary transition-colors">VoIP Systems</Link></li>
-              <li><Link href="/security" className="text-muted-foreground hover:text-primary transition-colors">Network Security</Link></li>
-              <li><Link href="/iot" className="text-muted-foreground hover:text-primary transition-colors">IoT Integration</Link></li>
+          
+          <div>
+            <h4 className="text-lg font-bold mb-4 font-heading">Contact</h4>
+            <ul className="space-y-3 text-gray-300 font-sans">
+              <li className="flex items-start">
+                <MapPin className="w-5 h-5 mr-3 mt-1 flex-shrink-0" />
+                <span>46 Bath Street, Leamington Spa, CV31 3AE</span>
+              </li>
+              <li className="flex items-center">
+                <Phone className="w-5 h-5 mr-3 flex-shrink-0" />
+                <a href="tel:01926298866" className="hover:text-secondary">01926 298866</a>
+              </li>
+              <li className="flex items-center">
+                <Mail className="w-5 h-5 mr-3 flex-shrink-0" />
+                <a href="mailto:enquiries@umbrella-broadband.co.uk" className="hover:text-secondary">enquiries@umbrella-broadband.co.uk</a>
+              </li>
             </ul>
           </div>
         </div>
-
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Umbrella Broadband. All rights reserved.
-          </p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="text-sm text-muted-foreground hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="text-sm text-muted-foreground hover:text-white transition-colors">Terms of Service</Link>
-          </div>
+        
+        <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400 text-sm font-sans">
+          <p>© 2025 Umbrella Broadband. All rights reserved.</p>
         </div>
       </div>
     </footer>
