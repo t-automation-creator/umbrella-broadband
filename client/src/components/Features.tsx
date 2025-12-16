@@ -1,4 +1,4 @@
-import { Wifi, ShieldCheck, Cpu } from "lucide-react";
+import { Wifi, ShieldCheck, KeyRound } from "lucide-react";
 
 export default function Features() {
   return (
@@ -36,11 +36,11 @@ export default function Features() {
           {/* Feature 3 */}
           <div className="p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
             <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-secondary">
-              <Cpu className="w-8 h-8" />
+              <KeyRound className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold text-primary mb-3 font-heading">Smart IoT</h3>
+            <h3 className="text-xl font-bold text-primary mb-3 font-heading">Door Entry Systems</h3>
             <p className="text-gray-600 font-sans">
-              Future-proof infrastructure supporting smart home technology, energy monitoring, and automation.
+              Secure and convenient access control solutions for residential and commercial properties.
             </p>
           </div>
         </div>

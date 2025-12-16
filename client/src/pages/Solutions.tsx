@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Wifi, ShieldCheck, Phone, Server, Lock, Activity } from "lucide-react";
+import { Wifi, ShieldCheck, Phone, Server, Lock, KeyRound } from "lucide-react";
 
 export default function Solutions() {
   const solutions = [
@@ -31,9 +31,9 @@ export default function Solutions() {
       description: "Robust structured cabling and network design that forms the backbone of your digital operations, built for scalability."
     },
     {
-      icon: <Activity className="w-10 h-10" />,
-      title: "IoT Integration",
-      description: "Connect and manage smart devices efficiently. From energy monitors to smart locks, we build the network that powers them."
+      icon: <KeyRound className="w-10 h-10" />,
+      title: "Door Entry Systems",
+      description: "Modern video intercom and keyless entry systems that provide secure, convenient access for residents and staff."
     }
   ];
 

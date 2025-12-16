@@ -52,7 +52,7 @@ export default function About() {
                 />
                 <h3 className="text-xl font-bold text-primary mb-3 font-heading">Our Mission</h3>
                 <p className="text-gray-600">
-                  To deliver reliable network infrastructure, supporting multiple internal IOT devices externally connected using high speed Broadband networks.
+                  To deliver reliable network infrastructure, supporting secure access control and high-speed broadband connectivity for modern properties.
                 </p>
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
@@ -63,7 +63,7 @@ export default function About() {
                 />
                 <h3 className="text-xl font-bold text-primary mb-3 font-heading">Our Vision</h3>
                 <p className="text-gray-600">
-                  To be the premier one-stop-shop for seamless IoT device connectivity over broadband networks, empowering multi-occupancy homes and businesses.
+                  To be the premier one-stop-shop for seamless connectivity and security solutions, empowering multi-occupancy homes and businesses with reliable broadband and access control.
                 </p>
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">

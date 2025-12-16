@@ -15,7 +15,7 @@ export default function Sectors() {
       title: "Property Developers",
       description: "Future-proof your developments with our pre-installed network infrastructure. We work with developers from the planning stage to ensure every unit is connectivity-ready from day one.",
       image: "/images/sectors/developers.png",
-      features: ["Infrastructure planning", "Smart building integration", "Value-added connectivity"]
+      features: ["Infrastructure planning", "Access control integration", "Value-added connectivity"]
     },
     {
       title: "SME Businesses",

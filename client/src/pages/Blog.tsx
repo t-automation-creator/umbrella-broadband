@@ -8,8 +8,8 @@ export default function Blog() {
   const posts = [
     {
       id: 1,
-      title: "The Future of Smart Buildings: IoT Integration",
-      excerpt: "Discover how Internet of Things (IoT) technology is transforming residential and commercial properties into intelligent, efficient ecosystems.",
+      title: "The Future of Secure Access: Modern Door Entry Systems",
+      excerpt: "Discover how modern video intercoms and keyless entry systems are transforming security and convenience for residential and commercial properties.",
       date: "October 15, 2024",
       author: "Tech Team",
       category: "Technology",
