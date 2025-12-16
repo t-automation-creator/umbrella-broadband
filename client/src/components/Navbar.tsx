@@ -25,35 +25,40 @@ export default function Navbar() {
     <nav ref={navRef} className="bg-primary shadow-md fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <div className="flex items-center">
+          {/* Left Side: Logo + Navigation Links */}
+          <div className="flex items-center flex-1">
             <Link href="/">
               <img 
                 src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_White-Large.png" 
                 alt="Umbrella Broadband" 
-                className="h-12 w-auto cursor-pointer" 
+                className="h-12 w-auto cursor-pointer mr-12" 
               />
             </Link>
+            
+            {/* Desktop Navigation Links - Left Aligned */}
+            <div className="hidden md:flex items-center space-x-8 text-white">
+              <Link href="/">
+                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Home</span>
+              </Link>
+              <Link href="/about">
+                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">About Us</span>
+              </Link>
+              <Link href="/sectors">
+                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Sectors</span>
+              </Link>
+              <Link href="/solutions">
+                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Solutions</span>
+              </Link>
+              <Link href="/blog">
+                <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Blog</span>
+              </Link>
+            </div>
           </div>
           
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 text-white">
-            <Link href="/">
-              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Home</span>
-            </Link>
-            <Link href="/about">
-              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">About Us</span>
-            </Link>
-            <Link href="/sectors">
-              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Sectors</span>
-            </Link>
-            <Link href="/solutions">
-              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Solutions</span>
-            </Link>
-            <Link href="/blog">
-              <span className="hover:text-secondary transition-colors cursor-pointer font-medium">Blog</span>
-            </Link>
+          {/* Right Side: Contact Button */}
+          <div className="hidden md:flex items-center">
             <Link href="/contact">
-              <span className="btn btn-primary ml-4 cursor-pointer">Contact</span>
+              <span className="btn btn-primary cursor-pointer">Contact</span>
             </Link>
           </div>
 
