@@ -40,20 +40,20 @@ export default function Navbar() {
             
             {/* Desktop Navigation Links: flex, align-center, height 100%, no margin/padding issues */}
             <div className="hidden md:flex items-center h-full text-white">
-              <Link href="/">
-                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Home</span>
+              <Link href="/" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Home
               </Link>
-              <Link href="/about">
-                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">About Us</span>
+              <Link href="/about" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                About Us
               </Link>
-              <Link href="/sectors">
-                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Sectors</span>
+              <Link href="/sectors" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Sectors
               </Link>
-              <Link href="/solutions">
-                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Solutions</span>
+              <Link href="/solutions" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Solutions
               </Link>
-              <Link href="/blog">
-                <span className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">Blog</span>
+              <Link href="/blog" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Blog
               </Link>
             </div>
           </div>
