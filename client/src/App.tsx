@@ -10,6 +10,7 @@ import Sectors from "./pages/Sectors";
 import Solutions from "./pages/Solutions";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEdit from "./pages/admin/BlogEdit";
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/solutions" component={Solutions} />
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       
       {/* Admin routes */}
       <Route path="/admin" component={AdminDashboard} />

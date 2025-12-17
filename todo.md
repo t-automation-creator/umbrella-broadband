@@ -9,3 +9,8 @@
 - [x] Build Admin Contacts page with read/delete functionality
 - [x] Connect public Blog page to database
 - [x] Connect Contact form to save submissions to database
+
+## Individual Blog Post Pages
+- [x] Create BlogPost page component with full content display
+- [x] Add /blog/:slug route to App.tsx
+- [x] Update Blog page "Read More" links to navigate to individual posts
