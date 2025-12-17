@@ -128,6 +128,25 @@ function CaseStudyEditContent() {
     },
   });
 
+  const testimonialMutation = trpc.ai.generateTestimonial.useMutation({
+    onSuccess: (data) => {
+      if (data.testimonial) setTestimonial(data.testimonial);
+      if (data.testimonialAuthor) setTestimonialAuthor(data.testimonialAuthor);
+      toast.success("Testimonial generated! Review and edit as needed.");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to generate testimonial");
+    },
+  });
+
+  const handleGenerateTestimonial = () => {
+    if (!clientName || !industry || !challenge || !solution || !results) {
+      toast.error("Please fill in client name, industry, challenge, solution, and results first");
+      return;
+    }
+    testimonialMutation.mutate({ clientName, industry, challenge, solution, results });
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -476,7 +495,23 @@ Industry: Student Accommodation
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="testimonial">Client Testimonial</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="testimonial">Client Testimonial</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleGenerateTestimonial}
+                  disabled={testimonialMutation.isPending}
+                  className="text-xs"
+                >
+                  {testimonialMutation.isPending ? (
+                    <><Loader2 className="w-3 h-3 mr-1 animate-spin" /> Generating...</>
+                  ) : (
+                    <><Sparkles className="w-3 h-3 mr-1" /> Generate with Manus</>
+                  )}
+                </Button>
+              </div>
               <Textarea
                 id="testimonial"
                 value={testimonial}

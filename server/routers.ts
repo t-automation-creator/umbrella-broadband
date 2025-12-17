@@ -636,6 +636,78 @@ Return ONLY valid JSON, no markdown code blocks.`;
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
         }
       }),
+
+    // Generate testimonial from case study content
+    generateTestimonial: adminProcedure
+      .input(z.object({
+        clientName: z.string(),
+        industry: z.string(),
+        challenge: z.string(),
+        solution: z.string(),
+        results: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are creating a realistic client testimonial for Umbrella Broadband, a UK-based internet service provider.
+
+Given the case study details, generate a believable testimonial quote and author. The testimonial should:
+- Sound natural and authentic (not overly promotional)
+- Reference specific benefits or outcomes mentioned in the results
+- Be 2-4 sentences long
+- Use British English spelling
+
+Return a JSON object with exactly these fields:
+- testimonial: The quote (without quotation marks)
+- testimonialAuthor: Name and job title, e.g., "Sarah Mitchell, IT Director"
+
+Return ONLY valid JSON, no markdown code blocks.`;
+
+        const userContent = `Client: ${input.clientName}
+Industry: ${input.industry}
+Challenge: ${input.challenge}
+Solution: ${input.solution}
+Results: ${input.results}`;
+
+        const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${forgeKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userContent },
+            ],
+            max_tokens: 500,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI generation failed" });
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+        
+        if (!content) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No content generated" });
+        }
+
+        try {
+          const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          return JSON.parse(cleanContent);
+        } catch {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
+        }
+      }),
   }),
 
   // Image upload router
