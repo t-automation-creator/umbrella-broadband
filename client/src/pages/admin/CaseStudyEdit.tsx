@@ -5,9 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "wouter";
 
@@ -41,6 +50,11 @@ function CaseStudyEditContent() {
   const [testimonialAuthor, setTestimonialAuthor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [published, setPublished] = useState(false);
+
+  // AI Generation state
+  const [aiDialogOpen, setAiDialogOpen] = useState(false);
+  const [rawText, setRawText] = useState("");
+  const [imagePrompt, setImagePrompt] = useState("");
 
   useEffect(() => {
     if (existingCaseStudy) {
@@ -78,6 +92,29 @@ function CaseStudyEditContent() {
     },
   });
 
+  const generateMutation = trpc.ai.generateCaseStudy.useMutation({
+    onSuccess: (data) => {
+      // Populate form fields with AI-generated content
+      if (data.title) setTitle(data.title);
+      if (data.slug) setSlug(data.slug);
+      if (data.clientName) setClientName(data.clientName);
+      if (data.industry) setIndustry(data.industry);
+      if (data.challenge) setChallenge(data.challenge);
+      if (data.solution) setSolution(data.solution);
+      if (data.results) setResults(data.results);
+      if (data.testimonial) setTestimonial(data.testimonial);
+      if (data.testimonialAuthor) setTestimonialAuthor(data.testimonialAuthor);
+      if (data.imagePrompt) setImagePrompt(data.imagePrompt);
+      
+      setAiDialogOpen(false);
+      setRawText("");
+      toast.success("Content generated! Review and edit as needed.");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to generate content");
+    },
+  });
+
   const generateSlug = (text: string) => {
     return text
       .toLowerCase()
@@ -90,6 +127,14 @@ function CaseStudyEditContent() {
     if (isNew || !existingCaseStudy?.slug) {
       setSlug(generateSlug(value));
     }
+  };
+
+  const handleGenerate = () => {
+    if (rawText.trim().length < 10) {
+      toast.error("Please enter at least 10 characters of content");
+      return;
+    }
+    generateMutation.mutate({ rawText: rawText.trim() });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -127,18 +172,83 @@ function CaseStudyEditContent() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Link href="/admin/case-studies">
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </Button>
-        </Link>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            {isNew ? "New Case Study" : "Edit Case Study"}
-          </h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/admin/case-studies">
+            <Button variant="ghost" size="sm">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back
+            </Button>
+          </Link>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              {isNew ? "New Case Study" : "Edit Case Study"}
+            </h1>
+          </div>
         </div>
+        
+        {/* Create with Manus Button */}
+        <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="gap-2">
+              <Sparkles className="h-4 w-4" />
+              Create with Manus
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Create with Manus AI
+              </DialogTitle>
+              <DialogDescription>
+                Paste your raw text, notes, or project details below. Manus will generate a complete case study that you can review and edit.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <Textarea
+                value={rawText}
+                onChange={(e) => setRawText(e.target.value)}
+                placeholder="Paste your content here... For example:
+
+Client: Manchester Student Housing Ltd
+Industry: Student Accommodation
+- 200-bed student accommodation in Manchester
+- Old copper wiring, constant complaints about slow WiFi
+- Installed full fibre infrastructure
+- Managed WiFi with 24/7 support
+- Results: 99.9% uptime, tenant satisfaction up 40%
+- Quote from property manager about the improvement"
+                rows={10}
+                className="font-mono text-sm"
+              />
+              <p className="text-sm text-muted-foreground">
+                Tip: Include client name, industry, the problem, your solution, and any results/metrics. The AI will structure them into a professional case study.
+              </p>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setAiDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleGenerate} 
+                disabled={generateMutation.isPending || rawText.trim().length < 10}
+              >
+                {generateMutation.isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Generate Case Study
+                  </>
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -201,6 +311,35 @@ function CaseStudyEditContent() {
                 placeholder="https://example.com/image.jpg"
               />
             </div>
+
+            {/* AI Generated Image Prompt */}
+            {imagePrompt && (
+              <div className="space-y-2 p-4 bg-muted/50 rounded-lg border border-dashed">
+                <div className="flex items-center justify-between">
+                  <Label className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                    AI Image Prompt (for Nano Banana)
+                  </Label>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      navigator.clipboard.writeText(imagePrompt);
+                      toast.success("Image prompt copied to clipboard!");
+                    }}
+                  >
+                    Copy
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground bg-background p-3 rounded border">
+                  {imagePrompt}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Use this prompt with Nano Banana in Manus to generate a featured image, then paste the URL above.
+                </p>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="challenge">The Challenge</Label>

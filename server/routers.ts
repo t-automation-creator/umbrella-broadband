@@ -509,6 +509,132 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+
+  // AI Content Generation router
+  ai: router({
+    // Generate blog post from raw text
+    generateBlogPost: adminProcedure
+      .input(z.object({ rawText: z.string().min(10) }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are a content writer for Umbrella Broadband, a UK-based internet service provider specializing in managed connectivity solutions for businesses, landlords, and property developers.
+
+Given raw text/notes, create a professional blog post. Return a JSON object with these exact fields:
+- title: A compelling, SEO-friendly title (max 70 chars)
+- slug: URL-friendly version of title (lowercase, hyphens, no special chars)
+- excerpt: A brief summary for previews (max 160 chars)
+- content: Full blog post content in plain text with paragraph breaks
+- category: One of: Technology, Business Solutions, Property Management, Cyber Security, Infrastructure, Student Living, Industry News
+- author: Default to "Umbrella Broadband Team"
+- imagePrompt: A detailed image generation prompt (50-100 words) for creating a featured image. Describe a professional, modern visual that represents the blog topic. Include style hints like "professional photography", "modern illustration", "tech-focused", colors (prefer blues, teals, whites), and specific visual elements relevant to the content.
+
+Return ONLY valid JSON, no markdown code blocks.`;
+
+        const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${forgeKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: `Create a blog post from this content:\n\n${input.rawText}` },
+            ],
+            max_tokens: 2000,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI generation failed" });
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+        
+        if (!content) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No content generated" });
+        }
+
+        try {
+          // Clean up potential markdown code blocks
+          const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          return JSON.parse(cleanContent);
+        } catch {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
+        }
+      }),
+
+    // Generate case study from raw text
+    generateCaseStudy: adminProcedure
+      .input(z.object({ rawText: z.string().min(10) }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are a content writer for Umbrella Broadband, a UK-based internet service provider specializing in managed connectivity solutions for businesses, landlords, and property developers.
+
+Given raw text/notes about a client project, create a professional case study. Return a JSON object with these exact fields:
+- title: A compelling case study title (max 70 chars)
+- slug: URL-friendly version of title (lowercase, hyphens, no special chars)
+- clientName: The client/company name
+- industry: The industry sector (e.g., Healthcare, Education, Hospitality, Retail, Property Management)
+- challenge: Detailed description of the problem/challenge the client faced (2-3 paragraphs)
+- solution: Detailed description of how Umbrella Broadband solved the problem (2-3 paragraphs)
+- results: Specific outcomes and benefits achieved (include metrics if available)
+- testimonial: A realistic client quote about their experience (optional, can be empty string)
+- testimonialAuthor: Name and title of person giving testimonial (optional, can be empty string)
+- imagePrompt: A detailed image generation prompt (50-100 words) for creating a featured image. Describe a professional visual representing this client's industry and the success story. Include style hints like "professional photography", "modern business setting", colors (prefer blues, teals, whites), and specific visual elements relevant to the industry (e.g., healthcare facility, student accommodation, office building, retail space).
+
+Return ONLY valid JSON, no markdown code blocks.`;
+
+        const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${forgeKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: `Create a case study from this content:\n\n${input.rawText}` },
+            ],
+            max_tokens: 2500,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI generation failed" });
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+        
+        if (!content) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No content generated" });
+        }
+
+        try {
+          // Clean up potential markdown code blocks
+          const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          return JSON.parse(cleanContent);
+        } catch {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
+        }
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

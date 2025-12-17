@@ -51,3 +51,11 @@
 - [x] Create public Case Study detail page
 - [x] Add Case Studies to navigation menu (before Blog)
 - [x] Reorganize admin sidebar with Content section
+
+## Create with Manus AI Feature
+- [x] Create AI generation API endpoint using Forge API
+- [x] Add "Create with Manus" button to Blog Edit page
+- [x] Add "Create with Manus" button to Case Study Edit page
+- [x] Add modal/dialog for pasting raw text
+- [x] Auto-populate form fields from AI response
+- [x] Add AI image prompt generation for Nano Banana
