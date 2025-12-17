@@ -35,5 +35,6 @@
 ## New Features
 - [x] Fix admin login redirect - login succeeds but doesn't navigate to dashboard
 - [x] Persist admin sessions to database for production deployments
+- [x] Fix admin pages to use password login instead of OAuth
 - [ ] Add email notifications for contact form submissions
 - [ ] Implement blog image upload functionality
