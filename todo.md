@@ -66,3 +66,4 @@
 - [x] Add image upload UI to Blog Edit page
 - [x] Add image upload UI to Case Study Edit page
 - [x] Enhance AI image prompts with tech visuals and client name
+- [x] Add Umbrella Broadband logo to AI image prompts for brand consistency
