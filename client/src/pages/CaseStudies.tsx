@@ -55,8 +55,8 @@ export default function CaseStudies() {
                             alt={study.title} 
                             loading="lazy"
                             decoding="async"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300" 
-                            style={{ imageRendering: 'auto' }}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
