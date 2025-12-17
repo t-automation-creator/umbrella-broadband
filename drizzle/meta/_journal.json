@@ -22,6 +22,13 @@
       "when": 1765971787012,
       "tag": "0002_shiny_cloak",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1765976769289,
+      "tag": "0003_flashy_wendigo",
+      "breakpoints": true
     }
   ]
 }

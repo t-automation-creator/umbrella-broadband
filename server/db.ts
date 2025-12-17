@@ -224,3 +224,56 @@ export async function cleanupExpiredSessions() {
 
   await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date()));
 }
+
+
+// ==================== CASE STUDIES ====================
+
+import { caseStudies, InsertCaseStudy } from "../drizzle/schema";
+
+export async function getAllCaseStudies(publishedOnly = false) {
+  const db = await getDb();
+  if (!db) return [];
+
+  if (publishedOnly) {
+    return db.select().from(caseStudies).where(eq(caseStudies.published, true)).orderBy(desc(caseStudies.createdAt));
+  }
+  return db.select().from(caseStudies).orderBy(desc(caseStudies.createdAt));
+}
+
+export async function getCaseStudyById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(caseStudies).where(eq(caseStudies.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getCaseStudyBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(caseStudies).where(eq(caseStudies.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createCaseStudy(caseStudy: InsertCaseStudy) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(caseStudies).values(caseStudy);
+  return result[0].insertId;
+}
+
+export async function updateCaseStudy(id: number, caseStudy: Partial<InsertCaseStudy>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(caseStudies).set(caseStudy).where(eq(caseStudies.id, id));
+}
+
+export async function deleteCaseStudy(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.delete(caseStudies).where(eq(caseStudies.id, id));
+}

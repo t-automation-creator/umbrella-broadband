@@ -13,7 +13,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Briefcase, FolderOpen, ChevronDown } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "wouter";
 import { DashboardLayoutSkeleton } from "@/components/DashboardLayoutSkeleton";
@@ -23,9 +23,13 @@ import { toast } from "sonner";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
-  { icon: FileText, label: "Blog Posts", path: "/admin/blog" },
   { icon: Mail, label: "Contact Inquiries", path: "/admin/contacts" },
   { icon: Settings, label: "Settings", path: "/admin/settings" },
+];
+
+const contentItems = [
+  { icon: Briefcase, label: "Case Studies", path: "/admin/case-studies" },
+  { icon: FileText, label: "Blog Posts", path: "/admin/blog" },
 ];
 
 const SIDEBAR_WIDTH_KEY = "admin-sidebar-width";
@@ -178,11 +182,31 @@ function AdminLayoutContent({
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu className="gap-1 px-2">
-              {menuItems.map((item) => (
+              {/* Dashboard */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location === "/admin"}
+                  tooltip="Dashboard"
+                >
+                  <Link href="/admin">
+                    <LayoutDashboard className="h-5 w-5" />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              {/* Content Management Section */}
+              <SidebarMenuItem>
+                <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-4">
+                  {!isCollapsed && "Content"}
+                </div>
+              </SidebarMenuItem>
+              {contentItems.map((item) => (
                 <SidebarMenuItem key={item.path}>
                   <SidebarMenuButton
                     asChild
-                    isActive={location === item.path}
+                    isActive={location === item.path || location.startsWith(item.path + "/")}
                     tooltip={item.label}
                   >
                     <Link href={item.path}>
@@ -192,6 +216,37 @@ function AdminLayoutContent({
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              
+              {/* Other Items */}
+              <SidebarMenuItem>
+                <div className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-4">
+                  {!isCollapsed && "Manage"}
+                </div>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location === "/admin/contacts"}
+                  tooltip="Contact Inquiries"
+                >
+                  <Link href="/admin/contacts">
+                    <Mail className="h-5 w-5" />
+                    <span>Contact Inquiries</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location === "/admin/settings"}
+                  tooltip="Settings"
+                >
+                  <Link href="/admin/settings">
+                    <Settings className="h-5 w-5" />
+                    <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarContent>
           <SidebarFooter className="p-2">

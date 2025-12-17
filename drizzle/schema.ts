@@ -75,3 +75,27 @@ export const adminSessions = mysqlTable("admin_sessions", {
 
 export type AdminSession = typeof adminSessions.$inferSelect;
 export type InsertAdminSession = typeof adminSessions.$inferInsert;
+
+
+/**
+ * Case studies table for showcasing client success stories
+ */
+export const caseStudies = mysqlTable("case_studies", {
+  id: int("id").autoincrement().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  clientName: varchar("clientName", { length: 255 }).notNull(),
+  industry: varchar("industry", { length: 100 }),
+  challenge: text("challenge"),
+  solution: text("solution"),
+  results: text("results"),
+  testimonial: text("testimonial"),
+  testimonialAuthor: varchar("testimonialAuthor", { length: 255 }),
+  imageUrl: text("imageUrl"),
+  published: boolean("published").default(false).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CaseStudy = typeof caseStudies.$inferSelect;
+export type InsertCaseStudy = typeof caseStudies.$inferInsert;

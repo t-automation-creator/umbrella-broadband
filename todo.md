@@ -41,3 +41,13 @@
 - [x] Fix auto-login after logout issue (TRPC cache clearing)
 - [x] Remove OAuth fallback from admin auth - password only
 - [x] Fix white space at top of admin login page
+
+## Case Studies Feature
+- [x] Add case studies database schema
+- [x] Add case studies API routes (CRUD)
+- [x] Create admin Case Studies list page
+- [x] Create admin Case Studies edit page
+- [x] Create public Case Studies listing page
+- [x] Create public Case Study detail page
+- [x] Add Case Studies to navigation menu (before Blog)
+- [x] Reorganize admin sidebar with Content section

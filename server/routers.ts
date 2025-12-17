@@ -21,6 +21,12 @@ import {
   getAdminSession,
   deleteAdminSession,
   cleanupExpiredSessions,
+  getAllCaseStudies,
+  getCaseStudyById,
+  getCaseStudyBySlug,
+  createCaseStudy,
+  updateCaseStudy,
+  deleteCaseStudy,
 } from "./db";
 
 // Admin session cookie name
@@ -411,6 +417,95 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deleteContactSubmission(input.id);
+        return { success: true };
+      }),
+  }),
+
+  // Case studies router
+  caseStudies: router({
+    // Public: List published case studies
+    list: publicProcedure.query(async () => {
+      return getAllCaseStudies(true);
+    }),
+
+    // Public: Get single case study by slug
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        const caseStudy = await getCaseStudyBySlug(input.slug);
+        if (!caseStudy || !caseStudy.published) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Case study not found" });
+        }
+        return caseStudy;
+      }),
+
+    // Admin: Get all case studies (including drafts)
+    adminList: adminProcedure.query(async () => {
+      return getAllCaseStudies(false);
+    }),
+
+    // Admin: Get single case study by ID
+    getById: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const caseStudy = await getCaseStudyById(input.id);
+        if (!caseStudy) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Case study not found" });
+        }
+        return caseStudy;
+      }),
+
+    // Admin: Create case study
+    create: adminProcedure
+      .input(
+        z.object({
+          title: z.string().min(1),
+          slug: z.string().min(1),
+          clientName: z.string().min(1),
+          industry: z.string().optional(),
+          challenge: z.string().optional(),
+          solution: z.string().optional(),
+          results: z.string().optional(),
+          testimonial: z.string().optional(),
+          testimonialAuthor: z.string().optional(),
+          imageUrl: z.string().optional(),
+          published: z.boolean().default(false),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const id = await createCaseStudy(input);
+        return { id };
+      }),
+
+    // Admin: Update case study
+    update: adminProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          title: z.string().min(1).optional(),
+          slug: z.string().min(1).optional(),
+          clientName: z.string().min(1).optional(),
+          industry: z.string().optional(),
+          challenge: z.string().optional(),
+          solution: z.string().optional(),
+          results: z.string().optional(),
+          testimonial: z.string().optional(),
+          testimonialAuthor: z.string().optional(),
+          imageUrl: z.string().optional(),
+          published: z.boolean().optional(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await updateCaseStudy(id, data);
+        return { success: true };
+      }),
+
+    // Admin: Delete case study
+    delete: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteCaseStudy(input.id);
         return { success: true };
       }),
   }),

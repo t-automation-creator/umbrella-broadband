@@ -17,7 +17,11 @@ import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEdit from "./pages/admin/BlogEdit";
 import AdminContacts from "./pages/admin/Contacts";
 import AdminSettings from "./pages/admin/Settings";
+import AdminCaseStudiesList from "./pages/admin/CaseStudiesList";
+import AdminCaseStudyEdit from "./pages/admin/CaseStudyEdit";
 import AdminAuthGuard from "./components/AdminAuthGuard";
+import CaseStudies from "./pages/CaseStudies";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 
 // Wrapper component for protected admin routes
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
@@ -37,6 +41,8 @@ function Router() {
       <Route path="/sectors" component={Sectors} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/contact" component={Contact} />
+      <Route path="/case-studies" component={CaseStudies} />
+      <Route path="/case-studies/:slug" component={CaseStudyDetail} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       
@@ -61,6 +67,15 @@ function Router() {
       </Route>
       <Route path="/admin/settings">
         {() => <ProtectedAdminRoute component={AdminSettings} />}
+      </Route>
+      <Route path="/admin/case-studies">
+        {() => <ProtectedAdminRoute component={AdminCaseStudiesList} />}
+      </Route>
+      <Route path="/admin/case-studies/new">
+        {() => <ProtectedAdminRoute component={AdminCaseStudyEdit} />}
+      </Route>
+      <Route path="/admin/case-studies/:id">
+        {() => <ProtectedAdminRoute component={AdminCaseStudyEdit} />}
       </Route>
       
       <Route path="/404" component={NotFound} />

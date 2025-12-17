@@ -10,11 +10,17 @@ import {
   createContactSubmission,
   markContactAsRead,
   deleteContactSubmission,
+  getAllCaseStudies,
+  getCaseStudyById,
+  createCaseStudy,
+  updateCaseStudy,
+  deleteCaseStudy,
 } from "../db";
 
 describe("CMS Database Operations", () => {
   let testBlogPostId: number;
   let testContactId: number;
+  let testCaseStudyId: number;
 
   describe("Blog Posts", () => {
     it("should create a blog post", async () => {
@@ -106,6 +112,58 @@ describe("CMS Database Operations", () => {
       await deleteContactSubmission(testContactId);
 
       const deleted = await getContactSubmissionById(testContactId);
+      expect(deleted).toBeUndefined();
+    });
+  });
+
+  describe("Case Studies", () => {
+    it("should create a case study", async () => {
+      const id = await createCaseStudy({
+        title: "Test Case Study",
+        slug: "test-case-study-" + Date.now(),
+        clientName: "Test Client",
+        industry: "Technology",
+        challenge: "Test challenge description",
+        solution: "Test solution description",
+        results: "Test results description",
+        published: false,
+      });
+
+      expect(id).toBeDefined();
+      expect(id).toBeGreaterThan(0);
+      testCaseStudyId = id;
+    });
+
+    it("should retrieve the case study", async () => {
+      const caseStudy = await getCaseStudyById(testCaseStudyId);
+
+      expect(caseStudy).toBeDefined();
+      expect(caseStudy?.title).toBe("Test Case Study");
+      expect(caseStudy?.clientName).toBe("Test Client");
+      expect(caseStudy?.published).toBe(false);
+    });
+
+    it("should update the case study", async () => {
+      await updateCaseStudy(testCaseStudyId, {
+        published: true,
+        title: "Updated Test Case Study",
+      });
+
+      const updated = await getCaseStudyById(testCaseStudyId);
+
+      expect(updated?.published).toBe(true);
+      expect(updated?.title).toBe("Updated Test Case Study");
+    });
+
+    it("should list all case studies", async () => {
+      const caseStudies = await getAllCaseStudies(false);
+      expect(Array.isArray(caseStudies)).toBe(true);
+    });
+
+    it("should delete the case study", async () => {
+      await deleteCaseStudy(testCaseStudyId);
+
+      const deleted = await getCaseStudyById(testCaseStudyId);
       expect(deleted).toBeUndefined();
     });
   });
