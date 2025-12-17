@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Sparkles, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Loader2, Upload, Image as ImageIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "wouter";
 
@@ -52,6 +52,7 @@ function BlogEditContent() {
   const [aiDialogOpen, setAiDialogOpen] = useState(false);
   const [rawText, setRawText] = useState("");
   const [imagePrompt, setImagePrompt] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (existingPost) {
@@ -105,6 +106,53 @@ function BlogEditContent() {
       toast.error(error.message || "Failed to generate content");
     },
   });
+
+  const uploadMutation = trpc.upload.image.useMutation({
+    onSuccess: (data) => {
+      setImageUrl(data.url);
+      toast.success("Image uploaded successfully!");
+      setIsUploading(false);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to upload image");
+      setIsUploading(false);
+    },
+  });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image must be less than 5MB");
+      return;
+    }
+
+    setIsUploading(true);
+
+    // Convert to base64
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = reader.result as string;
+      uploadMutation.mutate({
+        filename: file.name,
+        data: base64,
+        contentType: file.type,
+      });
+    };
+    reader.onerror = () => {
+      toast.error("Failed to read file");
+      setIsUploading(false);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const generateSlug = (text: string) => {
     return text
@@ -286,13 +334,51 @@ function BlogEditContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="imageUrl">Featured Image URL</Label>
-              <Input
-                id="imageUrl"
-                value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://example.com/image.jpg"
-              />
+              <Label>Featured Image</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="imageUrl"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="https://example.com/image.jpg or upload below"
+                  className="flex-1"
+                />
+                <label className="cursor-pointer">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    disabled={isUploading}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isUploading}
+                    asChild
+                  >
+                    <span>
+                      {isUploading ? (
+                        <><Loader2 className="h-4 w-4 animate-spin mr-2" />Uploading...</>
+                      ) : (
+                        <><Upload className="h-4 w-4 mr-2" />Upload</>
+                      )}
+                    </span>
+                  </Button>
+                </label>
+              </div>
+              {imageUrl && (
+                <div className="mt-2 relative rounded-lg overflow-hidden border bg-muted">
+                  <img
+                    src={imageUrl}
+                    alt="Featured image preview"
+                    className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
             {/* AI Generated Image Prompt */}

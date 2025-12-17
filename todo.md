@@ -59,3 +59,9 @@
 - [x] Add modal/dialog for pasting raw text
 - [x] Auto-populate form fields from AI response
 - [x] Add AI image prompt generation for Nano Banana
+
+## Image Upload Feature
+- [x] Update AI prompts to specify web-optimized, mobile-responsive images (1600x900, 16:9)
+- [x] Add image upload API endpoint using S3 storage
+- [x] Add image upload UI to Blog Edit page
+- [x] Add image upload UI to Case Study Edit page

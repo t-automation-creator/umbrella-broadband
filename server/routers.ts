@@ -28,6 +28,7 @@ import {
   updateCaseStudy,
   deleteCaseStudy,
 } from "./db";
+import { storagePut } from "./storage";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -532,7 +533,7 @@ Given raw text/notes, create a professional blog post. Return a JSON object with
 - content: Full blog post content in plain text with paragraph breaks
 - category: One of: Technology, Business Solutions, Property Management, Cyber Security, Infrastructure, Student Living, Industry News
 - author: Default to "Umbrella Broadband Team"
-- imagePrompt: A detailed image generation prompt (50-100 words) for creating a featured image. Describe a professional, modern visual that represents the blog topic. Include style hints like "professional photography", "modern illustration", "tech-focused", colors (prefer blues, teals, whites), and specific visual elements relevant to the content.
+- imagePrompt: A detailed image generation prompt (50-100 words) for creating a web-optimized, mobile-responsive featured image at 1600x900 pixels (16:9 ratio). Describe a professional, modern visual that represents the blog topic. Include: style hints ("professional photography", "modern illustration", "tech-focused"), colors (prefer blues, teals, whites), specific visual elements relevant to the content, and always end with "web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, clean composition".
 
 Return ONLY valid JSON, no markdown code blocks.`;
 
@@ -595,7 +596,7 @@ Given raw text/notes about a client project, create a professional case study. R
 - results: Specific outcomes and benefits achieved (include metrics if available)
 - testimonial: A realistic client quote about their experience (optional, can be empty string)
 - testimonialAuthor: Name and title of person giving testimonial (optional, can be empty string)
-- imagePrompt: A detailed image generation prompt (50-100 words) for creating a featured image. Describe a professional visual representing this client's industry and the success story. Include style hints like "professional photography", "modern business setting", colors (prefer blues, teals, whites), and specific visual elements relevant to the industry (e.g., healthcare facility, student accommodation, office building, retail space).
+- imagePrompt: A detailed image generation prompt (50-100 words) for creating a web-optimized, mobile-responsive featured image at 1600x900 pixels (16:9 ratio). Describe a professional visual representing this client's industry and the success story. Include: style hints ("professional photography", "modern business setting"), colors (prefer blues, teals, whites), specific visual elements relevant to the industry (e.g., healthcare facility, student accommodation, office building, retail space), and always end with "web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, clean composition".
 
 Return ONLY valid JSON, no markdown code blocks.`;
 
@@ -632,6 +633,43 @@ Return ONLY valid JSON, no markdown code blocks.`;
           return JSON.parse(cleanContent);
         } catch {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
+        }
+      }),
+  }),
+
+  // Image upload router
+  upload: router({
+    // Upload image to S3 storage
+    image: adminProcedure
+      .input(z.object({
+        filename: z.string(),
+        data: z.string(), // base64 encoded image data
+        contentType: z.string().default("image/jpeg"),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          // Decode base64 data
+          const base64Data = input.data.replace(/^data:image\/\w+;base64,/, "");
+          const buffer = Buffer.from(base64Data, "base64");
+          
+          // Generate unique filename with timestamp
+          const timestamp = Date.now();
+          const sanitizedFilename = input.filename.replace(/[^a-zA-Z0-9.-]/g, "_");
+          const key = `images/${timestamp}-${sanitizedFilename}`;
+          
+          // Upload to S3
+          const result = await storagePut(key, buffer, input.contentType);
+          
+          return {
+            success: true,
+            url: result.url,
+            key: result.key,
+          };
+        } catch (error) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: error instanceof Error ? error.message : "Failed to upload image",
+          });
         }
       }),
   }),
