@@ -392,6 +392,15 @@ function BlogEditContent() {
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}
                   />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    className="absolute top-2 right-2"
+                    onClick={() => setImageUrl("")}
+                  >
+                    Remove Image
+                  </Button>
                 </div>
               )}
             </div>
