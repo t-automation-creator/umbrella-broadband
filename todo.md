@@ -14,3 +14,9 @@
 - [x] Create BlogPost page component with full content display
 - [x] Add /blog/:slug route to App.tsx
 - [x] Update Blog page "Read More" links to navigate to individual posts
+
+## Admin Password Login
+- [x] Create admin login page with username/password form
+- [x] Add server-side authentication endpoint for admin login
+- [x] Protect admin routes with session-based authentication
+- [x] Store admin credentials securely as environment variables

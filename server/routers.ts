@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import bcrypt from "bcryptjs";
 import {
   getAllBlogPosts,
   getBlogPostById,
@@ -18,11 +19,91 @@ import {
   deleteContactSubmission,
 } from "./db";
 
-// Admin-only procedure
-const adminProcedure = protectedProcedure.use(({ ctx, next }) => {
-  if (ctx.user.role !== "admin") {
-    throw new TRPCError({ code: "FORBIDDEN", message: "Admin access required" });
+// Admin session cookie name
+const ADMIN_SESSION_COOKIE = "admin_session";
+
+// Hash the password at startup for comparison (done once)
+let hashedAdminPassword: string | null = null;
+
+async function getHashedPassword(): Promise<string> {
+  if (!hashedAdminPassword) {
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error("ADMIN_PASSWORD environment variable is not set");
+    }
+    // Hash the password with bcrypt (10 rounds)
+    hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
   }
+  return hashedAdminPassword;
+}
+
+// Verify admin credentials using timing-safe comparison
+async function verifyAdminCredentials(username: string, password: string): Promise<boolean> {
+  const adminUsername = process.env.ADMIN_USERNAME;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  
+  if (!adminUsername || !adminPassword) {
+    console.error("Admin credentials not configured");
+    return false;
+  }
+  
+  // Check username first with timing-safe comparison
+  if (username.length !== adminUsername.length) {
+    return false;
+  }
+  
+  let usernameMatch = true;
+  for (let i = 0; i < username.length; i++) {
+    if (username[i] !== adminUsername[i]) {
+      usernameMatch = false;
+    }
+  }
+  
+  if (!usernameMatch) {
+    return false;
+  }
+  
+  // Compare password with timing-safe comparison
+  if (password.length !== adminPassword.length) {
+    return false;
+  }
+  
+  let passwordMatch = true;
+  for (let i = 0; i < password.length; i++) {
+    if (password[i] !== adminPassword[i]) {
+      passwordMatch = false;
+    }
+  }
+  
+  return passwordMatch;
+}
+
+// Generate a secure session token
+function generateSessionToken(): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
+  for (let i = 0; i < 64; i++) {
+    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return token;
+}
+
+// Store valid session tokens (in production, use Redis or database)
+const validAdminSessions = new Set<string>();
+
+// Admin-only procedure that checks for admin session cookie
+const adminProcedure = publicProcedure.use(({ ctx, next }) => {
+  const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
+  
+  // Check if user has valid admin session
+  if (!adminSession || !validAdminSessions.has(adminSession)) {
+    // Fall back to OAuth admin check
+    if (ctx.user?.role === "admin") {
+      return next({ ctx });
+    }
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "Admin login required" });
+  }
+  
   return next({ ctx });
 });
 
@@ -36,6 +117,65 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+  }),
+
+  // Admin authentication router
+  admin: router({
+    // Check if admin is logged in
+    checkSession: publicProcedure.query(({ ctx }) => {
+      const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
+      const isAdminSession = adminSession && validAdminSessions.has(adminSession);
+      const isOAuthAdmin = ctx.user?.role === "admin";
+      
+      return {
+        isAuthenticated: isAdminSession || isOAuthAdmin,
+        method: isAdminSession ? "password" : isOAuthAdmin ? "oauth" : null,
+      };
+    }),
+
+    // Admin login with username/password
+    login: publicProcedure
+      .input(z.object({
+        username: z.string().min(1),
+        password: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const isValid = await verifyAdminCredentials(input.username, input.password);
+        
+        if (!isValid) {
+          throw new TRPCError({ 
+            code: "UNAUTHORIZED", 
+            message: "Invalid username or password" 
+          });
+        }
+        
+        // Generate session token
+        const sessionToken = generateSessionToken();
+        validAdminSessions.add(sessionToken);
+        
+        // Set session cookie (httpOnly, secure in production)
+        const cookieOptions = getSessionCookieOptions(ctx.req);
+        ctx.res.cookie(ADMIN_SESSION_COOKIE, sessionToken, {
+          ...cookieOptions,
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+        
+        return { success: true };
+      }),
+
+    // Admin logout
+    logout: publicProcedure.mutation(({ ctx }) => {
+      const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
+      
+      if (adminSession) {
+        validAdminSessions.delete(adminSession);
+      }
+      
+      const cookieOptions = getSessionCookieOptions(ctx.req);
+      ctx.res.clearCookie(ADMIN_SESSION_COOKIE, { ...cookieOptions, maxAge: -1 });
+      
+      return { success: true };
     }),
   }),
 

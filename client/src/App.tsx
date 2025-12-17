@@ -11,10 +11,21 @@ import Solutions from "./pages/Solutions";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import AdminLogin from "./pages/admin/Login";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEdit from "./pages/admin/BlogEdit";
 import AdminContacts from "./pages/admin/Contacts";
+import AdminAuthGuard from "./components/AdminAuthGuard";
+
+// Wrapper component for protected admin routes
+function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
+  return (
+    <AdminAuthGuard>
+      <Component />
+    </AdminAuthGuard>
+  );
+}
 
 function Router() {
   return (
@@ -28,12 +39,25 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       
-      {/* Admin routes */}
-      <Route path="/admin" component={AdminDashboard} />
-      <Route path="/admin/blog" component={AdminBlogList} />
-      <Route path="/admin/blog/new" component={AdminBlogEdit} />
-      <Route path="/admin/blog/:id" component={AdminBlogEdit} />
-      <Route path="/admin/contacts" component={AdminContacts} />
+      {/* Admin login (public) */}
+      <Route path="/admin/login" component={AdminLogin} />
+      
+      {/* Protected admin routes */}
+      <Route path="/admin">
+        {() => <ProtectedAdminRoute component={AdminDashboard} />}
+      </Route>
+      <Route path="/admin/blog">
+        {() => <ProtectedAdminRoute component={AdminBlogList} />}
+      </Route>
+      <Route path="/admin/blog/new">
+        {() => <ProtectedAdminRoute component={AdminBlogEdit} />}
+      </Route>
+      <Route path="/admin/blog/:id">
+        {() => <ProtectedAdminRoute component={AdminBlogEdit} />}
+      </Route>
+      <Route path="/admin/contacts">
+        {() => <ProtectedAdminRoute component={AdminContacts} />}
+      </Route>
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
