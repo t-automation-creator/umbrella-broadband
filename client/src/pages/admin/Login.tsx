@@ -17,9 +17,13 @@ export default function AdminLogin() {
 
   const utils = trpc.useUtils();
 
-  // Check if already logged in
+  // Check if already logged in - disable caching to always get fresh session state
   const { data: session, isLoading: sessionLoading } = trpc.admin.checkSession.useQuery(undefined, {
     retry: false,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
   });
 
   // Redirect if already authenticated

@@ -38,3 +38,4 @@
 - [x] Fix admin pages to use password login instead of OAuth
 - [ ] Add email notifications for contact form submissions
 - [ ] Implement blog image upload functionality
+- [x] Fix auto-login after logout issue (TRPC cache clearing)

@@ -97,11 +97,16 @@ function AdminLayoutContent({
   const activeMenuItem = menuItems.find((item) => item.path === location);
   const isMobile = useIsMobile();
   
+  const utils = trpc.useUtils();
+  
   // Admin logout mutation
   const logoutMutation = trpc.admin.logout.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Logged out successfully");
-      window.location.href = "/admin/login";
+      // Clear all TRPC cache to prevent stale session data
+      await utils.invalidate();
+      // Use replace to prevent back navigation to authenticated pages
+      window.location.replace("/admin/login");
     },
     onError: () => {
       toast.error("Failed to logout");
