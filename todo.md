@@ -20,3 +20,8 @@
 - [x] Add server-side authentication endpoint for admin login
 - [x] Protect admin routes with session-based authentication
 - [x] Store admin credentials securely as environment variables
+
+## Admin Panel Enhancements
+- [x] Add logout button to admin dashboard header
+- [x] Implement rate limiting for login attempts
+- [x] Add password change feature in admin settings

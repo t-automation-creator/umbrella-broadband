@@ -21,13 +21,16 @@ import {
 } from "@/components/ui/sidebar";
 import { getLoginUrl } from "@/const";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Key } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "wouter";
 import { DashboardLayoutSkeleton } from "@/components/DashboardLayoutSkeleton";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/admin" },
@@ -41,7 +44,7 @@ const DEFAULT_WIDTH = 280;
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 480;
 
-export default function AdminDashboard() {
+export default function AdminSettings() {
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     const saved = localStorage.getItem(SIDEBAR_WIDTH_KEY);
     return saved ? parseInt(saved, 10) : DEFAULT_WIDTH;
@@ -114,134 +117,116 @@ export default function AdminDashboard() {
       }
     >
       <AdminLayoutContent setSidebarWidth={setSidebarWidth}>
-        <DashboardContent />
+        <SettingsContent />
       </AdminLayoutContent>
     </SidebarProvider>
   );
 }
 
-function DashboardContent() {
-  const { data: blogPosts } = trpc.blog.adminList.useQuery();
-  const { data: contacts } = trpc.contact.list.useQuery();
+function SettingsContent() {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isChanging, setIsChanging] = useState(false);
 
-  const unreadContacts = contacts?.filter((c) => !c.read).length ?? 0;
-  const publishedPosts = blogPosts?.filter((p) => p.published).length ?? 0;
-  const draftPosts = blogPosts?.filter((p) => !p.published).length ?? 0;
+  const changePasswordMutation = trpc.admin.changePassword.useMutation({
+    onSuccess: () => {
+      toast.success("Password changed successfully");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setIsChanging(false);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      setIsChanging(false);
+    },
+  });
+
+  const handleChangePassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
+    
+    if (newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+    
+    setIsChanging(true);
+    changePasswordMutation.mutate({
+      currentPassword,
+      newPassword,
+    });
+  };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground mt-1">
-          Welcome to your Umbrella Broadband admin panel.
+          Manage your admin account settings.
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Published Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{publishedPosts}</div>
-            <p className="text-xs text-muted-foreground">Live on the website</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Draft Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{draftPosts}</div>
-            <p className="text-xs text-muted-foreground">Awaiting publication</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Unread Inquiries</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{unreadContacts}</div>
-            <p className="text-xs text-muted-foreground">New contact submissions</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Inquiries</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{contacts?.length ?? 0}</div>
-            <p className="text-xs text-muted-foreground">All time submissions</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Common tasks you can perform</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <Link href="/admin/blog/new">
-              <Button className="w-full justify-start" variant="outline">
-                <FileText className="mr-2 h-4 w-4" />
-                Create New Blog Post
-              </Button>
-            </Link>
-            <Link href="/admin/contacts">
-              <Button className="w-full justify-start" variant="outline">
-                <Mail className="mr-2 h-4 w-4" />
-                View Contact Inquiries
-              </Button>
-            </Link>
-            <Link href="/">
-              <Button className="w-full justify-start" variant="outline">
-                <Home className="mr-2 h-4 w-4" />
-                View Live Website
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Inquiries</CardTitle>
-            <CardDescription>Latest contact form submissions</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {contacts && contacts.length > 0 ? (
-              <div className="space-y-3">
-                {contacts.slice(0, 5).map((contact) => (
-                  <div
-                    key={contact.id}
-                    className="flex items-center justify-between text-sm"
-                  >
-                    <div className="flex items-center gap-2">
-                      {!contact.read && (
-                        <span className="h-2 w-2 rounded-full bg-blue-500" />
-                      )}
-                      <span className="font-medium">{contact.name}</span>
-                    </div>
-                    <span className="text-muted-foreground text-xs">
-                      {new Date(contact.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm text-muted-foreground">No inquiries yet.</p>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="max-w-xl">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Key className="h-5 w-5" />
+            Change Password
+          </CardTitle>
+          <CardDescription>
+            Update your admin password. You will remain logged in after changing your password.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleChangePassword} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="currentPassword">Current Password</Label>
+              <Input
+                id="currentPassword"
+                type="password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter your current password"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="newPassword">New Password</Label>
+              <Input
+                id="newPassword"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new password (min 8 characters)"
+                required
+                minLength={8}
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your new password"
+                required
+              />
+            </div>
+            
+            <Button type="submit" disabled={isChanging} className="w-full">
+              {isChanging ? "Changing Password..." : "Change Password"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

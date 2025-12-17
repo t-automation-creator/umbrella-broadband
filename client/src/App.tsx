@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminBlogList from "./pages/admin/BlogList";
 import AdminBlogEdit from "./pages/admin/BlogEdit";
 import AdminContacts from "./pages/admin/Contacts";
+import AdminSettings from "./pages/admin/Settings";
 import AdminAuthGuard from "./components/AdminAuthGuard";
 
 // Wrapper component for protected admin routes
@@ -57,6 +58,9 @@ function Router() {
       </Route>
       <Route path="/admin/contacts">
         {() => <ProtectedAdminRoute component={AdminContacts} />}
+      </Route>
+      <Route path="/admin/settings">
+        {() => <ProtectedAdminRoute component={AdminSettings} />}
       </Route>
       
       <Route path="/404" component={NotFound} />

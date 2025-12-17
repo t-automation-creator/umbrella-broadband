@@ -91,6 +91,70 @@ function generateSessionToken(): string {
 // Store valid session tokens (in production, use Redis or database)
 const validAdminSessions = new Set<string>();
 
+// Rate limiting for login attempts
+interface LoginAttempt {
+  count: number;
+  lastAttempt: number;
+  blockedUntil: number | null;
+}
+const loginAttempts = new Map<string, LoginAttempt>();
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCKOUT_DURATION = 15 * 60 * 1000; // 15 minutes
+const ATTEMPT_WINDOW = 5 * 60 * 1000; // 5 minutes
+
+function checkRateLimit(ip: string): { allowed: boolean; remainingAttempts: number; blockedFor?: number } {
+  const now = Date.now();
+  const attempt = loginAttempts.get(ip);
+  
+  if (!attempt) {
+    return { allowed: true, remainingAttempts: MAX_LOGIN_ATTEMPTS - 1 };
+  }
+  
+  // Check if blocked
+  if (attempt.blockedUntil && now < attempt.blockedUntil) {
+    return { 
+      allowed: false, 
+      remainingAttempts: 0, 
+      blockedFor: Math.ceil((attempt.blockedUntil - now) / 1000) 
+    };
+  }
+  
+  // Reset if outside window
+  if (now - attempt.lastAttempt > ATTEMPT_WINDOW) {
+    loginAttempts.delete(ip);
+    return { allowed: true, remainingAttempts: MAX_LOGIN_ATTEMPTS - 1 };
+  }
+  
+  // Check remaining attempts
+  if (attempt.count >= MAX_LOGIN_ATTEMPTS) {
+    attempt.blockedUntil = now + LOCKOUT_DURATION;
+    return { 
+      allowed: false, 
+      remainingAttempts: 0, 
+      blockedFor: Math.ceil(LOCKOUT_DURATION / 1000) 
+    };
+  }
+  
+  return { allowed: true, remainingAttempts: MAX_LOGIN_ATTEMPTS - attempt.count - 1 };
+}
+
+function recordLoginAttempt(ip: string, success: boolean): void {
+  if (success) {
+    loginAttempts.delete(ip);
+    return;
+  }
+  
+  const now = Date.now();
+  const attempt = loginAttempts.get(ip);
+  
+  if (!attempt || now - attempt.lastAttempt > ATTEMPT_WINDOW) {
+    loginAttempts.set(ip, { count: 1, lastAttempt: now, blockedUntil: null });
+  } else {
+    attempt.count++;
+    attempt.lastAttempt = now;
+  }
+}
+
 // Admin-only procedure that checks for admin session cookie
 const adminProcedure = publicProcedure.use(({ ctx, next }) => {
   const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
@@ -134,19 +198,34 @@ export const appRouter = router({
       };
     }),
 
-    // Admin login with username/password
+    // Admin login with username/password (rate limited)
     login: publicProcedure
       .input(z.object({
         username: z.string().min(1),
         password: z.string().min(1),
       }))
       .mutation(async ({ input, ctx }) => {
+        // Get client IP for rate limiting
+        const clientIp = ctx.req.headers['x-forwarded-for'] as string || ctx.req.socket?.remoteAddress || 'unknown';
+        
+        // Check rate limit
+        const rateLimit = checkRateLimit(clientIp);
+        if (!rateLimit.allowed) {
+          throw new TRPCError({ 
+            code: "TOO_MANY_REQUESTS", 
+            message: `Too many login attempts. Please try again in ${rateLimit.blockedFor} seconds.` 
+          });
+        }
+        
         const isValid = await verifyAdminCredentials(input.username, input.password);
+        
+        // Record the attempt
+        recordLoginAttempt(clientIp, isValid);
         
         if (!isValid) {
           throw new TRPCError({ 
             code: "UNAUTHORIZED", 
-            message: "Invalid username or password" 
+            message: `Invalid username or password. ${rateLimit.remainingAttempts} attempts remaining.` 
           });
         }
         
@@ -177,6 +256,36 @@ export const appRouter = router({
       
       return { success: true };
     }),
+
+    // Change admin password
+    changePassword: adminProcedure
+      .input(z.object({
+        currentPassword: z.string().min(1),
+        newPassword: z.string().min(8, "Password must be at least 8 characters"),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const adminPassword = process.env.ADMIN_PASSWORD;
+        
+        if (!adminPassword) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Admin password not configured" });
+        }
+        
+        // Verify current password
+        if (input.currentPassword !== adminPassword) {
+          throw new TRPCError({ code: "UNAUTHORIZED", message: "Current password is incorrect" });
+        }
+        
+        // Update password in environment (Note: This only persists for the current session)
+        // In production, you would update this in a database or secrets manager
+        process.env.ADMIN_PASSWORD = input.newPassword;
+        
+        // Invalidate all existing sessions except current one
+        const currentSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
+        const sessionsToDelete = Array.from(validAdminSessions).filter(s => s !== currentSession);
+        sessionsToDelete.forEach(s => validAdminSessions.delete(s));
+        
+        return { success: true, message: "Password changed successfully" };
+      }),
   }),
 
   // Blog posts router
