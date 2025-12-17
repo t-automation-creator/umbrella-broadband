@@ -112,17 +112,6 @@ export default function BlogPost() {
         {/* Article Content */}
         <article className="py-12 md:py-16">
           <div className="max-w-4xl mx-auto px-4">
-            {/* Featured Image (if not shown in hero) */}
-            {post.imageUrl && (
-              <div className="mb-10 -mt-8 relative z-10">
-                <img 
-                  src={post.imageUrl} 
-                  alt={post.title}
-                  className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg"
-                />
-              </div>
-            )}
-
             {/* Excerpt */}
             {post.excerpt && (
               <p className="text-xl text-gray-600 leading-relaxed mb-8 font-medium border-l-4 border-secondary pl-6">
