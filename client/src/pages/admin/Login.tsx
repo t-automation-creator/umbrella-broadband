@@ -14,10 +14,15 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const utils = trpc.useUtils();
+
   const loginMutation = trpc.admin.login.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success("Login successful!");
-      setLocation("/admin");
+      // Invalidate the session query to force re-check
+      await utils.admin.checkSession.invalidate();
+      // Use window.location for a full page navigation to ensure cookies are read
+      window.location.href = "/admin";
     },
     onError: (error) => {
       toast.error(error.message || "Invalid credentials");

@@ -25,3 +25,9 @@
 - [x] Add logout button to admin dashboard header
 - [x] Implement rate limiting for login attempts
 - [x] Add password change feature in admin settings
+
+## Logout Button Visibility Fix
+- [ ] Add prominent logout button visible in admin header/sidebar
+
+## Logout Button Visibility
+- [x] Add prominent logout button to admin sidebar/header
