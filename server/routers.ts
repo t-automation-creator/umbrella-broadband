@@ -29,6 +29,7 @@ import {
   deleteCaseStudy,
 } from "./db";
 import { storagePut } from "./storage";
+import sharp from "sharp";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -639,7 +640,7 @@ Return ONLY valid JSON, no markdown code blocks.`;
 
   // Image upload router
   upload: router({
-    // Upload image to S3 storage
+    // Upload image to S3 storage with WebP conversion
     image: adminProcedure
       .input(z.object({
         filename: z.string(),
@@ -652,13 +653,18 @@ Return ONLY valid JSON, no markdown code blocks.`;
           const base64Data = input.data.replace(/^data:image\/\w+;base64,/, "");
           const buffer = Buffer.from(base64Data, "base64");
           
-          // Generate unique filename with timestamp
-          const timestamp = Date.now();
-          const sanitizedFilename = input.filename.replace(/[^a-zA-Z0-9.-]/g, "_");
-          const key = `images/${timestamp}-${sanitizedFilename}`;
+          // Convert to WebP format using sharp
+          const webpBuffer = await sharp(buffer)
+            .webp({ quality: 85 }) // Good quality with compression
+            .toBuffer();
           
-          // Upload to S3
-          const result = await storagePut(key, buffer, input.contentType);
+          // Generate unique filename with timestamp (always .webp)
+          const timestamp = Date.now();
+          const baseName = input.filename.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9.-]/g, "_");
+          const key = `images/${timestamp}-${baseName}.webp`;
+          
+          // Upload WebP to S3
+          const result = await storagePut(key, webpBuffer, "image/webp");
           
           return {
             success: true,
