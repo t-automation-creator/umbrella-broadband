@@ -39,3 +39,4 @@
 - [ ] Add email notifications for contact form submissions
 - [ ] Implement blog image upload functionality
 - [x] Fix auto-login after logout issue (TRPC cache clearing)
+- [x] Remove OAuth fallback from admin auth - password only

@@ -176,7 +176,7 @@ export const appRouter = router({
 
   // Admin authentication router
   admin: router({
-    // Check if admin is logged in (now uses database)
+    // Check if admin is logged in (password-only, no OAuth fallback)
     checkSession: publicProcedure.query(async ({ ctx }) => {
       const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
       
@@ -186,11 +186,9 @@ export const appRouter = router({
         isAdminSession = !!session;
       }
       
-      const isOAuthAdmin = ctx.user?.role === "admin";
-      
       return {
-        isAuthenticated: isAdminSession || isOAuthAdmin,
-        method: isAdminSession ? "password" : isOAuthAdmin ? "oauth" : null,
+        isAuthenticated: isAdminSession,
+        method: isAdminSession ? "password" : null,
       };
     }),
 
