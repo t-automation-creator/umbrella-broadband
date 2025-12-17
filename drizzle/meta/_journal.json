@@ -15,6 +15,13 @@
       "when": 1765966907055,
       "tag": "0001_noisy_swarm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1765971787012,
+      "tag": "0002_shiny_cloak",
+      "breakpoints": true
     }
   ]
 }

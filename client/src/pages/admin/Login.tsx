@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -13,16 +13,40 @@ export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const utils = trpc.useUtils();
 
+  // Check if already logged in
+  const { data: session, isLoading: sessionLoading } = trpc.admin.checkSession.useQuery(undefined, {
+    retry: false,
+  });
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (!sessionLoading && session?.isAuthenticated) {
+      window.location.href = "/admin";
+    }
+  }, [session, sessionLoading]);
+
+  // Handle redirect after successful login
+  useEffect(() => {
+    if (loginSuccess) {
+      // Small delay to ensure cookie is set
+      const timer = setTimeout(() => {
+        window.location.href = "/admin";
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [loginSuccess]);
+
   const loginMutation = trpc.admin.login.useMutation({
     onSuccess: async () => {
-      toast.success("Login successful!");
+      toast.success("Login successful! Redirecting...");
       // Invalidate the session query to force re-check
       await utils.admin.checkSession.invalidate();
-      // Use window.location for a full page navigation to ensure cookies are read
-      window.location.href = "/admin";
+      // Set flag to trigger redirect
+      setLoginSuccess(true);
     },
     onError: (error) => {
       toast.error(error.message || "Invalid credentials");
@@ -41,6 +65,18 @@ export default function AdminLogin() {
     setIsLoading(true);
     loginMutation.mutate({ username, password });
   };
+
+  // Show loading while checking session
+  if (sessionLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary via-primary/95 to-primary/90 flex items-center justify-center p-4">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <p className="mt-4 text-white">Checking session...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary/95 to-primary/90 flex items-center justify-center p-4">
@@ -74,7 +110,7 @@ export default function AdminLogin() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     className="pl-10"
-                    disabled={isLoading}
+                    disabled={isLoading || loginSuccess}
                     autoComplete="username"
                   />
                 </div>
@@ -91,7 +127,7 @@ export default function AdminLogin() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10"
-                    disabled={isLoading}
+                    disabled={isLoading || loginSuccess}
                     autoComplete="current-password"
                   />
                 </div>
@@ -100,15 +136,15 @@ export default function AdminLogin() {
               <Button 
                 type="submit" 
                 className="w-full bg-primary hover:bg-primary/90"
-                disabled={isLoading}
+                disabled={isLoading || loginSuccess}
               >
-                {isLoading ? (
+                {isLoading || loginSuccess ? (
                   <span className="flex items-center">
                     <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Signing in...
+                    {loginSuccess ? "Redirecting..." : "Signing in..."}
                   </span>
                 ) : (
                   "Sign In"

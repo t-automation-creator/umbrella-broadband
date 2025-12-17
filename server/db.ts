@@ -177,3 +177,50 @@ export async function deleteContactSubmission(id: number) {
 
   await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
 }
+
+// ==================== ADMIN SESSIONS ====================
+
+import { adminSessions, InsertAdminSession } from "../drizzle/schema";
+import { gt, lt } from "drizzle-orm";
+
+export async function createAdminSession(token: string, expiresAt: Date) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.insert(adminSessions).values({ token, expiresAt });
+}
+
+export async function getAdminSession(token: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(adminSessions)
+    .where(eq(adminSessions.token, token))
+    .limit(1);
+  
+  if (result.length === 0) return undefined;
+  
+  const session = result[0];
+  // Check if session is expired
+  if (new Date() > session.expiresAt) {
+    // Delete expired session
+    await deleteAdminSession(token);
+    return undefined;
+  }
+  
+  return session;
+}
+
+export async function deleteAdminSession(token: string) {
+  const db = await getDb();
+  if (!db) return;
+
+  await db.delete(adminSessions).where(eq(adminSessions.token, token));
+}
+
+export async function cleanupExpiredSessions() {
+  const db = await getDb();
+  if (!db) return;
+
+  await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date()));
+}

@@ -17,25 +17,14 @@ import {
   createContactSubmission,
   markContactAsRead,
   deleteContactSubmission,
+  createAdminSession,
+  getAdminSession,
+  deleteAdminSession,
+  cleanupExpiredSessions,
 } from "./db";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
-
-// Hash the password at startup for comparison (done once)
-let hashedAdminPassword: string | null = null;
-
-async function getHashedPassword(): Promise<string> {
-  if (!hashedAdminPassword) {
-    const adminPassword = process.env.ADMIN_PASSWORD;
-    if (!adminPassword) {
-      throw new Error("ADMIN_PASSWORD environment variable is not set");
-    }
-    // Hash the password with bcrypt (10 rounds)
-    hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
-  }
-  return hashedAdminPassword;
-}
 
 // Verify admin credentials using timing-safe comparison
 async function verifyAdminCredentials(username: string, password: string): Promise<boolean> {
@@ -88,10 +77,7 @@ function generateSessionToken(): string {
   return token;
 }
 
-// Store valid session tokens (in production, use Redis or database)
-const validAdminSessions = new Set<string>();
-
-// Rate limiting for login attempts
+// Rate limiting for login attempts (in-memory is fine for rate limiting)
 interface LoginAttempt {
   count: number;
   lastAttempt: number;
@@ -155,20 +141,24 @@ function recordLoginAttempt(ip: string, success: boolean): void {
   }
 }
 
-// Admin-only procedure that checks for admin session cookie
-const adminProcedure = publicProcedure.use(({ ctx, next }) => {
+// Admin-only procedure that checks for admin session cookie (now uses database)
+const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
   const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
   
-  // Check if user has valid admin session
-  if (!adminSession || !validAdminSessions.has(adminSession)) {
-    // Fall back to OAuth admin check
-    if (ctx.user?.role === "admin") {
+  // Check if user has valid admin session in database
+  if (adminSession) {
+    const session = await getAdminSession(adminSession);
+    if (session) {
       return next({ ctx });
     }
-    throw new TRPCError({ code: "UNAUTHORIZED", message: "Admin login required" });
   }
   
-  return next({ ctx });
+  // Fall back to OAuth admin check
+  if (ctx.user?.role === "admin") {
+    return next({ ctx });
+  }
+  
+  throw new TRPCError({ code: "UNAUTHORIZED", message: "Admin login required" });
 });
 
 export const appRouter = router({
@@ -186,10 +176,16 @@ export const appRouter = router({
 
   // Admin authentication router
   admin: router({
-    // Check if admin is logged in
-    checkSession: publicProcedure.query(({ ctx }) => {
+    // Check if admin is logged in (now uses database)
+    checkSession: publicProcedure.query(async ({ ctx }) => {
       const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
-      const isAdminSession = adminSession && validAdminSessions.has(adminSession);
+      
+      let isAdminSession = false;
+      if (adminSession) {
+        const session = await getAdminSession(adminSession);
+        isAdminSession = !!session;
+      }
+      
       const isOAuthAdmin = ctx.user?.role === "admin";
       
       return {
@@ -198,7 +194,7 @@ export const appRouter = router({
       };
     }),
 
-    // Admin login with username/password (rate limited)
+    // Admin login with username/password (rate limited, stores session in database)
     login: publicProcedure
       .input(z.object({
         username: z.string().min(1),
@@ -229,9 +225,13 @@ export const appRouter = router({
           });
         }
         
-        // Generate session token
+        // Generate session token and store in database
         const sessionToken = generateSessionToken();
-        validAdminSessions.add(sessionToken);
+        const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+        await createAdminSession(sessionToken, expiresAt);
+        
+        // Cleanup expired sessions periodically
+        cleanupExpiredSessions().catch(console.error);
         
         // Set session cookie (httpOnly, secure in production)
         const cookieOptions = getSessionCookieOptions(ctx.req);
@@ -243,12 +243,12 @@ export const appRouter = router({
         return { success: true };
       }),
 
-    // Admin logout
-    logout: publicProcedure.mutation(({ ctx }) => {
+    // Admin logout (deletes session from database)
+    logout: publicProcedure.mutation(async ({ ctx }) => {
       const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
       
       if (adminSession) {
-        validAdminSessions.delete(adminSession);
+        await deleteAdminSession(adminSession);
       }
       
       const cookieOptions = getSessionCookieOptions(ctx.req);
@@ -278,11 +278,6 @@ export const appRouter = router({
         // Update password in environment (Note: This only persists for the current session)
         // In production, you would update this in a database or secrets manager
         process.env.ADMIN_PASSWORD = input.newPassword;
-        
-        // Invalidate all existing sessions except current one
-        const currentSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
-        const sessionsToDelete = Array.from(validAdminSessions).filter(s => s !== currentSession);
-        sessionsToDelete.forEach(s => validAdminSessions.delete(s));
         
         return { success: true, message: "Password changed successfully" };
       }),

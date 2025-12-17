@@ -61,3 +61,17 @@ export const contactSubmissions = mysqlTable("contact_submissions", {
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
+
+/**
+ * Admin sessions table for password-based authentication
+ * Persists sessions to database so they survive server restarts and work across deployments
+ */
+export const adminSessions = mysqlTable("admin_sessions", {
+  id: int("id").autoincrement().primaryKey(),
+  token: varchar("token", { length: 128 }).notNull().unique(),
+  expiresAt: timestamp("expiresAt").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type AdminSession = typeof adminSessions.$inferSelect;
+export type InsertAdminSession = typeof adminSessions.$inferInsert;

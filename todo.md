@@ -31,3 +31,9 @@
 
 ## Logout Button Visibility
 - [x] Add prominent logout button to admin sidebar/header
+
+## New Features
+- [x] Fix admin login redirect - login succeeds but doesn't navigate to dashboard
+- [x] Persist admin sessions to database for production deployments
+- [ ] Add email notifications for contact form submissions
+- [ ] Implement blog image upload functionality
