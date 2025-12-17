@@ -53,10 +53,13 @@ export default function CaseStudies() {
                           <img 
                             src={study.imageUrl} 
                             alt={study.title} 
+                            width={1600}
+                            height={900}
                             loading="lazy"
                             decoding="async"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            fetchPriority="low"
                             className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300" 
+                            style={{ imageRendering: 'crisp-edges' }}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">

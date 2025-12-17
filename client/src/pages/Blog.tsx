@@ -139,12 +139,15 @@ export default function Blog() {
                     <Link href={`/blog/${getPostSlug(post)}`} className="block">
                       <div className="h-56 overflow-hidden">
                         <img 
-                          src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800"} 
+                          src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1600"} 
                           alt={post.title} 
+                          width={1600}
+                          height={900}
                           loading="lazy"
                           decoding="async"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          fetchPriority="low"
                           className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300" 
+                          style={{ imageRendering: 'crisp-edges' }}
                         />
                       </div>
                     </Link>

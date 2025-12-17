@@ -146,21 +146,36 @@ function CaseStudyEditContent() {
 
     setIsUploading(true);
 
-    // Convert to base64
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      uploadMutation.mutate({
-        filename: file.name,
-        data: base64,
-        contentType: file.type,
-      });
+    // Validate image dimensions (min 1600x900 for retina)
+    const img = new Image();
+    img.onload = () => {
+      if (img.width < 1600 || img.height < 900) {
+        toast.error(`Image too small (${img.width}x${img.height}). Minimum 1600x900 pixels for sharp display on all devices.`);
+        setIsUploading(false);
+        return;
+      }
+      
+      // Convert to base64 and upload
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        uploadMutation.mutate({
+          filename: file.name,
+          data: base64,
+          contentType: file.type,
+        });
+      };
+      reader.onerror = () => {
+        toast.error("Failed to read file");
+        setIsUploading(false);
+      };
+      reader.readAsDataURL(file);
     };
-    reader.onerror = () => {
-      toast.error("Failed to read file");
+    img.onerror = () => {
+      toast.error("Failed to load image");
       setIsUploading(false);
     };
-    reader.readAsDataURL(file);
+    img.src = URL.createObjectURL(file);
   };
 
   const generateSlug = (text: string) => {
