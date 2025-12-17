@@ -40,3 +40,4 @@
 - [ ] Implement blog image upload functionality
 - [x] Fix auto-login after logout issue (TRPC cache clearing)
 - [x] Remove OAuth fallback from admin auth - password only
+- [x] Fix white space at top of admin login page
