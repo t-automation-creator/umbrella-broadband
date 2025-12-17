@@ -65,3 +65,4 @@
 - [x] Add image upload API endpoint using S3 storage
 - [x] Add image upload UI to Blog Edit page
 - [x] Add image upload UI to Case Study Edit page
+- [x] Enhance AI image prompts with tech visuals and client name
