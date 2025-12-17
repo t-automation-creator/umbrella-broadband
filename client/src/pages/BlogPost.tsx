@@ -72,18 +72,9 @@ export default function BlogPost() {
       />
       <Navbar />
       <main className="flex-grow">
-        {/* Hero Section with Featured Image */}
-        <section className="relative bg-primary text-white">
-          {post.imageUrl && (
-            <div className="absolute inset-0 opacity-20">
-              <img 
-                src={post.imageUrl} 
-                alt="" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-          <div className="relative max-w-4xl mx-auto px-4 py-16 md:py-24">
+        {/* Hero Section */}
+        <section className="bg-primary text-white">
+          <div className="max-w-4xl mx-auto px-4 py-16 md:py-20">
             <Link 
               href="/blog" 
               className="inline-flex items-center text-gray-300 hover:text-white transition-colors mb-6"
