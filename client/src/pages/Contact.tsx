@@ -1,9 +1,55 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
+import { trpc } from "@/lib/trpc";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    message: ""
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const createMutation = trpc.contact.submit.useMutation({
+    onSuccess: () => {
+      setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+    },
+    onError: (error: { message?: string }) => {
+      toast.error(error.message || "Failed to send message. Please try again.");
+    }
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    createMutation.mutate({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || undefined,
+      company: formData.company.trim() || undefined,
+      message: formData.message.trim()
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
@@ -64,65 +110,96 @@ export default function Contact() {
               {/* Contact Form */}
               <div className="lg:col-span-2">
                 <div className="bg-white p-8 md:p-10 rounded-xl shadow-sm border border-gray-100">
-                  <h3 className="text-2xl font-bold text-primary mb-6 font-heading">Send us a Message</h3>
-                  <form className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                        <input 
-                          type="text" 
-                          id="name" 
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
-                          placeholder="John Doe"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                        <input 
-                          type="email" 
-                          id="email" 
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
-                          placeholder="john@example.com"
-                        />
-                      </div>
+                  {submitted ? (
+                    <div className="text-center py-12">
+                      <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
+                      <h3 className="text-2xl font-bold text-primary mb-4 font-heading">Thank You!</h3>
+                      <p className="text-gray-600 mb-6">
+                        Your message has been received. We'll get back to you within 24 hours.
+                      </p>
+                      <button 
+                        onClick={() => setSubmitted(false)}
+                        className="btn btn-outline border-primary text-primary hover:bg-primary hover:text-white"
+                      >
+                        Send Another Message
+                      </button>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                        <input 
-                          type="tel" 
-                          id="phone" 
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
-                          placeholder="07700 900000"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                        <select 
-                          id="subject" 
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all bg-white"
+                  ) : (
+                    <>
+                      <h3 className="text-2xl font-bold text-primary mb-6 font-heading">Send us a Message</h3>
+                      <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input 
+                              type="text" 
+                              id="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
+                              placeholder="John Doe"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                            <input 
+                              type="email" 
+                              id="email"
+                              value={formData.email}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
+                              placeholder="john@example.com"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input 
+                              type="tel" 
+                              id="phone"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
+                              placeholder="07700 900000"
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                            <input 
+                              type="text" 
+                              id="company"
+                              value={formData.company}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all"
+                              placeholder="Your company name"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
+                          <textarea 
+                            id="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            rows={5} 
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all resize-none"
+                            placeholder="How can we help you?"
+                            required
+                          ></textarea>
+                        </div>
+                        <button 
+                          type="submit" 
+                          className="btn btn-primary w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={createMutation.isPending}
                         >
-                          <option value="">Select a topic...</option>
-                          <option value="sales">Sales Enquiry</option>
-                          <option value="support">Technical Support</option>
-                          <option value="partnership">Partnership</option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                      <textarea 
-                        id="message" 
-                        rows={5} 
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all resize-none"
-                        placeholder="How can we help you?"
-                      ></textarea>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-full md:w-auto">
-                      Send Message
-                    </button>
-                  </form>
+                          {createMutation.isPending ? "Sending..." : "Send Message"}
+                        </button>
+                      </form>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

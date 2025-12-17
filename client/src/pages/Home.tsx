@@ -9,7 +9,7 @@ import SEO from "@/components/SEO";
 
 export default function Home() {
   return (
-      <div className="min-h-screen flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans">
       <SEO 
         title="Managed Broadband, VoIP & Security Solutions" 
         description="Umbrella Broadband provides fast, reliable, and secure connectivity solutions for landlords, businesses, and developers. Fully managed networks you can trust."
