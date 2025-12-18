@@ -73,3 +73,4 @@
 - [x] Update AI prompts to generate 800x450 images
 - [x] Change card grid to 2 columns for larger display (already done)
 - [x] Fix card image height - images displaying too large after grid change (h-72 → h-48)
+- [x] Fix image cropping - use aspect-ratio instead of fixed height to show full image

@@ -48,12 +48,12 @@ export default function CaseStudies() {
                 {caseStudies.map((study) => (
                   <article key={study.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                     <Link href={`/case-studies/${study.slug}`} className="block">
-                      <div className="h-48 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+                      <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                         {study.imageUrl ? (
                           <img 
                             src={study.imageUrl} 
                             alt={study.title} 
-                            className="w-full h-full object-cover object-center"
+                            className="w-full h-full object-contain"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
