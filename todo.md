@@ -67,3 +67,8 @@
 - [x] Add image upload UI to Case Study Edit page
 - [x] Enhance AI image prompts with tech visuals and client name
 - [x] Add Umbrella Broadband logo to AI image prompts for brand consistency
+
+## Image Quality Optimization (Dec 2025)
+- [x] Update minimum image size from 1600x900 to 800x450 (hero images removed)
+- [x] Update AI prompts to generate 800x450 images
+- [x] Change card grid to 2 columns for larger display (already done)

@@ -30,7 +30,7 @@ export default function CaseStudies() {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4">
             {isLoading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
                     <div className="h-48 bg-gray-200" />
@@ -44,22 +44,16 @@ export default function CaseStudies() {
                 ))}
               </div>
             ) : caseStudies && caseStudies.length > 0 ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 {caseStudies.map((study) => (
                   <article key={study.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                     <Link href={`/case-studies/${study.slug}`} className="block">
-                      <div className="h-56 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
+                      <div className="h-72 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                         {study.imageUrl ? (
                           <img 
                             src={study.imageUrl} 
                             alt={study.title} 
-                            width={1200}
-                            height={675}
-                            loading="lazy"
-                            decoding="async"
-                            fetchPriority="low"
-                            className="w-full h-full object-cover object-center" 
-                            style={{ imageRendering: 'crisp-edges' }}
+                            className="w-full h-full object-cover object-center"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">

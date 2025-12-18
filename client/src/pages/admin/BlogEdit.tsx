@@ -143,8 +143,8 @@ function BlogEditContent() {
     // Validate image dimensions (min 1600x900 for retina)
     const img = new Image();
     img.onload = () => {
-      if (img.width < 1600 || img.height < 900) {
-        toast.error(`Image too small (${img.width}x${img.height}). Minimum 1600x900 pixels for sharp display on all devices.`);
+      if (img.width < 800 || img.height < 450) {
+        toast.error(`Image too small (${img.width}x${img.height}). Minimum 800x450 pixels for sharp display.`);
         setIsUploading(false);
         return;
       }
