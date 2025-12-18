@@ -137,7 +137,7 @@ export default function Blog() {
                 {posts.map((post) => (
                   <article key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                     <Link href={`/blog/${getPostSlug(post)}`} className="block">
-                      <div className="h-72 overflow-hidden">
+                      <div className="h-48 overflow-hidden">
                         <img 
                           src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1600"} 
                           alt={post.title} 
