@@ -534,7 +534,7 @@ Given raw text/notes, create a professional blog post. Return a JSON object with
 - content: Full blog post content in plain text with paragraph breaks
 - category: One of: Technology, Business Solutions, Property Management, Cyber Security, Infrastructure, Student Living, Industry News
 - author: Default to "Umbrella Broadband Team"
-- imagePrompt: A detailed image generation prompt (80-120 words) for creating a tech-infused, web-optimized featured image at 1600x900 pixels (16:9 ratio). The image MUST include: 1) The Umbrella Broadband logo (a shield/umbrella icon in teal/blue) positioned subtly in a corner or integrated into the design, 2) Tech elements relevant to the topic (fibre optic cables with light trails, network routers, ethernet connections, WiFi signals, server racks, or connectivity symbols), 3) The specific technology solution mentioned in the content (e.g., "managed WiFi", "full fibre", "VoIP", "cyber security"), 4) Professional corporate aesthetic with blues, teals, and whites. Style: modern tech photography or sleek digital illustration with depth and lighting effects. Always end with "featuring Umbrella Broadband branding, tech-infused, web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, professional corporate aesthetic".
+- imagePrompt: A detailed image generation prompt (80-120 words) for creating a tech-infused, web-optimized featured image at 1600x900 pixels (16:9 ratio). IMPORTANT: DO NOT include any text, titles, or typography in the image - headings will be overlaid as HTML. The image MUST include: 1) The Umbrella Broadband logo (a shield/umbrella icon in teal/blue) positioned subtly in a corner, 2) Tech elements relevant to the topic (fibre optic cables with light trails, network routers, ethernet connections, WiFi signals, server racks, or connectivity symbols), 3) Visual representation of the technology solution (no text labels), 4) Professional corporate aesthetic with blues, teals, and whites. Style: modern tech photography or sleek digital illustration with depth and lighting effects. Always end with "NO TEXT IN IMAGE, featuring Umbrella Broadband logo only, tech-infused, web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, professional corporate aesthetic".
 
 Return ONLY valid JSON, no markdown code blocks.`;
 
@@ -597,7 +597,7 @@ Given raw text/notes about a client project, create a professional case study. R
 - results: Specific outcomes and benefits achieved (include metrics if available)
 - testimonial: A realistic client quote about their experience (optional, can be empty string)
 - testimonialAuthor: Name and title of person giving testimonial (optional, can be empty string)
-- imagePrompt: A detailed image generation prompt (80-120 words) for creating a tech-infused, web-optimized featured image at 1600x900 pixels (16:9 ratio). The image MUST include: 1) The Umbrella Broadband logo (a shield/umbrella icon in teal/blue) positioned subtly in a corner, 2) The CLIENT NAME displayed professionally and elegantly (as subtle text overlay, signage, or branded element), 3) Tech elements showing the solution (fibre optic cables, network infrastructure, WiFi signals, routers, or connectivity symbols integrated into the scene), 4) The client's industry setting (e.g., student accommodation building, healthcare facility, office, retail space), 5) Professional corporate aesthetic with blues, teals, and whites. Style: modern tech-corporate photography with both Umbrella Broadband branding and client name visible. Always end with "featuring Umbrella Broadband branding and [CLIENT NAME], tech-infused, web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, professional corporate aesthetic".
+- imagePrompt: A detailed image generation prompt (80-120 words) for creating a tech-infused, web-optimized featured image at 1600x900 pixels (16:9 ratio). IMPORTANT: DO NOT include any text, client names, or typography in the image - these will be overlaid as HTML. The image MUST include: 1) The Umbrella Broadband logo (a shield/umbrella icon in teal/blue) positioned subtly in a corner, 2) Tech elements showing the solution (fibre optic cables, network infrastructure, WiFi signals, routers, or connectivity symbols integrated into the scene), 3) The client's industry setting (e.g., student accommodation building, healthcare facility, office, retail space), 4) Professional corporate aesthetic with blues, teals, and whites. Style: modern tech-corporate photography. Always end with "NO TEXT IN IMAGE, featuring Umbrella Broadband logo only, tech-infused, web-optimized for desktop and mobile, 1600x900 pixels, 16:9 ratio, high quality, professional corporate aesthetic".
 
 Return ONLY valid JSON, no markdown code blocks.`;
 
@@ -725,9 +725,9 @@ Results: ${input.results}`;
           const base64Data = input.data.replace(/^data:image\/\w+;base64,/, "");
           const buffer = Buffer.from(base64Data, "base64");
           
-          // Convert to WebP format using sharp
+          // Convert to WebP format using sharp with high quality for text readability
           const webpBuffer = await sharp(buffer)
-            .webp({ quality: 85 }) // Good quality with compression
+            .webp({ quality: 95, nearLossless: true }) // High quality for text-heavy images
             .toBuffer();
           
           // Generate unique filename with timestamp (always .webp)

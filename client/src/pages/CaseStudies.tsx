@@ -58,7 +58,7 @@ export default function CaseStudies() {
                             loading="lazy"
                             decoding="async"
                             fetchPriority="low"
-                            className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-300" 
+                            className="w-full h-full object-cover object-center" 
                             style={{ imageRendering: 'crisp-edges' }}
                           />
                         ) : (
