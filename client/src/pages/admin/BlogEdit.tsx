@@ -122,6 +122,9 @@ function BlogEditContent() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    
+    // Reset file input to allow re-selecting the same file
+    e.target.value = "";
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
@@ -199,21 +202,29 @@ function BlogEditContent() {
       return;
     }
 
-    const data = {
-      title: title.trim(),
-      slug: slug.trim(),
-      excerpt: excerpt.trim() || undefined,
-      content: content.trim() || undefined,
-      category: category.trim() || undefined,
-      imageUrl: imageUrl.trim() || undefined,
-      author: author.trim() || undefined,
-      published,
-    };
-
     if (isNew) {
-      createMutation.mutate(data);
+      createMutation.mutate({
+        title: title.trim(),
+        slug: slug.trim(),
+        excerpt: excerpt.trim() || undefined,
+        content: content.trim() || undefined,
+        category: category.trim() || undefined,
+        imageUrl: imageUrl.trim() || undefined,
+        author: author.trim() || undefined,
+        published,
+      });
     } else {
-      updateMutation.mutate({ id: postId!, ...data });
+      updateMutation.mutate({
+        id: postId!,
+        title: title.trim(),
+        slug: slug.trim(),
+        excerpt: excerpt.trim() || null,
+        content: content.trim() || null,
+        category: category.trim() || null,
+        imageUrl: imageUrl.trim() || null, // Explicitly set to null to clear image
+        author: author.trim() || null,
+        published,
+      });
     }
   };
 

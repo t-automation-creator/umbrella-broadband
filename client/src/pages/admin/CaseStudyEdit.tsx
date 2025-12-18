@@ -150,6 +150,9 @@ function CaseStudyEditContent() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    
+    // Reset file input to allow re-selecting the same file
+    e.target.value = "";
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
@@ -227,24 +230,35 @@ function CaseStudyEditContent() {
       return;
     }
 
-    const data = {
-      title: title.trim(),
-      slug: slug.trim(),
-      clientName: clientName.trim(),
-      industry: industry.trim() || undefined,
-      challenge: challenge.trim() || undefined,
-      solution: solution.trim() || undefined,
-      results: results.trim() || undefined,
-      testimonial: testimonial.trim() || undefined,
-      testimonialAuthor: testimonialAuthor.trim() || undefined,
-      imageUrl: imageUrl.trim() || undefined,
-      published,
-    };
-
     if (isNew) {
-      createMutation.mutate(data);
+      createMutation.mutate({
+        title: title.trim(),
+        slug: slug.trim(),
+        clientName: clientName.trim(),
+        industry: industry.trim() || undefined,
+        challenge: challenge.trim() || undefined,
+        solution: solution.trim() || undefined,
+        results: results.trim() || undefined,
+        testimonial: testimonial.trim() || undefined,
+        testimonialAuthor: testimonialAuthor.trim() || undefined,
+        imageUrl: imageUrl.trim() || undefined,
+        published,
+      });
     } else {
-      updateMutation.mutate({ id: caseStudyId!, ...data });
+      updateMutation.mutate({
+        id: caseStudyId!,
+        title: title.trim(),
+        slug: slug.trim(),
+        clientName: clientName.trim(),
+        industry: industry.trim() || null,
+        challenge: challenge.trim() || null,
+        solution: solution.trim() || null,
+        results: results.trim() || null,
+        testimonial: testimonial.trim() || null,
+        testimonialAuthor: testimonialAuthor.trim() || null,
+        imageUrl: imageUrl.trim() || null, // Explicitly set to null to clear image
+        published,
+      });
     }
   };
 
