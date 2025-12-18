@@ -53,8 +53,8 @@ export default function CaseStudies() {
                           <img 
                             src={study.imageUrl} 
                             alt={study.title} 
-                            width={1600}
-                            height={900}
+                            width={1200}
+                            height={675}
                             loading="lazy"
                             decoding="async"
                             fetchPriority="low"

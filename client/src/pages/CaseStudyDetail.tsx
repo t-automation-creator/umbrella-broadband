@@ -92,17 +92,6 @@ export default function CaseStudyDetail() {
           </div>
         </section>
 
-        {/* Featured Image */}
-        {caseStudy.imageUrl && (
-          <div className="max-w-4xl mx-auto px-4 -mt-8 relative z-10">
-            <img 
-              src={caseStudy.imageUrl} 
-              alt={caseStudy.title}
-              className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg"
-            />
-          </div>
-        )}
-
         {/* Case Study Content */}
         <article className="py-12 md:py-16">
           <div className="max-w-4xl mx-auto px-4">
