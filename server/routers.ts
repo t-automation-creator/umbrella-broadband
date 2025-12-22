@@ -393,6 +393,25 @@ export const appRouter = router({
       )
       .mutation(async ({ input }) => {
         const id = await createContactSubmission(input);
+
+        // Send email notification to owner
+        try {
+          const contactDetails = [
+            `Name: ${input.name}`,
+            `Email: ${input.email}`,
+            input.phone ? `Phone: ${input.phone}` : null,
+            input.company ? `Company: ${input.company}` : null,
+          ].filter(Boolean).join("\n");
+
+          await notifyOwner({
+            title: `📬 New Contact Form: ${input.name}`,
+            content: `A new contact form submission has been received.\n\n${contactDetails}\n\nMessage:\n${input.message}\n\nView all submissions in your admin dashboard.`,
+          });
+        } catch (notifyError) {
+          // Log but don't fail the submission if notification fails
+          console.error("Failed to send contact notification:", notifyError);
+        }
+
         return { id, success: true };
       }),
 

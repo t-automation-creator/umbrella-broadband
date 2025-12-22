@@ -36,7 +36,7 @@
 - [x] Fix admin login redirect - login succeeds but doesn't navigate to dashboard
 - [x] Persist admin sessions to database for production deployments
 - [x] Fix admin pages to use password login instead of OAuth
-- [ ] Add email notifications for contact form submissions
+- [x] Add email notifications for contact form submissions
 - [ ] Implement blog image upload functionality
 - [x] Fix auto-login after logout issue (TRPC cache clearing)
 - [x] Remove OAuth fallback from admin auth - password only
@@ -89,3 +89,4 @@
 - [x] Make chatbot proactive - auto-open after 10 seconds on page
 - [x] Customize chatbot welcome messages based on current page
 - [x] Set up email notifications for new chat leads
+- [x] Add email notifications for contact form submissions
