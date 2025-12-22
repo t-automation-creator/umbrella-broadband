@@ -9,21 +9,21 @@ import { toast } from "sonner";
 // Page-specific welcome messages
 const getWelcomeMessage = (pathname: string): string => {
   const messages: Record<string, string> = {
-    "/": "Hello! 👋 Welcome to Umbrella Broadband. I'm here to help you find the perfect connectivity solution for your property. Whether you manage HMOs, student accommodation, or commercial spaces - I can answer your questions. What can I help you with today?",
-    "/about": "Hello! 👋 I see you're learning about Umbrella Broadband. We've been providing managed connectivity solutions across the UK for years. Have any questions about our company or how we work?",
-    "/sectors": "Hello! 👋 Looking for sector-specific solutions? We specialise in landlords, HMOs, student accommodation, property developers, and SME businesses. Which sector are you interested in?",
-    "/sectors/landlords": "Hello! 👋 As a landlord, reliable broadband can be a real differentiator for your properties. I can help you understand our managed WiFi solutions for HMOs and rental properties. What would you like to know?",
-    "/sectors/students": "Hello! 👋 Student accommodation needs robust, high-speed connectivity. Our solutions are designed to handle high-density usage with fair bandwidth allocation. How can I help you today?",
-    "/sectors/developers": "Hello! 👋 Planning connectivity for a new development? We work with property developers from the design stage to ensure future-proof network infrastructure. What's your project?",
-    "/sectors/sme": "Hello! 👋 Looking for business connectivity? Our SME solutions include managed broadband, VoIP phone systems, and security. What does your business need?",
-    "/solutions": "Hello! 👋 Exploring our solutions? We offer managed broadband, VoIP phone systems, CCTV & security, and ongoing management services. Which solution interests you most?",
-    "/solutions/broadband": "Hello! 👋 Our managed broadband service includes installation, monitoring, and 24/7 support. I can help you understand what's included and get a quote. What would you like to know?",
-    "/solutions/voip": "Hello! 👋 Interested in our VoIP phone systems? We provide modern business phone solutions that integrate with your broadband. Any questions about features or pricing?",
-    "/solutions/security": "Hello! 👋 Looking at our security solutions? We offer CCTV, access control, and video intercom systems - all professionally installed and monitored. How can I help?",
-    "/solutions/management": "Hello! 👋 Our management services include proactive monitoring, maintenance, and support for all your connectivity infrastructure. Want to know more about what's included?",
-    "/case-studies": "Hello! 👋 Looking at our case studies? These show real results we've achieved for clients like you. If you'd like to discuss how we could help your property, I'm here!",
-    "/blog": "Hello! 👋 Browsing our blog? We share insights on broadband, property technology, and connectivity tips. If you have any questions about what you're reading, just ask!",
-    "/contact": "Hello! 👋 Ready to get in touch? I can help answer any final questions before you reach out, or you can fill in the contact form. What would you like to know?",
+    "/": "Hi! 👋 How can I help you today?",
+    "/about": "Hi! 👋 Questions about Umbrella Broadband? I'm here to help.",
+    "/sectors": "Hi! 👋 Which sector are you interested in?",
+    "/sectors/landlords": "Hi! 👋 Looking for solutions for your rental properties? How can I help?",
+    "/sectors/students": "Hi! 👋 Need solutions for student accommodation? Ask me anything.",
+    "/sectors/developers": "Hi! 👋 Planning a new development? I can help with your requirements.",
+    "/sectors/sme": "Hi! 👋 Looking for business solutions? What does your company need?",
+    "/solutions": "Hi! 👋 Which solution interests you - broadband, VoIP, security, or management?",
+    "/solutions/broadband": "Hi! 👋 Questions about our managed broadband? I can help.",
+    "/solutions/voip": "Hi! 👋 Interested in VoIP phone systems? Ask me anything.",
+    "/solutions/security": "Hi! 👋 Looking at CCTV or access control? How can I help?",
+    "/solutions/management": "Hi! 👋 Questions about our management services? I'm here to help.",
+    "/case-studies": "Hi! 👋 Want to discuss how we could help your property? Let me know.",
+    "/blog": "Hi! 👋 Questions about what you're reading? Just ask.",
+    "/contact": "Hi! 👋 Any questions before you get in touch?",
   };
 
   // Check for exact match first
@@ -33,20 +33,20 @@ const getWelcomeMessage = (pathname: string): string => {
 
   // Check for partial matches (for dynamic routes like /blog/slug)
   if (pathname.startsWith("/blog/")) {
-    return "Hello! 👋 I hope you're enjoying this article! If you have any questions about the topic or our services, I'm happy to help.";
+    return "Hi! 👋 Questions about this article? I'm happy to help.";
   }
   if (pathname.startsWith("/case-studies/")) {
-    return "Hello! 👋 Great choice looking at this case study! If you'd like to discuss how we could achieve similar results for your property, let me know.";
+    return "Hi! 👋 Want similar results for your property? Let's chat.";
   }
   if (pathname.startsWith("/sectors/")) {
-    return "Hello! 👋 I see you're exploring our sector solutions. I can help answer any questions about how we serve this market. What would you like to know?";
+    return "Hi! 👋 How can I help with your requirements?";
   }
   if (pathname.startsWith("/solutions/")) {
-    return "Hello! 👋 Interested in this solution? I can provide more details or help you get a quote. What questions do you have?";
+    return "Hi! 👋 Questions about this solution? I can help.";
   }
 
   // Default fallback
-  return "Hello! 👋 I'm here to help you with any questions about Umbrella Broadband's services. Whether you're interested in managed broadband, VoIP, security solutions, or have questions about our coverage - I'm happy to assist. How can I help you today?";
+  return "Hi! 👋 How can I help you today?";
 };
 
 interface Message {
