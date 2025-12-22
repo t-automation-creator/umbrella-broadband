@@ -16,6 +16,7 @@ interface LeadFormData {
   phone: string;
   company: string;
   serviceInterest: string;
+  propertyType: string;
 }
 
 export default function ChatBot() {
@@ -34,6 +35,7 @@ export default function ChatBot() {
     phone: "",
     company: "",
     serviceInterest: "",
+    propertyType: "",
   });
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -263,6 +265,23 @@ export default function ChatBot() {
                     <option value="security">CCTV & Security</option>
                     <option value="management">Management Services</option>
                     <option value="multiple">Multiple Services</option>
+                  </select>
+                  <select
+                    value={leadFormData.propertyType}
+                    onChange={(e) =>
+                      setLeadFormData({
+                        ...leadFormData,
+                        propertyType: e.target.value,
+                      })
+                    }
+                    className="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white"
+                  >
+                    <option value="">Property type</option>
+                    <option value="hmo">HMO (House in Multiple Occupation)</option>
+                    <option value="student">Student Accommodation</option>
+                    <option value="commercial">Commercial Property</option>
+                    <option value="residential">Residential Development</option>
+                    <option value="mixed">Mixed Use</option>
                   </select>
                   <div className="flex gap-2">
                     <Button

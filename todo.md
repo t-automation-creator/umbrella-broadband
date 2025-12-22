@@ -83,3 +83,6 @@
 - [x] Implement lead capture form triggered by buying intent
 - [x] Add chat leads view in admin panel
 - [x] Test chatbot responses and lead capture flow
+
+## Chatbot Enhancements
+- [x] Add property type dropdown to lead capture form (HMO, student accommodation, commercial)
