@@ -38,7 +38,24 @@ export default function ChatBot() {
     propertyType: "",
   });
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(() => {
+    // Check if chat was already auto-opened this session
+    return sessionStorage.getItem('chatbot-auto-opened') === 'true';
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-open chatbot after 10 seconds (only once per session)
+  useEffect(() => {
+    if (hasAutoOpened || isOpen) return;
+
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+      setHasAutoOpened(true);
+      sessionStorage.setItem('chatbot-auto-opened', 'true');
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timer);
+  }, [hasAutoOpened, isOpen]);
 
   const sendMessageMutation = trpc.chat.sendMessage.useMutation({
     onSuccess: (data) => {
