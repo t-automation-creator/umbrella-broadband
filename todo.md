@@ -92,3 +92,5 @@
 - [x] Add email notifications for contact form submissions
 - [x] Update chatbot welcome messages to remove 'connectivity' focus (made shorter)
 - [x] Adjust chatbot messages to medium length - asks 'What are you looking for?'
+- [x] Add quick reply buttons to chatbot (Get a quote, Schedule a callback, Learn about pricing, Speak to someone)
+- [x] Add callback scheduling form in chatbot

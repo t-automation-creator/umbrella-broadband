@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
-import { MessageCircle, X, Send, Loader2, User, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
@@ -63,6 +63,20 @@ interface LeadFormData {
   propertyType: string;
 }
 
+interface CallbackFormData {
+  name: string;
+  phone: string;
+  preferredTime: string;
+  notes: string;
+}
+
+const quickReplies = [
+  { label: "Get a quote", action: "quote" },
+  { label: "Schedule a callback", action: "callback" },
+  { label: "Learn about pricing", action: "pricing" },
+  { label: "Speak to someone", action: "speak" },
+];
+
 export default function ChatBot() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -90,6 +104,14 @@ export default function ChatBot() {
     propertyType: "",
   });
   const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [showCallbackForm, setShowCallbackForm] = useState(false);
+  const [callbackFormData, setCallbackFormData] = useState<CallbackFormData>({
+    name: "",
+    phone: "",
+    preferredTime: "",
+    notes: "",
+  });
+  const [showQuickReplies, setShowQuickReplies] = useState(true);
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if chat was already auto-opened this session
     return sessionStorage.getItem('chatbot-auto-opened') === 'true';
@@ -182,6 +204,68 @@ export default function ChatBot() {
     }
   };
 
+  const handleQuickReply = (action: string) => {
+    setShowQuickReplies(false);
+    
+    switch (action) {
+      case "quote":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I'd like to get a quote" },
+        ]);
+        setShowLeadForm(true);
+        break;
+      case "callback":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I'd like to schedule a callback" },
+          { role: "assistant", content: "I'd be happy to arrange a callback for you. Please fill in your details below and let us know when would be a good time to call." },
+        ]);
+        setShowCallbackForm(true);
+        break;
+      case "pricing":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I'd like to learn about pricing" },
+        ]);
+        sendMessageMutation.mutate({
+          message: "What are your prices? Can you tell me about your pricing?",
+          conversationHistory: [],
+        });
+        break;
+      case "speak":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I'd like to speak to someone" },
+          { role: "assistant", content: "You can reach our team directly:\n\n📞 Call: 01926 298866\n📧 Email: enquiries@umbrella-broadband.co.uk\n\nOr fill in your details below and we'll call you back." },
+        ]);
+        setShowCallbackForm(true);
+        break;
+    }
+  };
+
+  const handleCallbackSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!callbackFormData.phone) {
+      toast.error("Please provide a phone number");
+      return;
+    }
+
+    // Generate conversation summary
+    const conversationSummary = `CALLBACK REQUEST\nPreferred time: ${callbackFormData.preferredTime || "Not specified"}\nNotes: ${callbackFormData.notes || "None"}\n\n` + messages
+      .slice(1)
+      .map((m) => `${m.role === "user" ? "Customer" : "Bot"}: ${m.content}`)
+      .join("\n");
+
+    submitLeadMutation.mutate({
+      name: callbackFormData.name,
+      phone: callbackFormData.phone,
+      serviceInterest: "callback",
+      conversationSummary,
+    });
+    setShowCallbackForm(false);
+  };
+
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!leadFormData.email && !leadFormData.phone) {
@@ -264,6 +348,21 @@ export default function ChatBot() {
                 )}
               </div>
             ))}
+
+            {/* Quick Reply Buttons */}
+            {showQuickReplies && messages.length === 1 && !showLeadForm && !showCallbackForm && (
+              <div className="flex flex-wrap gap-2">
+                {quickReplies.map((reply) => (
+                  <button
+                    key={reply.action}
+                    onClick={() => handleQuickReply(reply.action)}
+                    className="px-3 py-1.5 text-xs font-medium bg-white border border-primary/30 text-primary rounded-full hover:bg-primary/5 transition-colors"
+                  >
+                    {reply.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Loading indicator */}
             {sendMessageMutation.isPending && (
@@ -372,6 +471,81 @@ export default function ChatBot() {
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         "Get Quote"
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Callback Form */}
+            {showCallbackForm && !leadSubmitted && (
+              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+                <h4 className="font-semibold text-sm text-gray-800 mb-3">
+                  Schedule a callback
+                </h4>
+                <form onSubmit={handleCallbackSubmit} className="space-y-3">
+                  <Input
+                    placeholder="Your name"
+                    value={callbackFormData.name}
+                    onChange={(e) =>
+                      setCallbackFormData({ ...callbackFormData, name: e.target.value })
+                    }
+                    className="text-sm h-9"
+                  />
+                  <Input
+                    type="tel"
+                    placeholder="Phone number *"
+                    value={callbackFormData.phone}
+                    onChange={(e) =>
+                      setCallbackFormData({ ...callbackFormData, phone: e.target.value })
+                    }
+                    className="text-sm h-9"
+                    required
+                  />
+                  <select
+                    value={callbackFormData.preferredTime}
+                    onChange={(e) =>
+                      setCallbackFormData({
+                        ...callbackFormData,
+                        preferredTime: e.target.value,
+                      })
+                    }
+                    className="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white"
+                  >
+                    <option value="">Preferred time to call</option>
+                    <option value="morning">Morning (9am - 12pm)</option>
+                    <option value="afternoon">Afternoon (12pm - 5pm)</option>
+                    <option value="anytime">Anytime</option>
+                  </select>
+                  <Input
+                    placeholder="Any notes (optional)"
+                    value={callbackFormData.notes}
+                    onChange={(e) =>
+                      setCallbackFormData({ ...callbackFormData, notes: e.target.value })
+                    }
+                    className="text-sm h-9"
+                  />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowCallbackForm(false)}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      disabled={submitLeadMutation.isPending}
+                      className="flex-1 bg-secondary hover:bg-secondary/90"
+                    >
+                      {submitLeadMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        "Request Callback"
                       )}
                     </Button>
                   </div>
