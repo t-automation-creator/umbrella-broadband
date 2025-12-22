@@ -1,6 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
+import { notifyOwner } from "./_core/notification";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
@@ -879,6 +880,30 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
           conversationSummary: input.conversationSummary || null,
           status: "new",
         });
+
+        // Send email notification to owner
+        try {
+          const leadDetails = [
+            input.name ? `Name: ${input.name}` : null,
+            input.email ? `Email: ${input.email}` : null,
+            input.phone ? `Phone: ${input.phone}` : null,
+            input.company ? `Company: ${input.company}` : null,
+            input.serviceInterest ? `Service Interest: ${input.serviceInterest}` : null,
+            input.propertyType ? `Property Type: ${input.propertyType}` : null,
+          ].filter(Boolean).join("\n");
+
+          const conversationInfo = input.conversationSummary 
+            ? `\n\nConversation Summary:\n${input.conversationSummary}` 
+            : "";
+
+          await notifyOwner({
+            title: `🔔 New Chat Lead: ${input.name || input.email || input.phone || "Unknown"}`,
+            content: `A new lead has been captured from the website chatbot.\n\n${leadDetails}${conversationInfo}\n\nView all leads in your admin dashboard.`,
+          });
+        } catch (notifyError) {
+          // Log but don't fail the lead creation if notification fails
+          console.error("Failed to send lead notification:", notifyError);
+        }
 
         return { success: true, leadId };
       }),

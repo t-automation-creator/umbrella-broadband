@@ -88,3 +88,4 @@
 - [x] Add property type dropdown to lead capture form (HMO, student accommodation, commercial)
 - [x] Make chatbot proactive - auto-open after 10 seconds on page
 - [x] Customize chatbot welcome messages based on current page
+- [x] Set up email notifications for new chat leads
