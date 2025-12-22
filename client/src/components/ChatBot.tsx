@@ -1,9 +1,53 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "wouter";
 import { MessageCircle, X, Send, Loader2, User, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
+
+// Page-specific welcome messages
+const getWelcomeMessage = (pathname: string): string => {
+  const messages: Record<string, string> = {
+    "/": "Hello! 👋 Welcome to Umbrella Broadband. I'm here to help you find the perfect connectivity solution for your property. Whether you manage HMOs, student accommodation, or commercial spaces - I can answer your questions. What can I help you with today?",
+    "/about": "Hello! 👋 I see you're learning about Umbrella Broadband. We've been providing managed connectivity solutions across the UK for years. Have any questions about our company or how we work?",
+    "/sectors": "Hello! 👋 Looking for sector-specific solutions? We specialise in landlords, HMOs, student accommodation, property developers, and SME businesses. Which sector are you interested in?",
+    "/sectors/landlords": "Hello! 👋 As a landlord, reliable broadband can be a real differentiator for your properties. I can help you understand our managed WiFi solutions for HMOs and rental properties. What would you like to know?",
+    "/sectors/students": "Hello! 👋 Student accommodation needs robust, high-speed connectivity. Our solutions are designed to handle high-density usage with fair bandwidth allocation. How can I help you today?",
+    "/sectors/developers": "Hello! 👋 Planning connectivity for a new development? We work with property developers from the design stage to ensure future-proof network infrastructure. What's your project?",
+    "/sectors/sme": "Hello! 👋 Looking for business connectivity? Our SME solutions include managed broadband, VoIP phone systems, and security. What does your business need?",
+    "/solutions": "Hello! 👋 Exploring our solutions? We offer managed broadband, VoIP phone systems, CCTV & security, and ongoing management services. Which solution interests you most?",
+    "/solutions/broadband": "Hello! 👋 Our managed broadband service includes installation, monitoring, and 24/7 support. I can help you understand what's included and get a quote. What would you like to know?",
+    "/solutions/voip": "Hello! 👋 Interested in our VoIP phone systems? We provide modern business phone solutions that integrate with your broadband. Any questions about features or pricing?",
+    "/solutions/security": "Hello! 👋 Looking at our security solutions? We offer CCTV, access control, and video intercom systems - all professionally installed and monitored. How can I help?",
+    "/solutions/management": "Hello! 👋 Our management services include proactive monitoring, maintenance, and support for all your connectivity infrastructure. Want to know more about what's included?",
+    "/case-studies": "Hello! 👋 Looking at our case studies? These show real results we've achieved for clients like you. If you'd like to discuss how we could help your property, I'm here!",
+    "/blog": "Hello! 👋 Browsing our blog? We share insights on broadband, property technology, and connectivity tips. If you have any questions about what you're reading, just ask!",
+    "/contact": "Hello! 👋 Ready to get in touch? I can help answer any final questions before you reach out, or you can fill in the contact form. What would you like to know?",
+  };
+
+  // Check for exact match first
+  if (messages[pathname]) {
+    return messages[pathname];
+  }
+
+  // Check for partial matches (for dynamic routes like /blog/slug)
+  if (pathname.startsWith("/blog/")) {
+    return "Hello! 👋 I hope you're enjoying this article! If you have any questions about the topic or our services, I'm happy to help.";
+  }
+  if (pathname.startsWith("/case-studies/")) {
+    return "Hello! 👋 Great choice looking at this case study! If you'd like to discuss how we could achieve similar results for your property, let me know.";
+  }
+  if (pathname.startsWith("/sectors/")) {
+    return "Hello! 👋 I see you're exploring our sector solutions. I can help answer any questions about how we serve this market. What would you like to know?";
+  }
+  if (pathname.startsWith("/solutions/")) {
+    return "Hello! 👋 Interested in this solution? I can provide more details or help you get a quote. What questions do you have?";
+  }
+
+  // Default fallback
+  return "Hello! 👋 I'm here to help you with any questions about Umbrella Broadband's services. Whether you're interested in managed broadband, VoIP, security solutions, or have questions about our coverage - I'm happy to assist. How can I help you today?";
+};
 
 interface Message {
   role: "user" | "assistant";
@@ -20,13 +64,21 @@ interface LeadFormData {
 }
 
 export default function ChatBot() {
+  const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello! 👋 I'm here to help you with any questions about Umbrella Broadband's services. Whether you're interested in managed broadband, VoIP, security solutions, or have questions about our coverage - I'm happy to assist. How can I help you today?",
+      content: getWelcomeMessage(location),
     },
   ]);
+
+  // Update welcome message when page changes (if chat hasn't been used yet)
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].role === "assistant") {
+      setMessages([{ role: "assistant", content: getWelcomeMessage(location) }]);
+    }
+  }, [location]);
   const [inputValue, setInputValue] = useState("");
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [leadFormData, setLeadFormData] = useState<LeadFormData>({
