@@ -27,6 +27,11 @@ import {
   createCaseStudy,
   updateCaseStudy,
   deleteCaseStudy,
+  getAllChatLeads,
+  getChatLeadById,
+  createChatLead,
+  updateChatLead,
+  deleteChatLead,
 } from "./db";
 import { storagePut } from "./storage";
 import sharp from "sharp";
@@ -749,6 +754,166 @@ Results: ${input.results}`;
             message: error instanceof Error ? error.message : "Failed to upload image",
           });
         }
+      }),
+  }),
+
+  // Chat router for AI chatbot with lead capture
+  chat: router({
+    // Send a message to the AI chatbot
+    sendMessage: publicProcedure
+      .input(z.object({
+        message: z.string().min(1),
+        conversationHistory: z.array(z.object({
+          role: z.enum(["user", "assistant"]),
+          content: z.string(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Chat service not configured" });
+        }
+
+        const systemPrompt = `You are a helpful customer service assistant for Umbrella Broadband, a UK-based company providing managed connectivity solutions. Your role is to:
+
+1. Answer questions about our services:
+   - **Managed Broadband**: Full fibre and leased line solutions for businesses, landlords, and property developers. We handle installation, monitoring, and 24/7 support.
+   - **VoIP Phone Systems**: Cloud-based business phone systems with features like call routing, voicemail-to-email, and mobile integration.
+   - **CCTV & Security**: IP camera systems with remote monitoring, motion detection, and cloud storage.
+   - **Management Services**: Ongoing network monitoring, maintenance, and technical support.
+
+2. Understand our target markets:
+   - Landlords & HMOs: Managed WiFi for rental properties
+   - Student Accommodation: High-speed internet for student housing
+   - SME Businesses: Reliable connectivity for small/medium businesses
+   - Property Developers: Infrastructure installation for new builds
+
+3. Identify buying intent signals:
+   - Questions about pricing, quotes, or costs
+   - Specific property or business requirements
+   - Timeline questions ("when can you install?")
+   - Comparison questions ("how do you compare to...")
+   - Location-specific questions
+
+When you detect buying intent, include "[LEAD_CAPTURE]" at the START of your response (before any other text), then provide a helpful response and naturally suggest collecting their details.
+
+Be friendly, professional, and use British English. Keep responses concise but helpful. If you don't know something specific (like exact pricing), explain that a team member can provide a personalised quote.
+
+Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Based in Warwickshire, UK.`;
+
+        // Build conversation messages
+        const messages = [
+          { role: "system", content: systemPrompt },
+          ...(input.conversationHistory || []).map(msg => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+          { role: "user", content: input.message },
+        ];
+
+        try {
+          const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${forgeKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages,
+              max_tokens: 500,
+              temperature: 0.7,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Chat service unavailable" });
+          }
+
+          const data = await response.json();
+          const content = data.choices?.[0]?.message?.content || "I apologise, I'm having trouble responding right now. Please call us on 01926 298866 or email enquiries@umbrella-broadband.co.uk.";
+
+          // Check if AI detected buying intent
+          const showLeadCapture = content.startsWith("[LEAD_CAPTURE]");
+          const cleanContent = content.replace("[LEAD_CAPTURE]", "").trim();
+
+          return {
+            message: cleanContent,
+            showLeadCapture,
+          };
+        } catch (error) {
+          console.error("Chat error:", error);
+          return {
+            message: "I apologise, I'm having trouble responding right now. Please call us on 01926 298866 or email enquiries@umbrella-broadband.co.uk.",
+            showLeadCapture: false,
+          };
+        }
+      }),
+
+    // Submit lead capture form
+    submitLead: publicProcedure
+      .input(z.object({
+        name: z.string().optional(),
+        email: z.string().email().optional(),
+        phone: z.string().optional(),
+        company: z.string().optional(),
+        serviceInterest: z.string().optional(),
+        propertyType: z.string().optional(),
+        conversationSummary: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        // Require at least email or phone
+        if (!input.email && !input.phone) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Please provide an email or phone number" });
+        }
+
+        const leadId = await createChatLead({
+          name: input.name || null,
+          email: input.email || null,
+          phone: input.phone || null,
+          company: input.company || null,
+          serviceInterest: input.serviceInterest || null,
+          propertyType: input.propertyType || null,
+          conversationSummary: input.conversationSummary || null,
+          status: "new",
+        });
+
+        return { success: true, leadId };
+      }),
+
+    // Admin: Get all chat leads
+    getLeads: adminProcedure.query(async () => {
+      return getAllChatLeads();
+    }),
+
+    // Admin: Get single chat lead
+    getLead: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return getChatLeadById(input.id);
+      }),
+
+    // Admin: Update chat lead status/notes
+    updateLead: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        status: z.enum(["new", "contacted", "qualified", "converted", "closed"]).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...updates } = input;
+        await updateChatLead(id, updates);
+        return { success: true };
+      }),
+
+    // Admin: Delete chat lead
+    deleteLead: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteChatLead(input.id);
+        return { success: true };
       }),
   }),
 });

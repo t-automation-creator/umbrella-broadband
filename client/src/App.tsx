@@ -19,9 +19,11 @@ import AdminContacts from "./pages/admin/Contacts";
 import AdminSettings from "./pages/admin/Settings";
 import AdminCaseStudiesList from "./pages/admin/CaseStudiesList";
 import AdminCaseStudyEdit from "./pages/admin/CaseStudyEdit";
+import AdminChatLeads from "./pages/admin/ChatLeads";
 import AdminAuthGuard from "./components/AdminAuthGuard";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
+import ChatBot from "./components/ChatBot";
 
 // Wrapper component for protected admin routes
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
@@ -77,6 +79,9 @@ function Router() {
       <Route path="/admin/case-studies/:id">
         {() => <ProtectedAdminRoute component={AdminCaseStudyEdit} />}
       </Route>
+      <Route path="/admin/chat-leads">
+        {() => <ProtectedAdminRoute component={AdminChatLeads} />}
+      </Route>
       
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
@@ -92,6 +97,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <Router />
+          <ChatBot />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

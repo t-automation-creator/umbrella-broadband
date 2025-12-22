@@ -74,3 +74,12 @@
 - [x] Change card grid to 2 columns for larger display (already done)
 - [x] Fix card image height - images displaying too large after grid change (h-72 → h-48)
 - [x] Fix image cropping - use aspect-ratio instead of fixed height to show full image
+
+## Hybrid AI Chatbot with Lead Capture
+- [x] Add chat_leads database table for storing captured leads
+- [x] Create chat API route with AI responses using Forge API
+- [x] Build floating chatbot UI component
+- [x] Train AI on Umbrella Broadband services (broadband, VoIP, security, management)
+- [x] Implement lead capture form triggered by buying intent
+- [x] Add chat leads view in admin panel
+- [x] Test chatbot responses and lead capture flow

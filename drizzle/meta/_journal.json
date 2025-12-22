@@ -29,6 +29,13 @@
       "when": 1765976769289,
       "tag": "0003_flashy_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1766421946097,
+      "tag": "0004_parallel_rage",
+      "breakpoints": true
     }
   ]
 }

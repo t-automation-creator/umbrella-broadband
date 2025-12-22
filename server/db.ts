@@ -277,3 +277,45 @@ export async function deleteCaseStudy(id: number) {
 
   await db.delete(caseStudies).where(eq(caseStudies.id, id));
 }
+
+
+// ==================== CHAT LEADS ====================
+
+import { chatLeads, InsertChatLead } from "../drizzle/schema";
+
+export async function getAllChatLeads() {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(chatLeads).orderBy(desc(chatLeads.createdAt));
+}
+
+export async function getChatLeadById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(chatLeads).where(eq(chatLeads.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createChatLead(lead: InsertChatLead) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(chatLeads).values(lead);
+  return result[0].insertId;
+}
+
+export async function updateChatLead(id: number, lead: Partial<InsertChatLead>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(chatLeads).set(lead).where(eq(chatLeads.id, id));
+}
+
+export async function deleteChatLead(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.delete(chatLeads).where(eq(chatLeads.id, id));
+}

@@ -99,3 +99,26 @@ export const caseStudies = mysqlTable("case_studies", {
 
 export type CaseStudy = typeof caseStudies.$inferSelect;
 export type InsertCaseStudy = typeof caseStudies.$inferInsert;
+
+
+/**
+ * Chat leads captured from the AI chatbot
+ * Stores visitor information when they show buying intent
+ */
+export const chatLeads = mysqlTable("chat_leads", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 255 }),
+  email: varchar("email", { length: 320 }),
+  phone: varchar("phone", { length: 50 }),
+  company: varchar("company", { length: 255 }),
+  serviceInterest: varchar("serviceInterest", { length: 100 }), // broadband, voip, security, management
+  propertyType: varchar("propertyType", { length: 100 }), // HMO, student, commercial, residential
+  conversationSummary: text("conversationSummary"), // AI-generated summary of the chat
+  status: mysqlEnum("status", ["new", "contacted", "qualified", "converted", "closed"]).default("new").notNull(),
+  notes: text("notes"), // Admin notes
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ChatLead = typeof chatLeads.$inferSelect;
+export type InsertChatLead = typeof chatLeads.$inferInsert;
