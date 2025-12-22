@@ -91,3 +91,4 @@
 - [x] Set up email notifications for new chat leads
 - [x] Add email notifications for contact form submissions
 - [x] Update chatbot welcome messages to remove 'connectivity' focus (made shorter)
+- [x] Adjust chatbot messages to medium length - asks 'What are you looking for?'

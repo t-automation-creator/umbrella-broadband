@@ -9,21 +9,21 @@ import { toast } from "sonner";
 // Page-specific welcome messages
 const getWelcomeMessage = (pathname: string): string => {
   const messages: Record<string, string> = {
-    "/": "Hi! 👋 How can I help you today?",
-    "/about": "Hi! 👋 Questions about Umbrella Broadband? I'm here to help.",
-    "/sectors": "Hi! 👋 Which sector are you interested in?",
-    "/sectors/landlords": "Hi! 👋 Looking for solutions for your rental properties? How can I help?",
-    "/sectors/students": "Hi! 👋 Need solutions for student accommodation? Ask me anything.",
-    "/sectors/developers": "Hi! 👋 Planning a new development? I can help with your requirements.",
-    "/sectors/sme": "Hi! 👋 Looking for business solutions? What does your company need?",
-    "/solutions": "Hi! 👋 Which solution interests you - broadband, VoIP, security, or management?",
-    "/solutions/broadband": "Hi! 👋 Questions about our managed broadband? I can help.",
-    "/solutions/voip": "Hi! 👋 Interested in VoIP phone systems? Ask me anything.",
-    "/solutions/security": "Hi! 👋 Looking at CCTV or access control? How can I help?",
-    "/solutions/management": "Hi! 👋 Questions about our management services? I'm here to help.",
-    "/case-studies": "Hi! 👋 Want to discuss how we could help your property? Let me know.",
-    "/blog": "Hi! 👋 Questions about what you're reading? Just ask.",
-    "/contact": "Hi! 👋 Any questions before you get in touch?",
+    "/": "Hi! 👋 Welcome to Umbrella Broadband. What are you looking for today? I can help with broadband, VoIP, security, or property management solutions.",
+    "/about": "Hi! 👋 I see you're learning about us. What are you looking for? I'm happy to answer any questions about Umbrella Broadband.",
+    "/sectors": "Hi! 👋 What type of property are you looking for solutions for? We work with landlords, student accommodation, developers, and businesses.",
+    "/sectors/landlords": "Hi! 👋 What are you looking for? I can help with broadband, VoIP, security, or management solutions for your rental properties.",
+    "/sectors/students": "Hi! 👋 What are you looking for? I can help with solutions designed for student accommodation.",
+    "/sectors/developers": "Hi! 👋 What are you looking for? I can help with infrastructure planning for your development project.",
+    "/sectors/sme": "Hi! 👋 What are you looking for? I can help with broadband, phone systems, or security for your business.",
+    "/solutions": "Hi! 👋 What are you looking for? We offer managed broadband, VoIP phone systems, CCTV & security, and ongoing management.",
+    "/solutions/broadband": "Hi! 👋 What are you looking for? I can help with questions about our managed broadband service.",
+    "/solutions/voip": "Hi! 👋 What are you looking for? I can help with questions about our VoIP phone systems.",
+    "/solutions/security": "Hi! 👋 What are you looking for? I can help with CCTV, access control, or video intercom questions.",
+    "/solutions/management": "Hi! 👋 What are you looking for? I can help with questions about our ongoing management services.",
+    "/case-studies": "Hi! 👋 What are you looking for? I can discuss how we could achieve similar results for your property.",
+    "/blog": "Hi! 👋 What are you looking for? I'm happy to answer questions about what you're reading or our services.",
+    "/contact": "Hi! 👋 What are you looking for? I can answer any questions before you get in touch with our team.",
   };
 
   // Check for exact match first
@@ -33,20 +33,20 @@ const getWelcomeMessage = (pathname: string): string => {
 
   // Check for partial matches (for dynamic routes like /blog/slug)
   if (pathname.startsWith("/blog/")) {
-    return "Hi! 👋 Questions about this article? I'm happy to help.";
+    return "Hi! 👋 What are you looking for? I'm happy to answer questions about this article or our services.";
   }
   if (pathname.startsWith("/case-studies/")) {
-    return "Hi! 👋 Want similar results for your property? Let's chat.";
+    return "Hi! 👋 What are you looking for? I can discuss how we could achieve similar results for your property.";
   }
   if (pathname.startsWith("/sectors/")) {
-    return "Hi! 👋 How can I help with your requirements?";
+    return "Hi! 👋 What are you looking for? I can help with solutions for your sector.";
   }
   if (pathname.startsWith("/solutions/")) {
-    return "Hi! 👋 Questions about this solution? I can help.";
+    return "Hi! 👋 What are you looking for? I can help with questions about this solution.";
   }
 
   // Default fallback
-  return "Hi! 👋 How can I help you today?";
+  return "Hi! 👋 Welcome to Umbrella Broadband. What are you looking for today?";
 };
 
 interface Message {
