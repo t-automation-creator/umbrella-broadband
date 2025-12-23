@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 import { useEffect, useRef } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
@@ -19,6 +22,18 @@ export default function Navbar() {
     updateHeaderHeight();
     window.addEventListener("resize", updateHeaderHeight);
     return () => window.removeEventListener("resize", updateHeaderHeight);
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setSolutionsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -49,12 +64,39 @@ export default function Navbar() {
               <Link href="/sectors" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
                 Sectors
               </Link>
-              <Link href="/solutions" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
-                Solutions
-              </Link>
-              <Link href="/starlink" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
-                Starlink
-              </Link>
+              
+              {/* Solutions Dropdown */}
+              <div 
+                ref={dropdownRef}
+                className="relative h-full"
+                onMouseEnter={() => setSolutionsOpen(true)}
+                onMouseLeave={() => setSolutionsOpen(false)}
+              >
+                <button 
+                  className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none gap-1"
+                  onClick={() => setSolutionsOpen(!solutionsOpen)}
+                >
+                  Solutions
+                  <ChevronDown className={`w-4 h-4 transition-transform ${solutionsOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {/* Dropdown Menu */}
+                {solutionsOpen && (
+                  <div className="absolute top-full left-0 bg-white rounded-lg shadow-lg py-2 min-w-[220px] border border-gray-100">
+                    <Link href="/solutions">
+                      <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
+                        All Solutions
+                      </span>
+                    </Link>
+                    <Link href="/starlink">
+                      <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
+                        Managed Starlink
+                      </span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+              
               <Link href="/case-studies" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
                 Case Studies
               </Link>
@@ -93,12 +135,28 @@ export default function Navbar() {
             <Link href="/sectors">
               <span className="block text-white hover:text-secondary cursor-pointer py-2">Sectors</span>
             </Link>
-            <Link href="/solutions">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Solutions</span>
-            </Link>
-            <Link href="/starlink">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Starlink</span>
-            </Link>
+            
+            {/* Mobile Solutions Dropdown */}
+            <div>
+              <button 
+                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                className="flex items-center justify-between w-full text-white hover:text-secondary cursor-pointer py-2"
+              >
+                <span>Solutions</span>
+                <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSolutionsOpen && (
+                <div className="pl-4 space-y-2 mt-2">
+                  <Link href="/solutions">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-2">All Solutions</span>
+                  </Link>
+                  <Link href="/starlink">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-2">Managed Starlink</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+            
             <Link href="/case-studies">
               <span className="block text-white hover:text-secondary cursor-pointer py-2">Case Studies</span>
             </Link>

@@ -148,3 +148,5 @@
 - [x] Create new Managed Starlink Services dedicated webpage
 - [x] Add navigation link to Starlink page
 - [x] Add SEO optimization for Starlink page
+- [x] Move Starlink under Solutions as dropdown menu item 'Managed Starlink'
+- [x] Update Navbar with Solutions dropdown containing main Solutions page and Managed Starlink
