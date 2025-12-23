@@ -3,9 +3,9 @@ import { Link } from "wouter";
 export default function Hero() {
   return (
     <section 
-      className="relative text-white min-h-[500px] md:min-h-[600px] lg:min-h-[700px] flex items-center bg-cover bg-[center_left_-200px] md:bg-[center_right]"
+      className="relative text-white min-h-[500px] md:min-h-[600px] lg:min-h-[700px] flex items-center bg-cover bg-[center_left_-200px] md:bg-[center_top_60px]"
       style={{
-        backgroundImage: "url('/images/hero-aerial-v7.png')",
+        backgroundImage: "url('/images/hero-aerial-v6.png')",
       }}
     >
       {/* Gradient overlay - stronger on mobile for better text readability */}

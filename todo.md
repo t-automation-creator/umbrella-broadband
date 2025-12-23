@@ -116,3 +116,4 @@
 - [x] Fix hero heading - keep 'Security Solutions' on same line
 - [x] Adjust heading - 'Broadband, VoIP &' on one line, 'Security Solutions' on next
 - [x] Fix hero image - move Student Accommodation icons lower to avoid nav bar overlap
+- [x] Revert to hero-aerial-v6.png and adjust background position to move icons down
