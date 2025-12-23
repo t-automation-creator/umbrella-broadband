@@ -11,8 +11,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <SEO 
-        title="Managed Broadband, VoIP & Security Solutions" 
+        title="Umbrella Broadband | Managed Connectivity" 
         description="Umbrella Broadband provides fast, reliable, and secure connectivity solutions for landlords, businesses, and developers. Fully managed networks you can trust."
+        keywords="managed broadband, business internet, VoIP, CCTV, network security, HMO broadband, student accommodation internet, commercial broadband, landlord internet solutions, UK broadband provider"
       />
       <Navbar />
       <main className="flex-grow">

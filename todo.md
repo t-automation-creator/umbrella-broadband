@@ -134,3 +134,6 @@
 - [x] Test email flows - verify sales and support emails arrive correctly
 - [x] Update AI chatbot system prompt to detect support issues and route to support form
 - [x] Add customer confirmation auto-reply emails for enquiries and support tickets
+- [ ] Troubleshoot SMTP email delivery - no emails being received
+- [x] Fix homepage SEO - add meta keywords
+- [x] Fix homepage SEO - shorten title to 30-60 characters
