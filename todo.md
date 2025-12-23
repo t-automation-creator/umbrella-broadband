@@ -127,3 +127,7 @@
 - [x] Move hero text and buttons to bottom of section on mobile
 - [x] Regenerate mobile hero image with all content (labels, buildings, icons, lines) fitting in top 60% above text overlay
 - [x] Regenerate mobile hero image to match desktop style (no boxes around labels, less sky headroom)
+- [x] Configure dual SMTP - sales (enquiries@student-internet.co.uk) and support (support@umbrella-broadband.co.uk)
+- [x] Update server email service to support both sales and support email routing
+- [x] Update chatbot to handle FAQ, sales enquiries, callbacks, and support enquiries
+- [x] Test email sending for both sales and support flows

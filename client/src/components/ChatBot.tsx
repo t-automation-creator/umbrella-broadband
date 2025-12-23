@@ -70,10 +70,20 @@ interface CallbackFormData {
   notes: string;
 }
 
+interface SupportFormData {
+  name: string;
+  email: string;
+  phone: string;
+  propertyAddress: string;
+  issueType: string;
+  urgency: "low" | "medium" | "high" | "critical";
+  description: string;
+}
+
 const quickReplies = [
   { label: "Get a quote", action: "quote" },
   { label: "Schedule a callback", action: "callback" },
-  { label: "Learn about pricing", action: "pricing" },
+  { label: "I need support", action: "support" },
   { label: "Speak to someone", action: "speak" },
 ];
 
@@ -112,6 +122,16 @@ export default function ChatBot() {
     notes: "",
   });
   const [showQuickReplies, setShowQuickReplies] = useState(true);
+  const [showSupportForm, setShowSupportForm] = useState(false);
+  const [supportFormData, setSupportFormData] = useState<SupportFormData>({
+    name: "",
+    email: "",
+    phone: "",
+    propertyAddress: "",
+    issueType: "",
+    urgency: "medium",
+    description: "",
+  });
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if chat was already auto-opened this session
     return sessionStorage.getItem('chatbot-auto-opened') === 'true';
@@ -167,6 +187,40 @@ export default function ChatBot() {
     },
     onError: (error) => {
       toast.error(error.message || "Failed to submit. Please try again.");
+    },
+  });
+
+  const submitSupportMutation = trpc.chat.submitSupportTicket.useMutation({
+    onSuccess: () => {
+      toast.success("Support ticket submitted! Our team will respond shortly.");
+      setShowSupportForm(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Your support ticket has been submitted. Our technical team will review it and get back to you as soon as possible. You'll receive a response at the email address you provided. Is there anything else I can help with?",
+        },
+      ]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to submit support ticket. Please try again.");
+    },
+  });
+
+  const submitCallbackMutation = trpc.chat.submitCallback.useMutation({
+    onSuccess: () => {
+      toast.success("Callback request submitted! We'll call you soon.");
+      setShowCallbackForm(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "Your callback request has been submitted. One of our team will call you at the time you requested. Is there anything else I can help with in the meantime?",
+        },
+      ]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to submit callback request. Please try again.");
     },
   });
 
@@ -233,6 +287,14 @@ export default function ChatBot() {
           conversationHistory: [],
         });
         break;
+      case "support":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I need technical support" },
+          { role: "assistant", content: "I'm sorry to hear you're having issues. Please fill in the support form below and our technical team will get back to you as soon as possible." },
+        ]);
+        setShowSupportForm(true);
+        break;
       case "speak":
         setMessages((prev) => [
           ...prev,
@@ -257,13 +319,35 @@ export default function ChatBot() {
       .map((m) => `${m.role === "user" ? "Customer" : "Bot"}: ${m.content}`)
       .join("\n");
 
-    submitLeadMutation.mutate({
+    submitCallbackMutation.mutate({
       name: callbackFormData.name,
       phone: callbackFormData.phone,
-      serviceInterest: "callback",
+      preferredTime: callbackFormData.preferredTime,
+      notes: callbackFormData.notes,
+    });
+  };
+
+  const handleSupportSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!supportFormData.email) {
+      toast.error("Please provide an email address");
+      return;
+    }
+    if (!supportFormData.description) {
+      toast.error("Please describe your issue");
+      return;
+    }
+
+    // Generate conversation summary
+    const conversationSummary = messages
+      .slice(1)
+      .map((m) => `${m.role === "user" ? "Customer" : "Bot"}: ${m.content}`)
+      .join("\n");
+
+    submitSupportMutation.mutate({
+      ...supportFormData,
       conversationSummary,
     });
-    setShowCallbackForm(false);
   };
 
   const handleLeadSubmit = (e: React.FormEvent) => {
@@ -539,13 +623,126 @@ export default function ChatBot() {
                     <Button
                       type="submit"
                       size="sm"
-                      disabled={submitLeadMutation.isPending}
+                      disabled={submitCallbackMutation.isPending}
                       className="flex-1 bg-secondary hover:bg-secondary/90"
                     >
-                      {submitLeadMutation.isPending ? (
+                      {submitCallbackMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         "Request Callback"
+                      )}
+                    </Button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Support Form */}
+            {showSupportForm && (
+              <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+                <h4 className="font-semibold text-sm text-gray-800 mb-3">
+                  Submit a support ticket
+                </h4>
+                <form onSubmit={handleSupportSubmit} className="space-y-3">
+                  <Input
+                    placeholder="Your name *"
+                    value={supportFormData.name}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, name: e.target.value })
+                    }
+                    className="text-sm h-9"
+                    required
+                  />
+                  <Input
+                    type="email"
+                    placeholder="Email address *"
+                    value={supportFormData.email}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, email: e.target.value })
+                    }
+                    className="text-sm h-9"
+                    required
+                  />
+                  <Input
+                    type="tel"
+                    placeholder="Phone number (optional)"
+                    value={supportFormData.phone}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, phone: e.target.value })
+                    }
+                    className="text-sm h-9"
+                  />
+                  <Input
+                    placeholder="Property address (optional)"
+                    value={supportFormData.propertyAddress}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, propertyAddress: e.target.value })
+                    }
+                    className="text-sm h-9"
+                  />
+                  <select
+                    value={supportFormData.issueType}
+                    onChange={(e) =>
+                      setSupportFormData({
+                        ...supportFormData,
+                        issueType: e.target.value,
+                      })
+                    }
+                    className="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white"
+                  >
+                    <option value="">Type of issue</option>
+                    <option value="No internet connection">No internet connection</option>
+                    <option value="Slow speeds">Slow speeds</option>
+                    <option value="WiFi issues">WiFi issues</option>
+                    <option value="VoIP/Phone issues">VoIP/Phone issues</option>
+                    <option value="CCTV/Security issues">CCTV/Security issues</option>
+                    <option value="Billing query">Billing query</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <select
+                    value={supportFormData.urgency}
+                    onChange={(e) =>
+                      setSupportFormData({
+                        ...supportFormData,
+                        urgency: e.target.value as "low" | "medium" | "high" | "critical",
+                      })
+                    }
+                    className="w-full h-9 px-3 text-sm border border-gray-200 rounded-md bg-white"
+                  >
+                    <option value="low">Low - Not urgent</option>
+                    <option value="medium">Medium - Affecting work</option>
+                    <option value="high">High - Urgent issue</option>
+                    <option value="critical">Critical - Complete outage</option>
+                  </select>
+                  <textarea
+                    placeholder="Describe your issue *"
+                    value={supportFormData.description}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, description: e.target.value })
+                    }
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-white min-h-[80px] resize-none"
+                    required
+                  />
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowSupportForm(false)}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      disabled={submitSupportMutation.isPending}
+                      className="flex-1 bg-secondary hover:bg-secondary/90"
+                    >
+                      {submitSupportMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : (
+                        "Submit Ticket"
                       )}
                     </Button>
                   </div>

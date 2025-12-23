@@ -36,6 +36,7 @@ import {
 } from "./db";
 import { storagePut } from "./storage";
 import sharp from "sharp";
+import { sendSalesEnquiry, sendSupportTicket } from "./services/email";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -394,7 +395,22 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const id = await createContactSubmission(input);
 
-        // Send email notification to owner
+        // Send email notification via SMTP
+        try {
+          await sendSalesEnquiry({
+            name: input.name,
+            email: input.email,
+            phone: input.phone,
+            company: input.company,
+            message: input.message,
+            enquiryType: "general",
+          });
+        } catch (emailError) {
+          // Log but don't fail the submission if email fails
+          console.error("Failed to send contact email:", emailError);
+        }
+
+        // Also send in-app notification
         try {
           const contactDetails = [
             `Name: ${input.name}`,
@@ -900,7 +916,24 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
           status: "new",
         });
 
-        // Send email notification to owner
+        // Send email notification via SMTP
+        try {
+          await sendSalesEnquiry({
+            name: input.name || "Unknown",
+            email: input.email || "Not provided",
+            phone: input.phone,
+            company: input.company,
+            propertyType: input.propertyType,
+            serviceInterest: input.serviceInterest,
+            conversationSummary: input.conversationSummary,
+            enquiryType: "general",
+          });
+        } catch (emailError) {
+          // Log but don't fail the lead creation if email fails
+          console.error("Failed to send sales email:", emailError);
+        }
+
+        // Also send in-app notification
         try {
           const leadDetails = [
             input.name ? `Name: ${input.name}` : null,
@@ -957,6 +990,103 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deleteChatLead(input.id);
+        return { success: true };
+      }),
+
+    // Submit support ticket (sends to support email)
+    submitSupportTicket: publicProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        company: z.string().optional(),
+        propertyAddress: z.string().optional(),
+        issueType: z.string().optional(),
+        urgency: z.enum(["low", "medium", "high", "critical"]).optional(),
+        description: z.string().min(1),
+        conversationSummary: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        // Send support ticket via SMTP
+        try {
+          const result = await sendSupportTicket({
+            name: input.name,
+            email: input.email,
+            phone: input.phone,
+            company: input.company,
+            propertyAddress: input.propertyAddress,
+            issueType: input.issueType,
+            urgency: input.urgency,
+            description: input.description,
+            conversationSummary: input.conversationSummary,
+          });
+
+          if (!result.success) {
+            console.error("Failed to send support ticket email:", result.error);
+          }
+        } catch (emailError) {
+          console.error("Failed to send support ticket:", emailError);
+        }
+
+        // Also send in-app notification
+        try {
+          const urgencyLabel = {
+            low: "🟢 Low",
+            medium: "🟡 Medium",
+            high: "🟠 High",
+            critical: "🔴 Critical",
+          }[input.urgency || "medium"];
+
+          await notifyOwner({
+            title: `🎫 Support Ticket: ${input.issueType || "General Issue"} - ${input.name}`,
+            content: `A new support ticket has been submitted.\n\nUrgency: ${urgencyLabel}\nName: ${input.name}\nEmail: ${input.email}${input.phone ? `\nPhone: ${input.phone}` : ""}${input.propertyAddress ? `\nProperty: ${input.propertyAddress}` : ""}\n\nIssue:\n${input.description}`,
+          });
+        } catch (notifyError) {
+          console.error("Failed to send support notification:", notifyError);
+        }
+
+        return { success: true };
+      }),
+
+    // Submit callback request (sends to sales email)
+    submitCallback: publicProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        phone: z.string().min(1),
+        email: z.string().email().optional(),
+        company: z.string().optional(),
+        propertyType: z.string().optional(),
+        preferredTime: z.string().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        // Send callback request via SMTP
+        try {
+          await sendSalesEnquiry({
+            name: input.name,
+            email: input.email || "Not provided",
+            phone: input.phone,
+            company: input.company,
+            propertyType: input.propertyType,
+            message: input.preferredTime 
+              ? `Callback requested. Preferred time: ${input.preferredTime}${input.notes ? `\n\nNotes: ${input.notes}` : ""}`
+              : `Callback requested.${input.notes ? `\n\nNotes: ${input.notes}` : ""}`,
+            enquiryType: "callback",
+          });
+        } catch (emailError) {
+          console.error("Failed to send callback email:", emailError);
+        }
+
+        // Also send in-app notification
+        try {
+          await notifyOwner({
+            title: `📞 Callback Request: ${input.name}`,
+            content: `A callback has been requested.\n\nName: ${input.name}\nPhone: ${input.phone}${input.email ? `\nEmail: ${input.email}` : ""}${input.company ? `\nCompany: ${input.company}` : ""}${input.propertyType ? `\nProperty Type: ${input.propertyType}` : ""}${input.preferredTime ? `\nPreferred Time: ${input.preferredTime}` : ""}${input.notes ? `\n\nNotes: ${input.notes}` : ""}`,
+          });
+        } catch (notifyError) {
+          console.error("Failed to send callback notification:", notifyError);
+        }
+
         return { success: true };
       }),
   }),
