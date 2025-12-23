@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Sectors from "./pages/Sectors";
 import Solutions from "./pages/Solutions";
+import Starlink from "./pages/Starlink";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/sectors" component={Sectors} />
       <Route path="/solutions" component={Solutions} />
+      <Route path="/starlink" component={Starlink} />
       <Route path="/contact" component={Contact} />
       <Route path="/case-studies" component={CaseStudies} />
       <Route path="/case-studies/:slug" component={CaseStudyDetail} />

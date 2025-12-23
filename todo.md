@@ -143,3 +143,8 @@
 - [x] Change hero image padding-top from 128 to 228
 - [x] Set up Resend email integration as alternative to SMTP
 - [x] Configure Resend to send notifications to enquiries@student-internet.co.uk (sales) and support@umbrella-broadband.co.uk (support)
+
+## Managed Starlink Services Page
+- [x] Create new Managed Starlink Services dedicated webpage
+- [x] Add navigation link to Starlink page
+- [x] Add SEO optimization for Starlink page

@@ -4,9 +4,11 @@ import { Resend } from "resend";
 export type EmailType = "sales" | "support";
 
 // Recipient email addresses
+// TODO: Change back to real addresses after domain verification in Resend
+// Real addresses: enquiries@student-internet.co.uk (sales), support@umbrella-broadband.co.uk (support)
 const EMAIL_RECIPIENTS = {
-  sales: "enquiries@student-internet.co.uk",
-  support: "support@umbrella-broadband.co.uk",
+  sales: "taylor.deakyne@gmail.com",
+  support: "taylor.deakyne@gmail.com",
 };
 
 // Initialize Resend client
