@@ -16,7 +16,7 @@ export default function Hero() {
       {/* Gradient overlay - bottom gradient on mobile, left gradient on desktop */}
       <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent md:bg-gradient-to-r md:from-primary/70 md:from-0% md:via-primary/40 md:via-25% md:to-transparent md:to-40%" />
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 pb-12 md:py-20 lg:py-32 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-[228px] lg:pb-32 w-full">
         <div className="max-w-xl">
           <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight font-heading" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 4px 40px rgba(0,0,0,0.6)' }}>
             Fully Managed <span className="whitespace-nowrap">Broadband, VoIP &</span><br />Security Solutions

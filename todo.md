@@ -140,3 +140,4 @@
 - [x] Add SEO optimization to About Us page (title + keywords)
 - [x] Add SEO optimization to Solutions page (title + keywords)
 - [x] Add SEO optimization to Sectors page (title + keywords)
+- [x] Change hero image padding-top from 128 to 228
