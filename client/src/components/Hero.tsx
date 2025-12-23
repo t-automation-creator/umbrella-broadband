@@ -5,15 +5,13 @@ export default function Hero() {
     <section 
       className="relative text-white min-h-[600px] lg:min-h-[700px] flex items-center"
       style={{
-        backgroundImage: "url('/images/hero-aerial-v3.png')",
+        backgroundImage: "url('/images/hero-aerial-v4.png')",
         backgroundSize: "cover",
         backgroundPosition: "center right",
       }}
     >
-      {/* Dark gradient overlay for text readability on left side */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary from-0% via-primary/80 via-30% to-transparent to-50%" />
-      {/* Bottom gradient for smoother blend into next section */}
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-primary/90 to-transparent" />
+      {/* Very subtle gradient overlay for text readability on left side */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/70 from-0% via-primary/40 via-25% to-transparent to-40%" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 lg:py-32 w-full">
         <div className="max-w-xl">
