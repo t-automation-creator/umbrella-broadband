@@ -94,3 +94,4 @@
 - [x] Adjust chatbot messages to medium length - asks 'What are you looking for?'
 - [x] Add quick reply buttons to chatbot (Get a quote, Schedule a callback, Learn about pricing, Speak to someone)
 - [x] Add callback scheduling form in chatbot
+- [x] Create new hero image for homepage

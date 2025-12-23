@@ -22,7 +22,7 @@ export default function Hero() {
         </div>
         <div className="flex justify-center">
           <img 
-            src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_Hero4.png" 
+            src="/images/hero-new.png" 
             alt="Connectivity Infrastructure" 
             className="w-full max-w-lg object-contain drop-shadow-2xl" 
           />
