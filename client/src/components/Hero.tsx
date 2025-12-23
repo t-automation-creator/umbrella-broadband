@@ -22,7 +22,7 @@ export default function Hero() {
         </div>
         <div className="flex justify-center">
           <img 
-            src="/images/hero-realistic.png" 
+            src="/images/hero-aerial.png" 
             alt="Property types connected by Umbrella Broadband solutions" 
             className="w-full max-w-2xl object-contain drop-shadow-2xl" 
           />
