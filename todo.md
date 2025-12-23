@@ -119,3 +119,4 @@
 - [x] Revert to hero-aerial-v6.png and adjust background position to move icons down
 - [x] Reset hero background position back to normal (remove offset)
 - [x] Increase navigation bar top and bottom padding (72px → 88px)
+- [x] Adjust hero background position on large screens to clear nav bar overlap
