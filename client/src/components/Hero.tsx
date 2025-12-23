@@ -5,7 +5,7 @@ export default function Hero() {
     <section 
       className="relative text-white min-h-[600px] lg:min-h-[700px] flex items-center"
       style={{
-        backgroundImage: "url('/images/hero-aerial.png')",
+        backgroundImage: "url('/images/hero-aerial-v2.png')",
         backgroundSize: "cover",
         backgroundPosition: "center right",
       }}
