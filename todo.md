@@ -123,3 +123,5 @@
 - [x] Regenerate hero image with Student Accommodation positioned lower to avoid nav bar overlap
 - [x] Create mobile-optimized hero image with better positioning for portrait screens
 - [x] Update Hero component to serve different images for mobile vs desktop
+- [x] Regenerate mobile hero image with property labels at top (in sky area)
+- [x] Move hero text and buttons to bottom of section on mobile
