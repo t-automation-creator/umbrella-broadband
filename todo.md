@@ -114,3 +114,4 @@
 - [x] Fix hero mobile display - adjust background position to show town, not labels
 - [x] Increase gradient overlay on mobile for better text readability
 - [x] Fix hero heading - keep 'Security Solutions' on same line
+- [x] Adjust heading - 'Broadband, VoIP &' on one line, 'Security Solutions' on next
