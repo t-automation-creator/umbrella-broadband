@@ -97,3 +97,4 @@
 - [x] Create new hero image for homepage
 - [x] Create realistic hero image showing property types and solutions, make larger
 - [x] Create aerial view hero image with labelled property types
+- [x] Make aerial image full background of hero section
