@@ -11,7 +11,7 @@ export default function Hero() {
       }}
     >
       {/* Dark gradient overlay for text readability on left side */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary from-0% via-primary/80 via-30% to-transparent to-50%" />
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 lg:py-32 w-full">
         <div className="max-w-xl">
