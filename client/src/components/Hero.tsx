@@ -14,7 +14,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-20 lg:py-32 w-full">
         <div className="max-w-xl">
           <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 leading-tight font-heading" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 4px 40px rgba(0,0,0,0.6)' }}>
-            Fully Managed Broadband, VoIP & Security Solutions
+            Fully Managed Broadband, <span className="whitespace-nowrap">VoIP & Security Solutions</span>
           </h1>
           <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-6 md:mb-8 font-sans" style={{ textShadow: '0 2px 15px rgba(0,0,0,0.7), 0 4px 30px rgba(0,0,0,0.5)' }}>
             Fast, reliable, and secure connectivity with full network management for landlords, businesses, and developers.
