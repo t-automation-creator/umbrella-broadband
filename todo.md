@@ -134,10 +134,12 @@
 - [x] Test email flows - verify sales and support emails arrive correctly
 - [x] Update AI chatbot system prompt to detect support issues and route to support form
 - [x] Add customer confirmation auto-reply emails for enquiries and support tickets
-- [ ] Troubleshoot SMTP email delivery - no emails being received
+- [x] Troubleshoot SMTP email delivery - replaced with Resend
 - [x] Fix homepage SEO - add meta keywords
 - [x] Fix homepage SEO - shorten title to 30-60 characters
 - [x] Add SEO optimization to About Us page (title + keywords)
 - [x] Add SEO optimization to Solutions page (title + keywords)
 - [x] Add SEO optimization to Sectors page (title + keywords)
 - [x] Change hero image padding-top from 128 to 228
+- [x] Set up Resend email integration as alternative to SMTP
+- [x] Configure Resend to send notifications to enquiries@student-internet.co.uk (sales) and support@umbrella-broadband.co.uk (support)

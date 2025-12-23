@@ -1,72 +1,57 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 // Email types for routing
 export type EmailType = "sales" | "support";
 
-// Email configuration from environment variables
-const SMTP_CONFIG = {
-  sales: {
-    host: process.env.SMTP_SALES_HOST || "smtp.office365.com",
-    port: parseInt(process.env.SMTP_SALES_PORT || "587"),
-    user: process.env.SMTP_SALES_USER || "",
-    pass: process.env.SMTP_SALES_PASS || "",
-  },
-  support: {
-    host: process.env.SMTP_SUPPORT_HOST || "smtp.office365.com",
-    port: parseInt(process.env.SMTP_SUPPORT_PORT || "587"),
-    user: process.env.SMTP_SUPPORT_USER || "",
-    pass: process.env.SMTP_SUPPORT_PASS || "",
-  },
+// Recipient email addresses
+const EMAIL_RECIPIENTS = {
+  sales: "enquiries@student-internet.co.uk",
+  support: "support@umbrella-broadband.co.uk",
 };
 
-// Create transporter for a specific email type
-function createTransporter(type: EmailType) {
-  const config = SMTP_CONFIG[type];
-  
-  if (!config.user || !config.pass) {
-    throw new Error(`SMTP credentials not configured for ${type} email`);
-  }
-  
-  return nodemailer.createTransport({
-    host: config.host,
-    port: config.port,
-    secure: false, // Use TLS
-    auth: {
-      user: config.user,
-      pass: config.pass,
-    },
-  });
-}
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Sender email - use Resend's default domain initially
+const SENDER_EMAIL = "onboarding@resend.dev";
+const SENDER_NAME = "Umbrella Broadband";
 
 // Email payload interface
 export interface EmailPayload {
-  to?: string; // Optional - defaults to the SMTP user (self-send)
+  to?: string;
   subject: string;
   text: string;
   html?: string;
 }
 
-// Send email using the appropriate SMTP configuration
+// Send email using Resend
 export async function sendEmail(
   type: EmailType,
   payload: EmailPayload
 ): Promise<{ success: boolean; messageId?: string; error?: string }> {
   try {
-    const config = SMTP_CONFIG[type];
-    const transporter = createTransporter(type);
+    if (!process.env.RESEND_API_KEY) {
+      console.warn(`[Email] Resend API key not configured, skipping ${type} email`);
+      return { success: false, error: "Resend API key not configured" };
+    }
+
+    const recipient = payload.to || EMAIL_RECIPIENTS[type];
     
-    const mailOptions = {
-      from: config.user,
-      to: payload.to || config.user, // Send to self if no recipient specified
+    const { data, error } = await resend.emails.send({
+      from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
+      to: [recipient],
       subject: payload.subject,
       text: payload.text,
       html: payload.html,
-    };
-    
-    const info = await transporter.sendMail(mailOptions);
-    
-    console.log(`[Email] ${type} email sent successfully:`, info.messageId);
-    return { success: true, messageId: info.messageId };
+    });
+
+    if (error) {
+      console.error(`[Email] Failed to send ${type} email:`, error.message);
+      return { success: false, error: error.message };
+    }
+
+    console.log(`[Email] ${type} email sent successfully:`, data?.id);
+    return { success: true, messageId: data?.id };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
     console.error(`[Email] Failed to send ${type} email:`, errorMessage);
@@ -264,7 +249,9 @@ export async function sendSupportConfirmation(data: {
 
 Thank you for contacting Umbrella Broadband Support. We have received your support request regarding "${data.issueType || "your issue"}" and our technical team is reviewing it.
 
-We aim to respond to all support tickets within 4 working hours. For urgent issues, please call us directly on 01926 298866.
+${data.ticketReference ? `Your ticket reference is: ${data.ticketReference}` : ""}
+
+We aim to respond to all support requests within 24 hours during business hours. For urgent issues, please call our support line on 01926 298866.
 
 Best regards,
 The Umbrella Broadband Support Team
@@ -282,11 +269,9 @@ Website: www.umbrella-broadband.co.uk`;
       </div>
       <div style="padding: 30px; background: #ffffff;">
         <p style="font-size: 16px; color: #333;">Dear ${data.name},</p>
-        <p style="font-size: 16px; color: #333;">Thank you for contacting Umbrella Broadband Support. We have received your support request regarding <strong>"${data.issueType || "your issue"}"</strong> and our technical team is reviewing it.</p>
-        <div style="background: #f0fdfa; border-left: 4px solid #0d9488; padding: 15px; margin: 20px 0;">
-          <p style="margin: 0; font-size: 14px; color: #0d9488;"><strong>Response Time:</strong> We aim to respond to all support tickets within 4 working hours.</p>
-        </div>
-        <p style="font-size: 16px; color: #333;">For urgent issues, please call us directly on <a href="tel:01926298866" style="color: #0d9488;">01926 298866</a>.</p>
+        <p style="font-size: 16px; color: #333;">Thank you for contacting Umbrella Broadband Support. We have received your support request regarding "<strong>${data.issueType || "your issue"}</strong>" and our technical team is reviewing it.</p>
+        ${data.ticketReference ? `<p style="font-size: 16px; color: #333; background: #f0f9ff; padding: 12px; border-radius: 8px;"><strong>Your ticket reference:</strong> ${data.ticketReference}</p>` : ""}
+        <p style="font-size: 16px; color: #333;">We aim to respond to all support requests within 24 hours during business hours. For urgent issues, please call our support line on <a href="tel:01926298866" style="color: #0d9488;">01926 298866</a>.</p>
         <p style="font-size: 16px; color: #333;">Best regards,<br>The Umbrella Broadband Support Team</p>
       </div>
       <div style="background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666;">
@@ -298,18 +283,4 @@ Website: www.umbrella-broadband.co.uk`;
   `;
   
   return sendEmail("support", { to: data.email, subject, text, html });
-}
-
-// Test SMTP connection
-export async function testSmtpConnection(type: EmailType): Promise<{ success: boolean; error?: string }> {
-  try {
-    const transporter = createTransporter(type);
-    await transporter.verify();
-    console.log(`[Email] ${type} SMTP connection verified successfully`);
-    return { success: true };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.error(`[Email] ${type} SMTP connection failed:`, errorMessage);
-    return { success: false, error: errorMessage };
-  }
 }
