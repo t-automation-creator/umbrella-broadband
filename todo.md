@@ -106,3 +106,6 @@
 - [x] Regenerate hero as one continuous image (no split/different left side)
 - [x] Make gradient almost invisible/very subtle
 - [x] Use smaller icon and label sizes like previous version
+- [x] Fix CCTV icon in hero image (should be camera icon like previous version)
+- [x] Add subtle text shadow to hero heading for better readability
+- [x] Reverted to hero-aerial-v4.png (preferred version without circle lines)
