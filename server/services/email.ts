@@ -199,6 +199,107 @@ export async function sendSupportTicket(data: {
   return sendEmail("support", { subject, text: textParts, html: htmlParts });
 }
 
+// Send customer confirmation email for sales enquiry
+export async function sendSalesConfirmation(data: {
+  name: string;
+  email: string;
+  enquiryType?: "general" | "callback" | "quote";
+}): Promise<{ success: boolean; error?: string }> {
+  const enquiryTypeLabel = {
+    general: "enquiry",
+    callback: "callback request",
+    quote: "quote request",
+  }[data.enquiryType || "general"];
+  
+  const subject = `Thank you for your ${enquiryTypeLabel} - Umbrella Broadband`;
+  
+  const text = `Dear ${data.name},
+
+Thank you for contacting Umbrella Broadband. We have received your ${enquiryTypeLabel} and one of our team members will be in touch with you shortly.
+
+In the meantime, if you have any urgent questions, please don't hesitate to call us on 01926 298866.
+
+Best regards,
+The Umbrella Broadband Team
+
+---
+Umbrella Broadband
+Managed Connectivity Solutions
+Phone: 01926 298866
+Email: enquiries@umbrella-broadband.co.uk
+Website: www.umbrella-broadband.co.uk`;
+  
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: linear-gradient(135deg, #0d9488 0%, #0891b2 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0; font-size: 24px;">Umbrella Broadband</h1>
+      </div>
+      <div style="padding: 30px; background: #ffffff;">
+        <p style="font-size: 16px; color: #333;">Dear ${data.name},</p>
+        <p style="font-size: 16px; color: #333;">Thank you for contacting Umbrella Broadband. We have received your ${enquiryTypeLabel} and one of our team members will be in touch with you shortly.</p>
+        <p style="font-size: 16px; color: #333;">In the meantime, if you have any urgent questions, please don't hesitate to call us on <a href="tel:01926298866" style="color: #0d9488;">01926 298866</a>.</p>
+        <p style="font-size: 16px; color: #333;">Best regards,<br>The Umbrella Broadband Team</p>
+      </div>
+      <div style="background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+        <p style="margin: 0;">Umbrella Broadband | Managed Connectivity Solutions</p>
+        <p style="margin: 5px 0;">Phone: 01926 298866 | Email: enquiries@umbrella-broadband.co.uk</p>
+        <p style="margin: 5px 0;"><a href="https://www.umbrella-broadband.co.uk" style="color: #0d9488;">www.umbrella-broadband.co.uk</a></p>
+      </div>
+    </div>
+  `;
+  
+  return sendEmail("sales", { to: data.email, subject, text, html });
+}
+
+// Send customer confirmation email for support ticket
+export async function sendSupportConfirmation(data: {
+  name: string;
+  email: string;
+  issueType?: string;
+  ticketReference?: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const subject = `Support Ticket Received - Umbrella Broadband`;
+  
+  const text = `Dear ${data.name},
+
+Thank you for contacting Umbrella Broadband Support. We have received your support request regarding "${data.issueType || "your issue"}" and our technical team is reviewing it.
+
+We aim to respond to all support tickets within 4 working hours. For urgent issues, please call us directly on 01926 298866.
+
+Best regards,
+The Umbrella Broadband Support Team
+
+---
+Umbrella Broadband Support
+Phone: 01926 298866
+Email: support@umbrella-broadband.co.uk
+Website: www.umbrella-broadband.co.uk`;
+  
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background: linear-gradient(135deg, #0d9488 0%, #0891b2 100%); padding: 30px; text-align: center;">
+        <h1 style="color: white; margin: 0; font-size: 24px;">Umbrella Broadband Support</h1>
+      </div>
+      <div style="padding: 30px; background: #ffffff;">
+        <p style="font-size: 16px; color: #333;">Dear ${data.name},</p>
+        <p style="font-size: 16px; color: #333;">Thank you for contacting Umbrella Broadband Support. We have received your support request regarding <strong>"${data.issueType || "your issue"}"</strong> and our technical team is reviewing it.</p>
+        <div style="background: #f0fdfa; border-left: 4px solid #0d9488; padding: 15px; margin: 20px 0;">
+          <p style="margin: 0; font-size: 14px; color: #0d9488;"><strong>Response Time:</strong> We aim to respond to all support tickets within 4 working hours.</p>
+        </div>
+        <p style="font-size: 16px; color: #333;">For urgent issues, please call us directly on <a href="tel:01926298866" style="color: #0d9488;">01926 298866</a>.</p>
+        <p style="font-size: 16px; color: #333;">Best regards,<br>The Umbrella Broadband Support Team</p>
+      </div>
+      <div style="background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+        <p style="margin: 0;">Umbrella Broadband Support</p>
+        <p style="margin: 5px 0;">Phone: 01926 298866 | Email: support@umbrella-broadband.co.uk</p>
+        <p style="margin: 5px 0;"><a href="https://www.umbrella-broadband.co.uk" style="color: #0d9488;">www.umbrella-broadband.co.uk</a></p>
+      </div>
+    </div>
+  `;
+  
+  return sendEmail("support", { to: data.email, subject, text, html });
+}
+
 // Test SMTP connection
 export async function testSmtpConnection(type: EmailType): Promise<{ success: boolean; error?: string }> {
   try {

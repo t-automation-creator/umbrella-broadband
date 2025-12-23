@@ -160,6 +160,9 @@ export default function ChatBot() {
       if (data.showLeadCapture && !leadSubmitted) {
         setShowLeadForm(true);
       }
+      if (data.showSupportForm) {
+        setShowSupportForm(true);
+      }
     },
     onError: () => {
       setMessages((prev) => [

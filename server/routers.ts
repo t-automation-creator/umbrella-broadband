@@ -36,7 +36,7 @@ import {
 } from "./db";
 import { storagePut } from "./storage";
 import sharp from "sharp";
-import { sendSalesEnquiry, sendSupportTicket } from "./services/email";
+import { sendSalesEnquiry, sendSupportTicket, sendSalesConfirmation, sendSupportConfirmation } from "./services/email";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -408,6 +408,17 @@ export const appRouter = router({
         } catch (emailError) {
           // Log but don't fail the submission if email fails
           console.error("Failed to send contact email:", emailError);
+        }
+
+        // Send customer confirmation email
+        try {
+          await sendSalesConfirmation({
+            name: input.name,
+            email: input.email,
+            enquiryType: "general",
+          });
+        } catch (confirmError) {
+          console.error("Failed to send contact confirmation email:", confirmError);
         }
 
         // Also send in-app notification
@@ -826,18 +837,33 @@ Results: ${input.results}`;
    - SME Businesses: Reliable connectivity for small/medium businesses
    - Property Developers: Infrastructure installation for new builds
 
-3. Identify buying intent signals:
+3. Identify buying intent signals (for NEW customers):
    - Questions about pricing, quotes, or costs
    - Specific property or business requirements
    - Timeline questions ("when can you install?")
    - Comparison questions ("how do you compare to...")
    - Location-specific questions
 
-When you detect buying intent, include "[LEAD_CAPTURE]" at the START of your response (before any other text), then provide a helpful response and naturally suggest collecting their details.
+4. Identify SUPPORT issues (for EXISTING customers):
+   - Internet not working, connection issues, outages
+   - Slow speeds, buffering, latency problems
+   - WiFi not connecting, signal issues
+   - VoIP/phone problems, call quality issues
+   - CCTV not recording, cameras offline
+   - Router/equipment issues
+   - Billing queries, account questions
+   - Password resets, login issues
+   - Any mention of "my internet", "my connection", "not working", "broken", "down"
+
+When you detect buying intent (NEW customer), include "[LEAD_CAPTURE]" at the START of your response, then provide a helpful response and naturally suggest collecting their details.
+
+When you detect a SUPPORT issue (EXISTING customer), include "[SUPPORT_TICKET]" at the START of your response, then empathise with their issue and explain that our technical team will help them. Suggest they fill in the support form so we can assist them quickly.
 
 Be friendly, professional, and use British English. Keep responses concise but helpful. If you don't know something specific (like exact pricing), explain that a team member can provide a personalised quote.
 
-Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Based in Warwickshire, UK.`;
+For support issues, reassure the customer that our technical team is here to help and will respond as quickly as possible.
+
+Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk (sales) or support@umbrella-broadband.co.uk (support), Based in Warwickshire, UK.`;
 
         // Build conversation messages
         const messages = [
@@ -871,19 +897,22 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
           const data = await response.json();
           const content = data.choices?.[0]?.message?.content || "I apologise, I'm having trouble responding right now. Please call us on 01926 298866 or email enquiries@umbrella-broadband.co.uk.";
 
-          // Check if AI detected buying intent
+          // Check if AI detected buying intent or support issue
           const showLeadCapture = content.startsWith("[LEAD_CAPTURE]");
-          const cleanContent = content.replace("[LEAD_CAPTURE]", "").trim();
+          const showSupportForm = content.startsWith("[SUPPORT_TICKET]");
+          const cleanContent = content.replace("[LEAD_CAPTURE]", "").replace("[SUPPORT_TICKET]", "").trim();
 
           return {
             message: cleanContent,
             showLeadCapture,
+            showSupportForm,
           };
         } catch (error) {
           console.error("Chat error:", error);
           return {
             message: "I apologise, I'm having trouble responding right now. Please call us on 01926 298866 or email enquiries@umbrella-broadband.co.uk.",
             showLeadCapture: false,
+            showSupportForm: false,
           };
         }
       }),
@@ -926,11 +955,24 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
             propertyType: input.propertyType,
             serviceInterest: input.serviceInterest,
             conversationSummary: input.conversationSummary,
-            enquiryType: "general",
+            enquiryType: "quote",
           });
         } catch (emailError) {
           // Log but don't fail the lead creation if email fails
           console.error("Failed to send sales email:", emailError);
+        }
+
+        // Send customer confirmation email
+        if (input.email) {
+          try {
+            await sendSalesConfirmation({
+              name: input.name || "Customer",
+              email: input.email,
+              enquiryType: "quote",
+            });
+          } catch (confirmError) {
+            console.error("Failed to send confirmation email:", confirmError);
+          }
         }
 
         // Also send in-app notification
@@ -1028,6 +1070,17 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
           console.error("Failed to send support ticket:", emailError);
         }
 
+        // Send customer confirmation email
+        try {
+          await sendSupportConfirmation({
+            name: input.name,
+            email: input.email,
+            issueType: input.issueType,
+          });
+        } catch (confirmError) {
+          console.error("Failed to send support confirmation email:", confirmError);
+        }
+
         // Also send in-app notification
         try {
           const urgencyLabel = {
@@ -1075,6 +1128,19 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk, Ba
           });
         } catch (emailError) {
           console.error("Failed to send callback email:", emailError);
+        }
+
+        // Send customer confirmation email
+        if (input.email) {
+          try {
+            await sendSalesConfirmation({
+              name: input.name,
+              email: input.email,
+              enquiryType: "callback",
+            });
+          } catch (confirmError) {
+            console.error("Failed to send callback confirmation email:", confirmError);
+          }
         }
 
         // Also send in-app notification
