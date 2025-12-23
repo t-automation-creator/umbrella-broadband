@@ -125,3 +125,4 @@
 - [x] Update Hero component to serve different images for mobile vs desktop
 - [x] Regenerate mobile hero image with property labels at top (in sky area)
 - [x] Move hero text and buttons to bottom of section on mobile
+- [x] Regenerate mobile hero image with all content (labels, buildings, icons, lines) fitting in top 60% above text overlay

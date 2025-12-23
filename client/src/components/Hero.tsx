@@ -7,7 +7,7 @@ export default function Hero() {
       <picture className="absolute inset-0 w-full h-full">
         <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v8.png" />
         <img 
-          src="/images/hero-aerial-mobile-v2.png" 
+          src="/images/hero-aerial-mobile-v3.png" 
           alt="Aerial view of UK town with connected properties"
           className="w-full h-full object-cover object-top md:object-center"
         />
