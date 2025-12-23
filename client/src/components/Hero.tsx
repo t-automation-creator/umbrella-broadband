@@ -5,7 +5,7 @@ export default function Hero() {
     <section 
       className="relative text-white min-h-[500px] md:min-h-[600px] lg:min-h-[700px] flex items-center bg-cover bg-[center_left_-200px] md:bg-[center_right]"
       style={{
-        backgroundImage: "url('/images/hero-aerial-v6.png')",
+        backgroundImage: "url('/images/hero-aerial-v7.png')",
       }}
     >
       {/* Gradient overlay - stronger on mobile for better text readability */}

@@ -115,3 +115,4 @@
 - [x] Increase gradient overlay on mobile for better text readability
 - [x] Fix hero heading - keep 'Security Solutions' on same line
 - [x] Adjust heading - 'Broadband, VoIP &' on one line, 'Security Solutions' on next
+- [x] Fix hero image - move Student Accommodation icons lower to avoid nav bar overlap
