@@ -25,7 +25,7 @@ export default function Navbar() {
     <nav ref={navRef} className="bg-primary shadow-md fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         {/* navbar-inner: flex row, align-center, justify-between, height 72px */}
-        <div className="flex justify-between items-center h-[72px]">
+        <div className="flex justify-between items-center h-[88px]">
           
           {/* Left Side: Logo + Navigation Links */}
           <div className="flex items-center h-full">
