@@ -95,3 +95,4 @@
 - [x] Add quick reply buttons to chatbot (Get a quote, Schedule a callback, Learn about pricing, Speak to someone)
 - [x] Add callback scheduling form in chatbot
 - [x] Create new hero image for homepage
+- [x] Create realistic hero image showing property types and solutions, make larger
