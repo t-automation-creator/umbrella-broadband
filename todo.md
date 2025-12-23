@@ -137,3 +137,6 @@
 - [ ] Troubleshoot SMTP email delivery - no emails being received
 - [x] Fix homepage SEO - add meta keywords
 - [x] Fix homepage SEO - shorten title to 30-60 characters
+- [x] Add SEO optimization to About Us page (title + keywords)
+- [x] Add SEO optimization to Solutions page (title + keywords)
+- [x] Add SEO optimization to Sectors page (title + keywords)

@@ -34,8 +34,9 @@ export default function Sectors() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Sectors We Serve" 
+        title="Sectors | Umbrella Broadband" 
         description="Tailored broadband and security solutions for Landlords, Developers, Businesses, and Student Accommodation. Find the right fit for your sector."
+        keywords="HMO broadband, landlord internet solutions, property developer connectivity, SME business internet, student accommodation WiFi, PBSA broadband, multi-tenant internet, commercial property broadband, residential broadband provider"
       />
       <Navbar />
       <main className="flex-grow">

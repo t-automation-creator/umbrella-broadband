@@ -8,8 +8,9 @@ export default function About() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="About Us" 
+        title="About Us | Umbrella Broadband" 
         description="Learn about Umbrella Broadband's mission to deliver seamless, high-speed internet and security solutions. We are dedicated to keeping you connected."
+        keywords="about umbrella broadband, UK internet provider, managed broadband company, connectivity solutions provider, business internet company, student internet provider, landlord broadband partner"
       />
       <Navbar />
       <main className="flex-grow">

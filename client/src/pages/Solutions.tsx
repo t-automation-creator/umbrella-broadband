@@ -40,8 +40,9 @@ export default function Solutions() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Our Solutions" 
+        title="Solutions | Umbrella Broadband" 
         description="Explore our comprehensive range of services including Managed Broadband, VoIP Telephony, CCTV Security, and Management Services."
+        keywords="managed broadband services, VoIP telephony, CCTV security systems, access control, network infrastructure, IT management services, business internet solutions, cloud phone systems, remote monitoring, structured cabling"
       />
       <Navbar />
       <main className="flex-grow">
