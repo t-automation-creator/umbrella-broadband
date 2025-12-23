@@ -111,3 +111,5 @@
 - [x] Reverted to hero-aerial-v4.png (preferred version without circle lines)
 - [x] Change CCTV icon back to original camera style (keep everything else the same)
 - [x] Increase text shadow strength for better readability
+- [x] Fix hero mobile display - adjust background position to show town, not labels
+- [x] Increase gradient overlay on mobile for better text readability
