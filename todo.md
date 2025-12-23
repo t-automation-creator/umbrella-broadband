@@ -109,3 +109,5 @@
 - [x] Fix CCTV icon in hero image (should be camera icon like previous version)
 - [x] Add subtle text shadow to hero heading for better readability
 - [x] Reverted to hero-aerial-v4.png (preferred version without circle lines)
+- [ ] Change CCTV icon back to original camera style (keep everything else the same)
+- [x] Increase text shadow strength for better readability
