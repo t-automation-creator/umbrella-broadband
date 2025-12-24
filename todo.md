@@ -250,3 +250,4 @@
 
 ## Statistics Update
 - [x] Change "Properties Connected" stat from 500+ to 1500+
+- [x] Change "since 2014" to "since 2010" in Industry Experience stat

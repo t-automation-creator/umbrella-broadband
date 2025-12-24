@@ -40,7 +40,7 @@ const stats: Stat[] = [
     value: 10,
     suffix: "+ years",
     label: "Industry Experience",
-    description: "Trusted by landlords and businesses since 2014",
+    description: "Trusted by landlords and businesses since 2010",
     icon: <Clock className="w-8 h-8" />
   }
 ];
