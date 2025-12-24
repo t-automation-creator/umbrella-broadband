@@ -154,3 +154,4 @@
 - [x] Fix unnatural spacing between Solutions and dropdown items in mobile menu
 - [x] Remove gap between Solutions and dropdown items - normalize like other menu items
 - [x] Fix uniform spacing in mobile menu - remove extra gap between Solutions dropdown and Case Studies
+- [x] Change chatbot popup delay to 20 seconds
