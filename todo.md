@@ -233,3 +233,11 @@
 - [x] About page: Vision icon (generated and updated)
 - [x] About page: Values icon (generated and updated)
 - [x] About page: Service image (generated and updated)
+
+## Partner Logos
+- [ ] Copy all 17 partner logos to public/images/partners
+- [ ] Update partner logos component with new images
+
+## Partner Logos Carousel
+- [x] Copy all 17 partner logos to public/images/partners
+- [x] Update Partners component to auto-scrolling carousel
