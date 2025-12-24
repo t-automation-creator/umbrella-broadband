@@ -207,3 +207,6 @@
 ## Cookie Consent & Navbar Social Icons
 - [x] Create cookie consent banner component for GDPR compliance
 - [x] Add social icons (LinkedIn, X) to navbar right of Contact button
+
+## Logo Fix
+- [x] Fix navbar logo not loading (switched to local image)

@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <Link href="/">
               <img 
-                src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_White-Large.png" 
+                src="/images/logo-white.png" 
                 alt="Logo" 
                 className="h-12 w-auto mb-6 cursor-pointer" 
               />

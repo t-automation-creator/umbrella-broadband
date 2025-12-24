@@ -54,7 +54,7 @@ export default function Navbar() {
             <Link href="/">
               {/* Logo: block, height 44px, width auto */}
               <img 
-                src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_White-Large.png" 
+                src="/images/logo-white.png" 
                 alt="Umbrella Broadband" 
                 className="block h-[44px] w-auto cursor-pointer mr-12" 
               />
