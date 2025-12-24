@@ -32,7 +32,7 @@ export default function About() {
               </div>
               <div className="relative">
                 <img 
-                  src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/About-Us-hero3.png" 
+                  src="/images/about-hero.png" 
                   alt="Our Team" 
                   className="w-full object-contain" 
                 />
@@ -47,7 +47,7 @@ export default function About() {
             <div className="grid md:grid-cols-3 gap-10 text-center">
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/Mission-icon.png" 
+                  src="/images/icons/mission-icon.png" 
                   alt="Mission" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -58,7 +58,7 @@ export default function About() {
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/Vision-icon.png" 
+                  src="/images/icons/vision-icon.png" 
                   alt="Vision" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -69,7 +69,7 @@ export default function About() {
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/Values-icon.png" 
+                  src="/images/icons/values-icon.png" 
                   alt="Values" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -88,7 +88,7 @@ export default function About() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <img 
-                  src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/About-Us-Service2.png" 
+                  src="/images/about-services.png" 
                   alt="Services" 
                   className="w-full object-contain" 
                 />

@@ -223,3 +223,13 @@
 
 ## Footer Logo Size
 - [x] Update footer logo to match navbar size (88px)
+
+## Favicon
+- [x] Set up favicon using UB icon
+
+## Missing Images Audit
+- [x] About page: "Our Team" hero image (generated and updated)
+- [x] About page: Mission icon (generated and updated)
+- [x] About page: Vision icon (generated and updated)
+- [x] About page: Values icon (generated and updated)
+- [x] About page: Service image (generated and updated)
