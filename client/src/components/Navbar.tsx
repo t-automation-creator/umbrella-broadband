@@ -52,11 +52,11 @@ export default function Navbar() {
           {/* Left Side: Logo + Navigation Links */}
           <div className="flex items-center h-full">
             <Link href="/">
-              {/* Logo: block, height 44px, width auto */}
+              {/* Logo: block, height 88px, width auto */}
               <img 
                 src="/images/logo-white.png" 
                 alt="Umbrella Broadband" 
-                className="block h-[44px] w-auto cursor-pointer mr-12" 
+                className="block h-[88px] w-auto cursor-pointer mr-12" 
               />
             </Link>
             

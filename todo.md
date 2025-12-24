@@ -217,3 +217,6 @@
 
 ## Sector Image Update
 - [x] Regenerate sector image without Umbrella Broadband logo/text in center
+
+## Logo Size Increase
+- [x] Increase navbar logo size for better readability (doubled from 44px to 88px)
