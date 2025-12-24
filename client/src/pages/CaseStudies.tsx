@@ -50,8 +50,7 @@ export default function CaseStudies() {
                     <Link href={`/case-studies/${study.slug}`} className="block">
                       <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                         {study.imageUrl ? (
-                          <img 
-                            src={study.imageUrl} 
+                          <img loading="lazy" src={study.imageUrl} 
                             alt={study.title} 
                             className="w-full h-full object-contain"
                           />

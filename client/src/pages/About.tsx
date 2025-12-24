@@ -31,8 +31,7 @@ export default function About() {
                 </Link>
               </div>
               <div className="relative">
-                <img 
-                  src="/images/about-hero.png" 
+                <img loading="lazy" src="/images/about-hero.png" 
                   alt="Our Team" 
                   className="w-full object-contain" 
                 />
@@ -46,8 +45,7 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-10 text-center">
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
-                <img 
-                  src="/images/icons/mission-icon.png" 
+                <img loading="lazy" src="/images/icons/mission-icon.png" 
                   alt="Mission" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -57,8 +55,7 @@ export default function About() {
                 </p>
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
-                <img 
-                  src="/images/icons/vision-icon.png" 
+                <img loading="lazy" src="/images/icons/vision-icon.png" 
                   alt="Vision" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -68,8 +65,7 @@ export default function About() {
                 </p>
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
-                <img 
-                  src="/images/icons/values-icon.png" 
+                <img loading="lazy" src="/images/icons/values-icon.png" 
                   alt="Values" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -87,8 +83,7 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <img 
-                  src="/images/about-services.png" 
+                <img loading="lazy" src="/images/about-services.png" 
                   alt="Services" 
                   className="w-full object-contain" 
                 />

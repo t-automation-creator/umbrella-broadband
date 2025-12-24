@@ -89,8 +89,7 @@ export default function Partners() {
                 key={index}
                 className="flex-shrink-0 h-12 w-32 flex items-center justify-center"
               >
-                <img 
-                  src={partner.src} 
+                <img loading="lazy" src={partner.src} 
                   alt={partner.alt}
                   className="h-10 w-auto object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity" 
                 />

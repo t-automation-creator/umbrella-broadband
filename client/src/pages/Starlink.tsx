@@ -83,8 +83,7 @@ export default function Starlink() {
           {/* Background Image */}
           <picture className="absolute inset-0">
             <source media="(min-width: 768px)" srcSet="/images/solutions/starlink-hero-desktop.png" />
-            <img 
-              src="/images/solutions/starlink-hero-mobile.png" 
+            <img loading="lazy" src="/images/solutions/starlink-hero-mobile.png" 
               alt="Managed Starlink Services" 
               className="w-full h-full object-cover"
             />

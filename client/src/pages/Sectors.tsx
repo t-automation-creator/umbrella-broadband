@@ -45,8 +45,7 @@ export default function Sectors() {
           {/* Background Image */}
           <picture className="absolute inset-0">
             <source media="(min-width: 768px)" srcSet="/images/sectors-hero-desktop.png" />
-            <img 
-              src="/images/sectors-hero-mobile.png" 
+            <img loading="lazy" src="/images/sectors-hero-mobile.png" 
               alt="Sectors We Serve" 
               className="w-full h-full object-cover"
             />
@@ -74,8 +73,7 @@ export default function Sectors() {
           {sectors.map((sector, index) => (
             <div key={index} className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
               <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                <img 
-                  src={sector.image} 
+                <img loading="lazy" src={sector.image} 
                   alt={sector.title} 
                   className="rounded-2xl shadow-xl w-full object-cover h-80 lg:h-auto" 
                 />

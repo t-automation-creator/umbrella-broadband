@@ -434,8 +434,7 @@ Industry: Student Accommodation
               </div>
               {imageUrl && (
                 <div className="mt-2 relative rounded-lg overflow-hidden border bg-muted">
-                  <img
-                    src={imageUrl}
+                  <img loading="lazy" src={imageUrl}
                     alt="Featured image preview"
                     className="w-full h-48 object-cover"
                     onError={(e) => {

@@ -86,8 +86,7 @@ export default function VoIP() {
           {/* Background Image */}
           <picture className="absolute inset-0">
             <source media="(min-width: 768px)" srcSet="/images/solutions/voip-hero-desktop.png" />
-            <img 
-              src="/images/solutions/voip-hero-mobile.png" 
+            <img loading="lazy" src="/images/solutions/voip-hero-mobile.png" 
               alt="VoIP Phone Systems" 
               className="w-full h-full object-cover"
             />

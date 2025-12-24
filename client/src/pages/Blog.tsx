@@ -138,8 +138,7 @@ export default function Blog() {
                   <article key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                     <Link href={`/blog/${getPostSlug(post)}`} className="block">
                       <div className="aspect-video overflow-hidden">
-                        <img 
-                          src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1600"} 
+                        <img loading="lazy" src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1600"} 
                           alt={post.title} 
                           className="w-full h-full object-contain bg-gray-100"
                         />

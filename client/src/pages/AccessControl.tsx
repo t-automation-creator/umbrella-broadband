@@ -132,8 +132,7 @@ export default function AccessControl() {
           {/* Background Image */}
           <picture className="absolute inset-0">
             <source media="(min-width: 768px)" srcSet="/images/solutions/access-control-hero-desktop.png" />
-            <img 
-              src="/images/solutions/access-control-hero-mobile.png" 
+            <img loading="lazy" src="/images/solutions/access-control-hero-mobile.png" 
               alt="Access Control Solutions" 
               className="w-full h-full object-cover"
             />
