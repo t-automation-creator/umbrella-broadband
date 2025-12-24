@@ -82,46 +82,40 @@ export default function VoIP() {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-28 bg-gradient-to-br from-[#1a365d] via-[#2c5282] to-[#1a365d] text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-10 w-32 h-32 border border-white/20 rounded-full"></div>
-            <div className="absolute bottom-20 right-20 w-48 h-48 border border-white/20 rounded-full"></div>
-          </div>
+        <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
+          {/* Background Image */}
+          <picture className="absolute inset-0">
+            <source media="(min-width: 768px)" srcSet="/images/solutions/voip-hero-desktop.png" />
+            <img 
+              src="/images/solutions/voip-hero-mobile.png" 
+              alt="VoIP Phone Systems" 
+              className="w-full h-full object-cover"
+            />
+          </picture>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a365d]/90 via-[#1a365d]/70 to-transparent"></div>
           
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  <Phone className="w-4 h-4" />
-                  Business Telephony
-                </div>
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight">
-                  VoIP Phone<br />
-                  <span className="text-green-400">Systems</span>
-                </h1>
-                <p className="text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
-                  Cost-effective, feature-rich cloud phone systems that keep your business 
-                  connected anywhere, on any device. Enterprise features at SME prices.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/contact" className="btn bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-center">
-                    Get a Quote
-                  </Link>
-                  <a href="tel:01926298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center">
-                    Call 01926 298866
-                  </a>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 relative z-10 py-20">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                <Phone className="w-4 h-4" />
+                Business Telephony
               </div>
-              <div className="hidden lg:flex justify-center">
-                <div className="relative">
-                  <div className="w-80 h-80 bg-gradient-to-br from-green-500/20 to-blue-600/20 rounded-full flex items-center justify-center border border-green-500/30">
-                    <div className="w-60 h-60 bg-gradient-to-br from-green-500/30 to-blue-600/30 rounded-full flex items-center justify-center border border-green-400/40">
-                      <Phone className="w-24 h-24 text-green-400" />
-                    </div>
-                  </div>
-                  <div className="absolute top-0 left-1/2 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-10 right-0 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight drop-shadow-lg">
+                VoIP Phone<br />
+                <span className="text-green-400">Systems</span>
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-200 mb-8 leading-relaxed drop-shadow-md">
+                Cost-effective, feature-rich cloud phone systems that keep your business 
+                connected anywhere, on any device. Enterprise features at SME prices.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/contact" className="btn bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-center">
+                  Get a Quote
+                </Link>
+                <a href="tel:01926298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center backdrop-blur-sm">
+                  Call 01926 298866
+                </a>
               </div>
             </div>
           </div>

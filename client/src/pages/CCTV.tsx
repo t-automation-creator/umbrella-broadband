@@ -101,46 +101,40 @@ export default function CCTV() {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-28 bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#1a1a2e] text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-20 left-10 w-32 h-32 border border-red-500/20 rounded-full"></div>
-            <div className="absolute bottom-20 right-20 w-48 h-48 border border-red-500/20 rounded-full"></div>
-          </div>
+        <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
+          {/* Background Image */}
+          <picture className="absolute inset-0">
+            <source media="(min-width: 768px)" srcSet="/images/solutions/cctv-hero-desktop.png" />
+            <img 
+              src="/images/solutions/cctv-hero-mobile.png" 
+              alt="CCTV & Security Systems" 
+              className="w-full h-full object-cover"
+            />
+          </picture>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/90 via-[#1a1a2e]/70 to-transparent"></div>
           
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-red-500/20 text-red-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  <Shield className="w-4 h-4" />
-                  Security Solutions
-                </div>
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight">
-                  CCTV &<br />
-                  <span className="text-red-400">Security</span>
-                </h1>
-                <p className="text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
-                  Advanced surveillance systems with remote monitoring capabilities to protect 
-                  your premises and assets around the clock. Professional installation and ongoing support.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/contact" className="btn bg-red-500 hover:bg-red-600 text-white px-8 py-3 text-center">
-                    Get a Quote
-                  </Link>
-                  <a href="tel:01926298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center">
-                    Call 01926 298866
-                  </a>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 relative z-10 py-20">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-red-500/20 text-red-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                <Shield className="w-4 h-4" />
+                Security Solutions
               </div>
-              <div className="hidden lg:flex justify-center">
-                <div className="relative">
-                  <div className="w-80 h-80 bg-gradient-to-br from-red-500/20 to-gray-600/20 rounded-full flex items-center justify-center border border-red-500/30">
-                    <div className="w-60 h-60 bg-gradient-to-br from-red-500/30 to-gray-600/30 rounded-full flex items-center justify-center border border-red-400/40">
-                      <Camera className="w-24 h-24 text-red-400" />
-                    </div>
-                  </div>
-                  <div className="absolute top-0 left-1/2 w-3 h-3 bg-red-400 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-10 right-0 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight drop-shadow-lg">
+                CCTV &<br />
+                <span className="text-red-400">Security</span>
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-200 mb-8 leading-relaxed drop-shadow-md">
+                Advanced surveillance systems with remote monitoring capabilities to protect 
+                your premises and assets around the clock. Professional installation and ongoing support.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/contact" className="btn bg-red-500 hover:bg-red-600 text-white px-8 py-3 text-center">
+                  Get a Quote
+                </Link>
+                <a href="tel:01926298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center backdrop-blur-sm">
+                  Call 01926 298866
+                </a>
               </div>
             </div>
           </div>

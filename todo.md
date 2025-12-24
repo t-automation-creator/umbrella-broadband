@@ -163,3 +163,10 @@
 - [x] Create Access Control & Intercom Systems page with detailed content
 - [x] Update Solutions dropdown menu with all solution pages
 - [x] Link homepage service sections to their respective solution pages
+
+## Solution Page Hero Images
+- [x] Generate Managed Broadband hero image (desktop + mobile)
+- [x] Generate VoIP Phone Systems hero image (desktop + mobile)
+- [x] Generate CCTV & Security hero image (desktop + mobile)
+- [x] Generate Access Control & Intercom hero image (desktop + mobile)
+- [x] Update solution pages with new hero images (responsive)
