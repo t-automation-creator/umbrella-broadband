@@ -100,7 +100,7 @@ export default function Navbar() {
                     </Link>
                     <Link href="/access-control">
                       <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
-                        Access Control & Intercom
+                        Access Control Solutions
                       </span>
                     </Link>
                     <Link href="/starlink">
@@ -172,7 +172,7 @@ export default function Navbar() {
                     <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">CCTV & Security</span>
                   </Link>
                   <Link href="/access-control">
-                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Access Control & Intercom</span>
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Access Control Solutions</span>
                   </Link>
                   <Link href="/starlink">
                     <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Managed Starlink</span>

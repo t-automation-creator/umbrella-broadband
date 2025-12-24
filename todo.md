@@ -189,3 +189,6 @@
 
 ## Hero Text Alignment Fix
 - [x] Align hero text to left on all solution pages (Managed Broadband, VoIP, CCTV, Access Control, Starlink, Sectors)
+
+## Access Control Rename
+- [x] Rename "Access Control & Intercom Systems" to "Access Control Solutions" across all pages

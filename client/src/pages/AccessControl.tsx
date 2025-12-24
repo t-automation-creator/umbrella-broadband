@@ -121,7 +121,7 @@ export default function AccessControl() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Access Control & Intercom Systems | Umbrella Broadband" 
+        title="Access Control Solutions | Umbrella Broadband" 
         description="Professional access control and intercom installation for businesses and landlords. Keyless entry, video intercoms, biometric systems, and mobile access. Secure your property with modern solutions."
         keywords="access control systems UK, video intercom installation, keyless entry systems, door entry systems, biometric access control, student accommodation access, HMO door entry, commercial access control, IP intercom systems"
       />
@@ -134,7 +134,7 @@ export default function AccessControl() {
             <source media="(min-width: 768px)" srcSet="/images/solutions/access-control-hero-desktop.png" />
             <img 
               src="/images/solutions/access-control-hero-mobile.png" 
-              alt="Access Control & Intercom Systems" 
+              alt="Access Control Solutions" 
               className="w-full h-full object-cover"
             />
           </picture>
@@ -148,8 +148,8 @@ export default function AccessControl() {
                 Security Solutions
               </div>
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight drop-shadow-lg">
-                Access Control &<br />
-                <span className="text-amber-400">Intercom Systems</span>
+                Access Control<br />
+                <span className="text-amber-400">Solutions</span>
               </h1>
               <p className="text-lg lg:text-xl text-gray-200 mb-8 leading-relaxed drop-shadow-md">
                 Control who enters your building with modern keyless entry and video intercom systems. 

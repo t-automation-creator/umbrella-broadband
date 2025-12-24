@@ -22,7 +22,7 @@ export default function Solutions() {
     },
     {
       icon: <Lock className="w-10 h-10" />,
-      title: "Access Control",
+      title: "Access Control Solutions",
       description: "Secure, keyless entry systems for buildings and rooms, fully integrated with our network infrastructure for easy management."
     },
     {
