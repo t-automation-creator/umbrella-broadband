@@ -241,3 +241,6 @@
 ## Partner Logos Carousel
 - [x] Copy all 17 partner logos to public/images/partners
 - [x] Update Partners component to auto-scrolling carousel
+
+## LinkedIn URL Update
+- [x] Update LinkedIn URL to https://www.linkedin.com/company/umbrella-broadband-ltd across all pages

@@ -135,7 +135,7 @@ export default function Navbar() {
             </Link>
             <div className="flex items-center gap-2">
               <a 
-                href="https://www.linkedin.com/company/umbrella-broadband/" 
+                href="https://www.linkedin.com/company/umbrella-broadband-ltd" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-9 h-9 bg-white/10 hover:bg-secondary rounded-full flex items-center justify-center transition-colors text-white"
@@ -221,7 +221,7 @@ export default function Navbar() {
             {/* Mobile Social Icons */}
             <div className="flex items-center gap-3 pt-4 mt-4 border-t border-gray-700">
               <a 
-                href="https://www.linkedin.com/company/umbrella-broadband/" 
+                href="https://www.linkedin.com/company/umbrella-broadband-ltd" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 hover:bg-secondary rounded-full flex items-center justify-center transition-colors text-white"

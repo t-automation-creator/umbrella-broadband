@@ -117,7 +117,7 @@ export default function Contact() {
                     <h4 className="font-semibold text-gray-800 mb-4">Follow Us</h4>
                     <div className="flex items-center gap-3">
                       <a 
-                        href="https://www.linkedin.com/company/umbrella-broadband/" 
+                        href="https://www.linkedin.com/company/umbrella-broadband-ltd" 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="w-10 h-10 bg-primary hover:bg-secondary rounded-full flex items-center justify-center transition-colors text-white"

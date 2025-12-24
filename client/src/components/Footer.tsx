@@ -27,7 +27,7 @@ export default function Footer() {
             {/* Social Media Icons */}
             <div className="flex items-center gap-4">
               <a 
-                href="https://www.linkedin.com/company/umbrella-broadband/" 
+                href="https://www.linkedin.com/company/umbrella-broadband-ltd" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 hover:bg-secondary rounded-full flex items-center justify-center transition-colors"
@@ -79,7 +79,7 @@ export default function Footer() {
             {/* Social Media Icons (Contact Column) */}
             <div className="flex items-center gap-3 mt-6">
               <a 
-                href="https://www.linkedin.com/company/umbrella-broadband/" 
+                href="https://www.linkedin.com/company/umbrella-broadband-ltd" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-secondary transition-colors"
