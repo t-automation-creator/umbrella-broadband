@@ -214,3 +214,6 @@
 ## Tailored for Your Sector Image
 - [x] Generate custom image for "Tailored for Your Sector" section on homepage
 - [x] Update homepage with new sector image
+
+## Sector Image Update
+- [x] Regenerate sector image without Umbrella Broadband logo/text in center
