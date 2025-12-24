@@ -247,3 +247,6 @@
 
 ## Google Analytics
 - [x] Add Google Analytics tag (G-YH5384Y27W) to all pages
+
+## Statistics Update
+- [x] Change "Properties Connected" stat from 500+ to 1500+

@@ -13,7 +13,7 @@ interface Stat {
 const stats: Stat[] = [
   {
     id: 1,
-    value: 500,
+    value: 1500,
     suffix: "+",
     label: "Properties Connected",
     description: "Student halls, HMOs, and commercial buildings across the UK",
