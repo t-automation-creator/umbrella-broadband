@@ -192,3 +192,6 @@
 
 ## Access Control Rename
 - [x] Rename "Access Control & Intercom Systems" to "Access Control Solutions" across all pages
+
+## Homepage Layout Update
+- [x] Move "Trusted Across the UK" statistics section below Comprehensive Connectivity boxes
