@@ -9,6 +9,10 @@ import About from "./pages/About";
 import Sectors from "./pages/Sectors";
 import Solutions from "./pages/Solutions";
 import Starlink from "./pages/Starlink";
+import ManagedBroadband from "./pages/ManagedBroadband";
+import VoIP from "./pages/VoIP";
+import CCTV from "./pages/CCTV";
+import AccessControl from "./pages/AccessControl";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
@@ -44,6 +48,10 @@ function Router() {
       <Route path="/sectors" component={Sectors} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/starlink" component={Starlink} />
+      <Route path="/managed-broadband" component={ManagedBroadband} />
+      <Route path="/voip" component={VoIP} />
+      <Route path="/cctv" component={CCTV} />
+      <Route path="/access-control" component={AccessControl} />
       <Route path="/contact" component={Contact} />
       <Route path="/case-studies" component={CaseStudies} />
       <Route path="/case-studies/:slug" component={CaseStudyDetail} />

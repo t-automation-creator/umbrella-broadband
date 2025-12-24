@@ -155,3 +155,11 @@
 - [x] Remove gap between Solutions and dropdown items - normalize like other menu items
 - [x] Fix uniform spacing in mobile menu - remove extra gap between Solutions dropdown and Case Studies
 - [x] Change chatbot popup delay to 20 seconds
+
+## Individual Solution Pages
+- [x] Create Managed Broadband page with detailed content
+- [x] Create VoIP Phone Systems page with detailed content
+- [x] Create CCTV & Security page with detailed content
+- [x] Create Access Control & Intercom Systems page with detailed content
+- [x] Update Solutions dropdown menu with all solution pages
+- [x] Link homepage service sections to their respective solution pages

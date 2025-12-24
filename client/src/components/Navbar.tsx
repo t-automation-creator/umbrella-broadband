@@ -83,9 +83,24 @@ export default function Navbar() {
                 {/* Dropdown Menu */}
                 {solutionsOpen && (
                   <div className="absolute top-full left-0 bg-white rounded-lg shadow-lg py-2 min-w-[220px] border border-gray-100">
-                    <Link href="/solutions">
+                    <Link href="/managed-broadband">
                       <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
-                        All Solutions
+                        Managed Broadband
+                      </span>
+                    </Link>
+                    <Link href="/voip">
+                      <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
+                        VoIP Phone Systems
+                      </span>
+                    </Link>
+                    <Link href="/cctv">
+                      <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
+                        CCTV & Security
+                      </span>
+                    </Link>
+                    <Link href="/access-control">
+                      <span className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-primary cursor-pointer font-medium">
+                        Access Control & Intercom
                       </span>
                     </Link>
                     <Link href="/starlink">
@@ -147,8 +162,17 @@ export default function Navbar() {
               </button>
               {mobileSolutionsOpen && (
                 <div className="pl-4">
-                  <Link href="/solutions">
-                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">All Solutions</span>
+                  <Link href="/managed-broadband">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Managed Broadband</span>
+                  </Link>
+                  <Link href="/voip">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">VoIP Phone Systems</span>
+                  </Link>
+                  <Link href="/cctv">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">CCTV & Security</span>
+                  </Link>
+                  <Link href="/access-control">
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Access Control & Intercom</span>
                   </Link>
                   <Link href="/starlink">
                     <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Managed Starlink</span>
