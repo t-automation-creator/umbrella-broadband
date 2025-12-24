@@ -203,3 +203,7 @@
 
 ## Navigation Fix
 - [x] Fix internal links to scroll to top of page when clicked
+
+## Cookie Consent & Navbar Social Icons
+- [x] Create cookie consent banner component for GDPR compliance
+- [x] Add social icons (LinkedIn, X) to navbar right of Contact button

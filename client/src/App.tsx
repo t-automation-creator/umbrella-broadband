@@ -30,6 +30,7 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
+import CookieConsent from "./components/CookieConsent";
 
 // Wrapper component for protected admin routes
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
@@ -110,6 +111,7 @@ function App() {
           <ScrollToTop />
           <Router />
           <ChatBot />
+          <CookieConsent />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
