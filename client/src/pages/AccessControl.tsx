@@ -131,8 +131,8 @@ export default function AccessControl() {
         <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
           {/* Background Image */}
           <picture className="absolute inset-0">
-            <source media="(min-width: 768px)" srcSet="/images/solutions/access-control-hero-desktop.png" />
-            <img loading="lazy" src="/images/solutions/access-control-hero-mobile.png" 
+            <source media="(min-width: 768px)" srcSet="/images/solutions/access-control-hero-desktop.jpg" />
+            <img loading="lazy" src="/images/solutions/access-control-hero-mobile.jpg" 
               alt="Access Control Solutions" 
               className="w-full h-full object-cover"
             />

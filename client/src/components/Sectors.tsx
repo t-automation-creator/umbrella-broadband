@@ -7,7 +7,7 @@ export default function Sectors() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <img loading="lazy" src="/images/sectors-tailored.png" 
+            <img loading="lazy" src="/images/sectors-tailored.jpg" 
               alt="Building Connectivity" 
               className="rounded-2xl shadow-xl w-full" 
             />

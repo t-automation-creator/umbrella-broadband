@@ -104,8 +104,8 @@ export default function CCTV() {
         <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
           {/* Background Image */}
           <picture className="absolute inset-0">
-            <source media="(min-width: 768px)" srcSet="/images/solutions/cctv-hero-desktop.png" />
-            <img loading="lazy" src="/images/solutions/cctv-hero-mobile.png" 
+            <source media="(min-width: 768px)" srcSet="/images/solutions/cctv-hero-desktop.jpg" />
+            <img loading="lazy" src="/images/solutions/cctv-hero-mobile.jpg" 
               alt="CCTV & Security Systems" 
               className="w-full h-full object-cover"
             />

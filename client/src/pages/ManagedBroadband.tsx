@@ -81,8 +81,8 @@ export default function ManagedBroadband() {
         <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
           {/* Background Image */}
           <picture className="absolute inset-0">
-            <source media="(min-width: 768px)" srcSet="/images/solutions/broadband-hero-desktop.png" />
-            <img loading="lazy" src="/images/solutions/broadband-hero-mobile.png" 
+            <source media="(min-width: 768px)" srcSet="/images/solutions/broadband-hero-desktop.jpg" />
+            <img loading="lazy" src="/images/solutions/broadband-hero-mobile.jpg" 
               alt="Managed Broadband Solutions" 
               className="w-full h-full object-cover"
             />
