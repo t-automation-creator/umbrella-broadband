@@ -32,7 +32,7 @@ export default function About() {
               </div>
               <div className="relative">
                 <img 
-                  src="/images/about-hero.png" 
+                  src="/images/about-hero.webp" 
                   alt="Our Team" 
                   className="w-full object-contain" 
                 />
@@ -47,7 +47,7 @@ export default function About() {
             <div className="grid md:grid-cols-3 gap-10 text-center">
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="/images/icons/mission-icon.png" 
+                  src="/images/icons/mission-icon.webp" 
                   alt="Mission" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -58,7 +58,7 @@ export default function About() {
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="/images/icons/vision-icon.png" 
+                  src="/images/icons/vision-icon.webp" 
                   alt="Vision" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -69,7 +69,7 @@ export default function About() {
               </div>
               <div className="p-8 bg-white rounded-xl shadow-sm border border-gray-100">
                 <img 
-                  src="/images/icons/values-icon.png" 
+                  src="/images/icons/values-icon.webp" 
                   alt="Values" 
                   className="h-16 w-16 mx-auto mb-6" 
                 />
@@ -88,7 +88,7 @@ export default function About() {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <img 
-                  src="/images/about-services.png" 
+                  src="/images/about-services.webp" 
                   alt="Services" 
                   className="w-full object-contain" 
                 />
