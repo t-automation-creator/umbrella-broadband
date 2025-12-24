@@ -186,3 +186,6 @@
 - [x] Create AnimatedCounter component with scroll-triggered animation
 - [x] Add statistics section to homepage (properties connected, uptime, support response)
 - [x] Style and position statistics section appropriately
+
+## Hero Text Alignment Fix
+- [x] Align hero text to left on all solution pages (Managed Broadband, VoIP, CCTV, Access Control, Starlink, Sectors)

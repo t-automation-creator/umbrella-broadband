@@ -114,8 +114,8 @@ export default function CCTV() {
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/90 via-[#1a1a2e]/70 to-transparent"></div>
           
-          <div className="max-w-7xl mx-auto px-4 relative z-10 py-20">
-            <div className="max-w-2xl">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 w-full">
+            <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 bg-red-500/20 text-red-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <Shield className="w-4 h-4" />
                 Security Solutions

@@ -54,8 +54,8 @@ export default function Sectors() {
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
           
-          <div className="max-w-7xl mx-auto px-4 relative z-10 py-16 text-center lg:text-left">
-            <div className="max-w-2xl mx-auto lg:mx-0">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 w-full">
+            <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 bg-secondary/20 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <Building2 className="w-4 h-4" />
                 Industry Solutions
