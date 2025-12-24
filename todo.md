@@ -263,3 +263,10 @@
 - [x] Analyze current hero image size and dimensions (6.8MB desktop, 6.4MB mobile)
 - [x] Optimize hero image with JPEG Q95 compression (812KB desktop, 712KB mobile - 88% smaller)
 - [x] Test visual quality before and after (quality maintained)
+
+## Performance Audit
+- [x] Audit all image file sizes (found 220MB total, 37 files over 1MB)
+- [x] Audit JS bundle size (1.3MB - needs code splitting)
+- [x] Audit CSS bundle size (150KB - acceptable)
+- [x] Identify unused images (15 legacy hero versions)
+- [x] Delete unused images (saved ~95MB, reduced from 220MB to 125MB)
