@@ -244,3 +244,6 @@
 
 ## LinkedIn URL Update
 - [x] Update LinkedIn URL to https://www.linkedin.com/company/umbrella-broadband-ltd across all pages
+
+## Google Analytics
+- [x] Add Google Analytics tag (G-YH5384Y27W) to all pages
