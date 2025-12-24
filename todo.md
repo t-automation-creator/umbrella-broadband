@@ -200,3 +200,6 @@
 - [x] Add LinkedIn icon and link to footer
 - [x] Add X (Twitter) icon and placeholder link to footer
 - [x] Add social icons to other relevant areas (header/contact page if needed)
+
+## Navigation Fix
+- [x] Fix internal links to scroll to top of page when clicked

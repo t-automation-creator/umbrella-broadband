@@ -29,6 +29,7 @@ import AdminAuthGuard from "./components/AdminAuthGuard";
 import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ChatBot from "./components/ChatBot";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Wrapper component for protected admin routes
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
@@ -106,6 +107,7 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
+          <ScrollToTop />
           <Router />
           <ChatBot />
         </TooltipProvider>
