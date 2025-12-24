@@ -146,7 +146,7 @@ export default function Navbar() {
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
               </button>
               {mobileSolutionsOpen && (
-                <div className="pl-4 space-y-1 mt-1">
+                <div className="pl-4">
                   <Link href="/solutions">
                     <span className="block text-gray-300 hover:text-secondary cursor-pointer py-2">All Solutions</span>
                   </Link>

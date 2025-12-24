@@ -152,3 +152,4 @@
 - [x] Update Navbar with Solutions dropdown containing main Solutions page and Managed Starlink
 - [ ] Fix mobile menu - ensure Starlink appears under Solutions dropdown on mobile
 - [x] Fix unnatural spacing between Solutions and dropdown items in mobile menu
+- [x] Remove gap between Solutions and dropdown items - normalize like other menu items
