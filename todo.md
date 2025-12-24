@@ -210,3 +210,7 @@
 
 ## Logo Fix
 - [x] Fix navbar logo not loading (switched to local image)
+
+## Tailored for Your Sector Image
+- [x] Generate custom image for "Tailored for Your Sector" section on homepage
+- [x] Update homepage with new sector image

@@ -8,7 +8,7 @@ export default function Sectors() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <img 
-              src="https://umbrella.onyx-sites.io/wp-content/uploads/2023/07/UB_Landlords_Hero.png" 
+              src="/images/sectors-tailored.png" 
               alt="Building Connectivity" 
               className="rounded-2xl shadow-xl w-full" 
             />
