@@ -24,6 +24,33 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          // Vendor chunks - split large dependencies
+          if (id.includes('node_modules')) {
+            if (id.includes('react-dom') || id.includes('/react/')) {
+              return 'vendor-react';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'vendor-ui';
+            }
+            if (id.includes('lucide-react')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('@tanstack')) {
+              return 'vendor-query';
+            }
+          }
+          // Admin pages in separate chunk
+          if (id.includes('/pages/admin/')) {
+            return 'admin';
+          }
+          return undefined;
+        },
+      },
+    },
+    chunkSizeWarningLimit: 500,
   },
   server: {
     host: true,
