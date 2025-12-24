@@ -153,3 +153,4 @@
 - [ ] Fix mobile menu - ensure Starlink appears under Solutions dropdown on mobile
 - [x] Fix unnatural spacing between Solutions and dropdown items in mobile menu
 - [x] Remove gap between Solutions and dropdown items - normalize like other menu items
+- [x] Fix uniform spacing in mobile menu - remove extra gap between Solutions dropdown and Case Studies

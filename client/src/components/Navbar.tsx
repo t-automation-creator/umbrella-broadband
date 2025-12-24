@@ -125,22 +125,22 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-primary border-t border-gray-700">
-          <div className="px-4 py-4 space-y-3">
+          <div className="px-4 py-4">
             <Link href="/">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Home</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Home</span>
             </Link>
             <Link href="/about">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">About Us</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">About Us</span>
             </Link>
             <Link href="/sectors">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Sectors</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Sectors</span>
             </Link>
             
             {/* Mobile Solutions Dropdown */}
             <div>
               <button 
                 onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                className="flex items-center justify-between w-full text-white hover:text-secondary cursor-pointer py-2"
+                className="flex items-center justify-between w-full text-white hover:text-secondary cursor-pointer py-3"
               >
                 <span>Solutions</span>
                 <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
@@ -148,23 +148,23 @@ export default function Navbar() {
               {mobileSolutionsOpen && (
                 <div className="pl-4">
                   <Link href="/solutions">
-                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-2">All Solutions</span>
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">All Solutions</span>
                   </Link>
                   <Link href="/starlink">
-                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-2">Managed Starlink</span>
+                    <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Managed Starlink</span>
                   </Link>
                 </div>
               )}
             </div>
             
             <Link href="/case-studies">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Case Studies</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Case Studies</span>
             </Link>
             <Link href="/blog">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Blog</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Blog</span>
             </Link>
             <Link href="/contact">
-              <span className="block text-white hover:text-secondary cursor-pointer py-2">Contact</span>
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Contact</span>
             </Link>
           </div>
         </div>
