@@ -2,7 +2,9 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
 import Sectors from "@/components/Sectors";
+import AnimatedStats from "@/components/AnimatedStats";
 import Partners from "@/components/Partners";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -20,7 +22,9 @@ export default function Home() {
         <Hero />
         <Features />
         <Sectors />
+        <AnimatedStats />
         <Partners />
+        <TestimonialsCarousel />
         <CTA />
       </main>
       <Footer />

@@ -170,3 +170,19 @@
 - [x] Generate CCTV & Security hero image (desktop + mobile)
 - [x] Generate Access Control & Intercom hero image (desktop + mobile)
 - [x] Update solution pages with new hero images (responsive)
+
+## Additional Hero Images
+- [x] Generate Starlink hero image (desktop + mobile)
+- [x] Generate Sectors hero image (desktop + mobile)
+- [x] Update Starlink page with hero images
+- [x] Update Sectors page with hero images
+
+## Testimonials Carousel
+- [x] Create TestimonialsCarousel component
+- [x] Add testimonials data with customer quotes and company names
+- [x] Integrate carousel on homepage
+
+## Animated Statistics Counters
+- [x] Create AnimatedCounter component with scroll-triggered animation
+- [x] Add statistics section to homepage (properties connected, uptime, support response)
+- [x] Style and position statistics section appropriately

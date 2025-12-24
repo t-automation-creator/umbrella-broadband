@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Building2 } from "lucide-react";
 
 export default function Sectors() {
   const sectors = [
@@ -40,12 +40,33 @@ export default function Sectors() {
       />
       <Navbar />
       <main className="flex-grow">
-        <section className="py-16 bg-primary text-white text-center">
-          <div className="max-w-4xl mx-auto px-4">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6 font-heading">Sectors We Serve</h1>
-            <p className="text-lg text-gray-200">
-              Tailored connectivity solutions for every industry. We understand the unique challenges of your sector and provide bespoke infrastructure to match.
-            </p>
+        {/* Hero Section */}
+        <section className="relative min-h-[400px] lg:min-h-[500px] flex items-center text-white overflow-hidden">
+          {/* Background Image */}
+          <picture className="absolute inset-0">
+            <source media="(min-width: 768px)" srcSet="/images/sectors-hero-desktop.png" />
+            <img 
+              src="/images/sectors-hero-mobile.png" 
+              alt="Sectors We Serve" 
+              className="w-full h-full object-cover"
+            />
+          </picture>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 relative z-10 py-16 text-center lg:text-left">
+            <div className="max-w-2xl mx-auto lg:mx-0">
+              <div className="inline-flex items-center gap-2 bg-secondary/20 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                <Building2 className="w-4 h-4" />
+                Industry Solutions
+              </div>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight drop-shadow-lg">
+                Sectors We Serve
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-200 leading-relaxed drop-shadow-md">
+                Tailored connectivity solutions for every industry. We understand the unique challenges of your sector and provide bespoke infrastructure to match.
+              </p>
+            </div>
           </div>
         </section>
 

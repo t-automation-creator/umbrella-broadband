@@ -79,53 +79,40 @@ export default function Starlink() {
       <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative py-20 lg:py-28 bg-gradient-to-br from-[#0a1628] via-[#0d2847] to-[#0a1628] text-white overflow-hidden">
-          {/* Starlink-inspired background pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-20 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-            <div className="absolute top-40 right-20 w-1 h-1 bg-white rounded-full animate-pulse delay-100"></div>
-            <div className="absolute top-60 left-1/4 w-1.5 h-1.5 bg-cyan-300 rounded-full animate-pulse delay-200"></div>
-            <div className="absolute bottom-40 right-1/3 w-2 h-2 bg-white rounded-full animate-pulse delay-300"></div>
-            <div className="absolute bottom-20 left-1/2 w-1 h-1 bg-cyan-400 rounded-full animate-pulse delay-500"></div>
-          </div>
+        <section className="relative min-h-[500px] lg:min-h-[600px] flex items-center text-white overflow-hidden">
+          {/* Background Image */}
+          <picture className="absolute inset-0">
+            <source media="(min-width: 768px)" srcSet="/images/solutions/starlink-hero-desktop.png" />
+            <img 
+              src="/images/solutions/starlink-hero-mobile.png" 
+              alt="Managed Starlink Services" 
+              className="w-full h-full object-cover"
+            />
+          </picture>
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628]/90 via-[#0a1628]/70 to-transparent"></div>
           
-          <div className="max-w-7xl mx-auto px-4 relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                  <Satellite className="w-4 h-4" />
-                  Satellite Internet Solutions
-                </div>
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight">
-                  Managed Starlink<br />
-                  <span className="text-cyan-400">Services</span>
-                </h1>
-                <p className="text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
-                  High-speed satellite internet, professionally installed and fully managed. 
-                  Connect anywhere in the UK with speeds up to 220 Mbps and 24/7 expert support.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/contact" className="btn bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 text-center">
-                    Get a Quote
-                  </Link>
-                  <a href="tel:01onal298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center">
-                    Call 01926 298866
-                  </a>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 relative z-10 py-20">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 bg-cyan-500/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                <Satellite className="w-4 h-4" />
+                Satellite Internet Solutions
               </div>
-              <div className="hidden lg:flex justify-center">
-                <div className="relative">
-                  {/* Stylized Starlink dish illustration */}
-                  <div className="w-80 h-80 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 rounded-full flex items-center justify-center border border-cyan-500/30">
-                    <div className="w-60 h-60 bg-gradient-to-br from-cyan-500/30 to-blue-600/30 rounded-full flex items-center justify-center border border-cyan-400/40">
-                      <Satellite className="w-24 h-24 text-cyan-400" />
-                    </div>
-                  </div>
-                  {/* Orbiting dots */}
-                  <div className="absolute top-0 left-1/2 w-3 h-3 bg-cyan-400 rounded-full animate-ping"></div>
-                  <div className="absolute bottom-10 right-0 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  <div className="absolute top-1/2 left-0 w-2 h-2 bg-cyan-300 rounded-full animate-pulse delay-200"></div>
-                </div>
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 font-heading leading-tight drop-shadow-lg">
+                Managed Starlink<br />
+                <span className="text-cyan-400">Services</span>
+              </h1>
+              <p className="text-lg lg:text-xl text-gray-200 mb-8 leading-relaxed drop-shadow-md">
+                High-speed satellite internet, professionally installed and fully managed. 
+                Connect anywhere in the UK with speeds up to 220 Mbps and 24/7 expert support.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/contact" className="btn bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 text-center">
+                  Get a Quote
+                </Link>
+                <a href="tel:01926298866" className="btn bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-3 text-center backdrop-blur-sm">
+                  Call 01926 298866
+                </a>
               </div>
             </div>
           </div>
