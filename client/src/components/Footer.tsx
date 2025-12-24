@@ -18,7 +18,7 @@ export default function Footer() {
               <img 
                 src="/images/logo-white.png" 
                 alt="Logo" 
-                className="h-12 w-auto mb-6 cursor-pointer" 
+                className="h-[88px] w-auto mb-6 cursor-pointer" 
               />
             </Link>
             <p className="text-gray-300 max-w-sm mb-6 font-sans">

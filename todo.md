@@ -220,3 +220,6 @@
 
 ## Logo Size Increase
 - [x] Increase navbar logo size for better readability (doubled from 44px to 88px)
+
+## Footer Logo Size
+- [x] Update footer logo to match navbar size (88px)
