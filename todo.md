@@ -275,3 +275,9 @@
 - [x] Optimize 22 large images using JPEG Q95 compression (122MB → 10MB, 92% reduction)
 - [x] Update code references to use new optimized images (19 refs in 8 files)
 - [x] Verify all pages display correctly (Homepage, About, Sectors, Solutions pages tested)
+
+## Code Splitting (ROLLED BACK)
+- [ ] Code splitting implementation was rolled back due to issues
+- [x] Reverted to checkpoint 951c38e1 (before code splitting)
+- [x] All pages working correctly after rollback
+
