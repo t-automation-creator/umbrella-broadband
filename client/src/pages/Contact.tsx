@@ -1,7 +1,14 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, CheckCircle, Linkedin } from "lucide-react";
+
+// X (Twitter) icon component
+const XIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 import { trpc } from "@/lib/trpc";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -104,6 +111,31 @@ export default function Contact() {
                       </div>
                     </li>
                   </ul>
+                  
+                  {/* Social Media Links */}
+                  <div className="mt-8 pt-6 border-t border-gray-100">
+                    <h4 className="font-semibold text-gray-800 mb-4">Follow Us</h4>
+                    <div className="flex items-center gap-3">
+                      <a 
+                        href="https://www.linkedin.com/company/umbrella-broadband/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 bg-primary hover:bg-secondary rounded-full flex items-center justify-center transition-colors text-white"
+                        aria-label="Follow us on LinkedIn"
+                      >
+                        <Linkedin className="w-5 h-5" />
+                      </a>
+                      <a 
+                        href="https://x.com/umbrellabroadband" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 bg-primary hover:bg-secondary rounded-full flex items-center justify-center transition-colors text-white"
+                        aria-label="Follow us on X"
+                      >
+                        <XIcon className="w-5 h-5" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 

@@ -195,3 +195,8 @@
 
 ## Homepage Layout Update
 - [x] Move "Trusted Across the UK" statistics section below Comprehensive Connectivity boxes
+
+## Social Media Icons
+- [x] Add LinkedIn icon and link to footer
+- [x] Add X (Twitter) icon and placeholder link to footer
+- [x] Add social icons to other relevant areas (header/contact page if needed)
