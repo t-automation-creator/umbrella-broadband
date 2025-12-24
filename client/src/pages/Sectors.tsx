@@ -8,25 +8,25 @@ export default function Sectors() {
     {
       title: "Landlords & HMOs",
       description: "Reliable, high-speed internet is a top priority for tenants. We provide fully managed broadband solutions that eliminate connectivity headaches for landlords, ensuring happy tenants and higher retention rates.",
-      image: "/images/sectors/landlords.webp",
+      image: "/images/sectors/landlords.png",
       features: ["Zero downtime guarantee", "24/7 tenant support", "Seamless installation"]
     },
     {
       title: "Property Developers",
       description: "Future-proof your developments with our pre-installed network infrastructure. We work with developers from the planning stage to ensure every unit is connectivity-ready from day one.",
-      image: "/images/sectors/developers.webp",
+      image: "/images/sectors/developers.png",
       features: ["Infrastructure planning", "Managed network services", "Value-added connectivity"]
     },
     {
       title: "SME Businesses",
       description: "Business continuity relies on robust connectivity. Our enterprise-grade broadband and VoIP solutions are designed to keep your business running smoothly, with dedicated support when you need it.",
-      image: "/images/sectors/business.webp",
+      image: "/images/sectors/business.png",
       features: ["Dedicated leased lines", "VoIP telephony systems", "Cyber security packages"]
     },
     {
       title: "Purpose Built Student Accommodation (PBSA)",
       description: "Students demand fast, reliable internet for study and entertainment. Our managed service ensures high-density coverage and secure access for hundreds of users simultaneously.",
-      image: "/images/sectors/student.webp",
+      image: "/images/sectors/student.png",
       features: ["High-density Wi-Fi", "Secure personal networks", "Content filtering options"]
     }
   ];
@@ -44,9 +44,9 @@ export default function Sectors() {
         <section className="relative min-h-[400px] lg:min-h-[500px] flex items-center text-white overflow-hidden">
           {/* Background Image */}
           <picture className="absolute inset-0">
-            <source media="(min-width: 768px)" srcSet="/images/sectors-hero-desktop.webp" />
+            <source media="(min-width: 768px)" srcSet="/images/sectors-hero-desktop.png" />
             <img 
-              src="/images/sectors-hero-mobile.webp" 
+              src="/images/sectors-hero-mobile.png" 
               alt="Sectors We Serve" 
               className="w-full h-full object-cover"
             />
