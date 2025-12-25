@@ -281,3 +281,9 @@
 - [x] Reverted to checkpoint 951c38e1 (before code splitting)
 - [x] All pages working correctly after rollback
 
+
+## Hero Image Position Fix
+- [x] Fix Student Accommodation being cut off at top of hero image
+- [x] Created new hero image (v10) with extra sky padding at top
+- [x] Use responsive positioning for different screen sizes (md:30%, lg:25%, xl:20%, 2xl:15%)
+

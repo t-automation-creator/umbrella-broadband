@@ -2,14 +2,14 @@ import { Link } from "wouter";
 
 export default function Hero() {
   return (
-    <section className="relative text-white min-h-[600px] md:min-h-[600px] lg:min-h-[700px] flex items-end md:items-center overflow-hidden">
+    <section className="relative text-white min-h-[600px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px] flex items-end md:items-center overflow-hidden">
       {/* Background images - mobile and desktop versions */}
       <picture className="absolute inset-0 w-full h-full">
-        <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v8.jpg" />
+        <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v10.jpg" />
         <img 
           src="/images/hero-aerial-mobile-v4.jpg" 
           alt="Aerial view of UK town with connected properties"
-          className="w-full h-full object-cover object-top md:object-center"
+          className="w-full h-full object-cover object-[center_35%] md:object-top"
         />
       </picture>
       
