@@ -138,7 +138,7 @@ export default function ChatBot() {
   });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-open chatbot after 20 seconds (only once per session)
+  // Auto-open chatbot after 45 seconds (only once per session)
   useEffect(() => {
     if (hasAutoOpened || isOpen) return;
 
@@ -146,7 +146,7 @@ export default function ChatBot() {
       setIsOpen(true);
       setHasAutoOpened(true);
       sessionStorage.setItem('chatbot-auto-opened', 'true');
-    }, 20000); // 20 seconds
+    }, 45000); // 45 seconds
 
     return () => clearTimeout(timer);
   }, [hasAutoOpened, isOpen]);

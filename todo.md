@@ -292,3 +292,6 @@
 - [x] Adjust mobile hero image to show icons at top
 - [x] Update object-position to object-top for mobile view
 
+## Chatbot Popup Timing
+- [x] Changed auto-open timer from 20 seconds to 45 seconds
+
