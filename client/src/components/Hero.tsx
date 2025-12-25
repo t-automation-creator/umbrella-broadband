@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="relative text-white min-h-[600px] md:min-h-[600px] lg:min-h-[700px] xl:min-h-[800px] 2xl:min-h-[900px] flex items-end md:items-center overflow-hidden">
       {/* Background images - mobile and desktop versions */}
       <picture className="absolute inset-0 w-full h-full">
-        <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v10.jpg" />
+        <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v14.jpg" />
         <img 
           src="/images/hero-aerial-mobile-v4.jpg" 
           alt="Aerial view of UK town with connected properties"

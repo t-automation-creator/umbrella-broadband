@@ -284,6 +284,6 @@
 
 ## Hero Image Position Fix
 - [x] Fix Student Accommodation being cut off at top of hero image
-- [x] Created new hero image (v10) with extra sky padding at top
-- [x] Use responsive positioning for different screen sizes (md:30%, lg:25%, xl:20%, 2xl:15%)
+- [x] Created new hero image (v14) with 20px sky padding at top - optimal balance
+- [x] All property labels visible: Student Accommodation, Commercial, HMO, Residential
 
