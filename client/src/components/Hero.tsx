@@ -9,7 +9,7 @@ export default function Hero() {
         <img 
           src="/images/hero-aerial-mobile-v4.jpg" 
           alt="Aerial view of UK town with connected properties"
-          className="w-full h-full object-cover object-[center_35%] md:object-top"
+          className="w-full h-full object-cover object-top md:object-top"
         />
       </picture>
       

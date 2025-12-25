@@ -287,3 +287,8 @@
 - [x] Created new hero image (v14) with 20px sky padding at top - optimal balance
 - [x] All property labels visible: Student Accommodation, Commercial, HMO, Residential
 
+
+## Mobile Hero Image Position Fix
+- [x] Adjust mobile hero image to show icons at top
+- [x] Update object-position to object-top for mobile view
+
