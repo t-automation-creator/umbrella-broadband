@@ -77,7 +77,7 @@ export default function VoIP() {
       <SEO 
         title="VoIP Phone Systems | Umbrella Broadband" 
         description="Cloud-based VoIP phone systems for businesses. Reduce costs, work from anywhere, and get enterprise features at SME prices. Hosted telephony with UK support."
-        keywords="VoIP phone systems UK, cloud phone system, business telephony, hosted PBX, SIP trunking, unified communications, business VoIP provider, cloud telephony, IP phone systems"
+        keywords="VoIP phone systems UK, cloud phone system, business telephony, hosted PBX, SIP trunking, business VoIP"
       />
       <Navbar />
       <main className="flex-grow">

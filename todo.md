@@ -323,3 +323,6 @@
 - [x] Reduce keywords from 9 to 6 focused keywords
 - [x] Shorten description from 191 to 118 characters
 
+## VoIP Page SEO Fix
+- [x] Reduce keywords from 9 to 6 focused keywords
+
