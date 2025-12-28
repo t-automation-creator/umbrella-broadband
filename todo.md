@@ -398,3 +398,8 @@
 - [x] Update sources editor so title is just a label (display text), not duplicate of URL
 - [x] Auto-extract uses link text as the label
 
+## Regenerate Excerpt Button
+- [x] Add regenerate button next to excerpt field
+- [x] Use AI to generate excerpt from blog content
+- [x] Add server endpoint for excerpt generation (chat.generateExcerpt)
+

@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Sparkles, Loader2, Upload, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Loader2, Upload, Image as ImageIcon, Wand2 } from "lucide-react";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Link, useLocation, useParams } from "wouter";
 
@@ -122,6 +122,18 @@ function BlogEditContent() {
     onError: (error) => {
       toast.error(error.message || "Failed to upload image");
       setIsUploading(false);
+    },
+  });
+
+  const generateExcerptMutation = trpc.chat.generateExcerpt.useMutation({
+    onSuccess: (data: { excerpt: string }) => {
+      if (data.excerpt) {
+        setExcerpt(data.excerpt);
+        toast.success("Excerpt generated!");
+      }
+    },
+    onError: (error: { message?: string }) => {
+      toast.error(error.message || "Failed to generate excerpt");
     },
   });
 
@@ -453,12 +465,34 @@ function BlogEditContent() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="excerpt">Excerpt</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="excerpt">Excerpt</Label>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (!content || content.length < 50) {
+                      toast.error("Add more content first (at least 50 characters)");
+                      return;
+                    }
+                    generateExcerptMutation.mutate({ content, title });
+                  }}
+                  disabled={generateExcerptMutation.isPending || !content || content.length < 50}
+                  className="gap-1"
+                >
+                  {generateExcerptMutation.isPending ? (
+                    <><Loader2 className="h-3 w-3 animate-spin" />Generating...</>
+                  ) : (
+                    <><Wand2 className="h-3 w-3" />Regenerate</>
+                  )}
+                </Button>
+              </div>
               <Textarea
                 id="excerpt"
                 value={excerpt}
                 onChange={(e) => setExcerpt(e.target.value)}
-                placeholder="Brief summary of the post"
+                placeholder="Brief summary of the post (or click Regenerate to auto-generate from content)"
                 rows={2}
               />
             </div>

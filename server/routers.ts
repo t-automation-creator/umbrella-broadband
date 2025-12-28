@@ -1230,6 +1230,69 @@ Example output structure:
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to format content" });
         }
       }),
+
+    // AI: Generate excerpt from blog content
+    generateExcerpt: adminProcedure
+      .input(z.object({ 
+        content: z.string().min(50),
+        title: z.string().optional()
+      }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are a professional copywriter for a UK business broadband company. Generate a compelling excerpt/summary for a blog post.
+
+Rules:
+1. The excerpt should be 1-2 sentences (max 160 characters)
+2. It should capture the main value or key insight of the post
+3. Make it engaging and encourage readers to click through
+4. Use professional British English
+5. Do NOT use quotes or special characters
+6. Return ONLY the excerpt text, nothing else`;
+
+        try {
+          const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${forgeKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: `Generate an excerpt for this blog post${input.title ? ` titled "${input.title}"` : ""}:\n\n${input.content.substring(0, 2000)}` },
+              ],
+              max_tokens: 200,
+              temperature: 0.7,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI generation failed" });
+          }
+
+          const data = await response.json();
+          let excerpt = data.choices?.[0]?.message?.content?.trim();
+          
+          if (!excerpt) {
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No excerpt generated" });
+          }
+
+          // Clean up any quotes
+          excerpt = excerpt.replace(/^["']|["']$/g, "").trim();
+
+          return { excerpt };
+        } catch (error) {
+          console.error("Generate excerpt error:", error);
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to generate excerpt" });
+        }
+      }),
   }),
 });
 
