@@ -339,3 +339,7 @@
 - [x] Add H2 heading (Contact Information)
 - [x] Extend title to 'Contact Umbrella Broadband | Get in Touch Today' (49 characters)
 
+## Case Studies Page SEO Fix
+- [x] Add keywords (4 focused keywords added)
+- [x] Extend title to 'Case Studies | Umbrella Broadband Success Stories' (49 characters)
+

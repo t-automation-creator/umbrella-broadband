@@ -11,8 +11,9 @@ export default function CaseStudies() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Case Studies" 
+        title="Case Studies | Umbrella Broadband Success Stories" 
         description="Discover how Umbrella Broadband has helped businesses and organizations achieve reliable, high-speed connectivity. Read our client success stories."
+        keywords="broadband case studies, connectivity success stories, UK business internet solutions, managed broadband results"
       />
       <Navbar />
       <main className="flex-grow">
