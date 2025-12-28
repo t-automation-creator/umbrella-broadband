@@ -121,18 +121,21 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
   const autoFormat = useCallback(() => {
     if (!editor) return;
     
-    const currentContent = editor.getText();
-    if (!currentContent.trim()) {
+    // Get HTML content to preserve links
+    const htmlContent = editor.getHTML();
+    const textContent = editor.getText();
+    
+    if (!textContent.trim()) {
       toast.error('No content to format');
       return;
     }
 
-    if (currentContent.length < 10) {
+    if (textContent.length < 10) {
       toast.error('Content too short to format');
       return;
     }
 
-    formatMutation.mutate({ content: currentContent });
+    formatMutation.mutate({ content: htmlContent });
   }, [editor, formatMutation]);
 
   if (!editor) {

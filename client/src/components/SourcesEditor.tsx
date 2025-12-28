@@ -82,7 +82,7 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
 
     links.forEach((link) => {
       const url = link.getAttribute('href') || '';
-      const title = link.textContent?.trim() || '';
+      const linkText = link.textContent?.trim() || '';
       
       // Skip empty URLs, anchors, and internal links
       if (!url || url.startsWith('#') || url.startsWith('/') || url.startsWith('mailto:') || url.startsWith('tel:')) {
@@ -95,7 +95,10 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
       }
 
       existingUrls.add(url.toLowerCase());
-      extractedSources.push({ title, url });
+      
+      // Use link text as title (the clickable text in the content)
+      // This is the label that describes what the link is about
+      extractedSources.push({ title: linkText, url });
     });
 
     if (extractedSources.length === 0) {
@@ -153,7 +156,7 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div>
                     <Label className="text-xs text-muted-foreground">
-                      Source Title
+                      Label (display text)
                     </Label>
                     <Input
                       value={source.title}
@@ -161,6 +164,9 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
                       placeholder="e.g., Ofcom Broadband Report 2024"
                       className="mt-1"
                     />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      The text shown to readers for this source
+                    </p>
                   </div>
                   <div>
                     <Label className="text-xs text-muted-foreground">
@@ -213,7 +219,7 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
 
       {sources.length > 0 && (
         <p className="text-xs text-muted-foreground">
-          Sources will appear at the bottom of the blog post with numbered references.
+          Sources will appear at the bottom of the blog post. The label is the clickable text readers will see.
         </p>
       )}
     </div>

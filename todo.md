@@ -389,3 +389,12 @@
 - [x] Keep hyperlinked text when pasting into the editor (linkOnPaste: true)
 - [x] Fix TypeScript errors in RichTextEditor
 
+## Auto-Format Hyperlink Preservation
+- [x] Update auto-format to preserve existing hyperlinks from content
+- [x] Pass HTML content (not just text) to AI for formatting
+- [x] Ensure links are kept attached to appropriate text after formatting
+
+## Sources Title as Plain Label
+- [x] Update sources editor so title is just a label (display text), not duplicate of URL
+- [x] Auto-extract uses link text as the label
+
