@@ -15,8 +15,19 @@ export default function CaseStudyDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+        <SEO 
+          title="Loading Case Study | Umbrella Broadband" 
+          description="Discover how Umbrella Broadband helps businesses achieve reliable connectivity. Read our client success stories."
+          keywords="broadband case study, UK connectivity solutions, managed broadband success"
+        />
         <Navbar />
         <main className="flex-grow">
+          <section className="bg-primary text-white py-16">
+            <div className="max-w-4xl mx-auto px-4">
+              <h1 className="text-4xl font-bold font-heading sr-only">Loading Case Study</h1>
+              <h2 className="text-2xl font-bold font-heading sr-only">Client Success Story</h2>
+            </div>
+          </section>
           <div className="max-w-4xl mx-auto px-4 py-20">
             <div className="animate-pulse space-y-8">
               <div className="h-8 bg-gray-200 rounded w-3/4" />
