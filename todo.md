@@ -375,3 +375,8 @@
 - [x] Replace HTML textarea with TipTap WYSIWYG editor
 - [x] Create user-friendly sources input (add/remove source rows with title and URL fields)
 
+## Auto-Extract Sources from Content
+- [x] Add button to extract links from blog content automatically
+- [x] Parse HTML content for anchor tags
+- [x] Populate sources editor with extracted links (skips duplicates, internal links, mailto/tel)
+

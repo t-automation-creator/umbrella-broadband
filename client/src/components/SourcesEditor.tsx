@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus, Trash2, ExternalLink } from 'lucide-react';
+import { Plus, Trash2, ExternalLink, Wand2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface Source {
   title: string;
@@ -12,9 +13,10 @@ interface Source {
 interface SourcesEditorProps {
   value: string; // JSON string
   onChange: (json: string) => void;
+  content?: string; // HTML content to extract links from
 }
 
-export default function SourcesEditor({ value, onChange }: SourcesEditorProps) {
+export default function SourcesEditor({ value, onChange, content }: SourcesEditorProps) {
   const [sources, setSources] = useState<Source[]>([]);
 
   // Parse initial value
@@ -58,25 +60,87 @@ export default function SourcesEditor({ value, onChange }: SourcesEditorProps) {
     updateSources(newSources);
   };
 
+  // Extract links from HTML content
+  const extractLinksFromContent = () => {
+    if (!content) {
+      toast.error('No content to extract links from');
+      return;
+    }
+
+    // Parse HTML and extract anchor tags
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(content, 'text/html');
+    const links = doc.querySelectorAll('a[href]');
+
+    if (links.length === 0) {
+      toast.info('No links found in the content');
+      return;
+    }
+
+    const extractedSources: Source[] = [];
+    const existingUrls = new Set(sources.map(s => s.url.toLowerCase()));
+
+    links.forEach((link) => {
+      const url = link.getAttribute('href') || '';
+      const title = link.textContent?.trim() || '';
+      
+      // Skip empty URLs, anchors, and internal links
+      if (!url || url.startsWith('#') || url.startsWith('/') || url.startsWith('mailto:') || url.startsWith('tel:')) {
+        return;
+      }
+
+      // Skip if URL already exists in sources
+      if (existingUrls.has(url.toLowerCase())) {
+        return;
+      }
+
+      existingUrls.add(url.toLowerCase());
+      extractedSources.push({ title, url });
+    });
+
+    if (extractedSources.length === 0) {
+      toast.info('No new external links found to add');
+      return;
+    }
+
+    // Merge with existing sources
+    const newSources = [...sources, ...extractedSources];
+    updateSources(newSources);
+    toast.success(`Added ${extractedSources.length} source${extractedSources.length > 1 ? 's' : ''} from content`);
+  };
+
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <Label>Sources & References</Label>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={addSource}
-          className="gap-1"
-        >
-          <Plus className="h-4 w-4" />
-          Add Source
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={extractLinksFromContent}
+            className="gap-1"
+            title="Extract links from content"
+          >
+            <Wand2 className="h-4 w-4" />
+            Auto-Extract
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={addSource}
+            className="gap-1"
+          >
+            <Plus className="h-4 w-4" />
+            Add Source
+          </Button>
+        </div>
       </div>
 
       {sources.length === 0 ? (
         <p className="text-sm text-muted-foreground py-4 text-center border rounded-lg bg-muted/30">
-          No sources added. Click "Add Source" to cite references.
+          No sources added. Click "Auto-Extract" to find links in your content, or "Add Source" to add manually.
         </p>
       ) : (
         <div className="space-y-3">

@@ -481,6 +481,7 @@ function BlogEditContent() {
             <SourcesEditor
               value={sources}
               onChange={setSources}
+              content={content}
             />
 
             <div className="flex items-center space-x-2">
