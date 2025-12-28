@@ -308,3 +308,7 @@
 ## About Page SEO Fix
 - [x] Fix title length - updated to 'About Umbrella Broadband | UK Connectivity Experts' (52 characters)
 
+## Sectors Page SEO Fix
+- [x] Reduce keywords from 9 to 6 focused keywords
+- [x] Fix title length - updated to 'Sectors We Serve | Umbrella Broadband Solutions' (48 characters)
+
