@@ -403,3 +403,10 @@
 - [x] Use AI to generate excerpt from blog content
 - [x] Add server endpoint for excerpt generation (chat.generateExcerpt)
 
+## Open Graph Meta Tags Fix
+- [x] Fix Open Graph description showing old project description instead of page-specific content
+- [x] Update index.html default OG tags
+- [x] Ensure blog posts have dynamic OG tags for proper social sharing
+- [x] Created og-image.jpg for social sharing previews
+- [x] Updated SEO component to dynamically set OG tags on all pages
+

@@ -81,6 +81,8 @@ export default function BlogPost() {
         title={`${post.title} | Umbrella Broadband Blog`} 
         description={post.excerpt ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? '...' : '') : `Read ${post.title} on Umbrella Broadband blog. Expert insights on connectivity and technology.`}
         keywords={`${post.category || 'broadband'} news, ${post.title.split(' ').slice(0, 3).join(' ')}, UK connectivity blog, technology insights`}
+        image={post.imageUrl || "/images/og-image.jpg"}
+        type="article"
       />
       <Navbar />
       <main className="flex-grow">
