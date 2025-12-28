@@ -330,3 +330,7 @@
 - [x] Reduce keywords from 9 to 6 focused keywords
 - [x] Shorten description from 195 to 128 characters
 
+## Access Control Page SEO Fix
+- [x] Reduce keywords from 9 to 6 focused keywords
+- [x] Shorten description from 197 to 130 characters
+

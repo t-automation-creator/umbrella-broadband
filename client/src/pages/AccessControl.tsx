@@ -122,8 +122,8 @@ export default function AccessControl() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
         title="Access Control Solutions | Umbrella Broadband" 
-        description="Professional access control and intercom installation for businesses and landlords. Keyless entry, video intercoms, biometric systems, and mobile access. Secure your property with modern solutions."
-        keywords="access control systems UK, video intercom installation, keyless entry systems, door entry systems, biometric access control, student accommodation access, HMO door entry, commercial access control, IP intercom systems"
+        description="Professional access control and intercom installation for UK businesses. Keyless entry, video intercoms, and biometric systems."
+        keywords="access control systems UK, video intercom, keyless entry, door entry systems, biometric access, commercial access control"
       />
       <Navbar />
       <main className="flex-grow">
