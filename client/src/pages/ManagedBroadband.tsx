@@ -72,8 +72,8 @@ export default function ManagedBroadband() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
         title="Managed Broadband | Umbrella Broadband" 
-        description="Fully managed broadband solutions for businesses and landlords. High-speed fibre, 24/7 monitoring, enterprise security, and dedicated UK support. Get reliable connectivity without the hassle."
-        keywords="managed broadband UK, business internet provider, landlord broadband, student accommodation WiFi, HMO internet, commercial broadband, managed WiFi service, enterprise internet, fibre broadband for business"
+        description="Fully managed broadband for businesses and landlords. High-speed fibre, 24/7 monitoring, and dedicated UK support."
+        keywords="managed broadband UK, business internet, landlord broadband, HMO internet, managed WiFi, fibre broadband"
       />
       <Navbar />
       <main className="flex-grow">
