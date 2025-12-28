@@ -16,6 +16,7 @@ export default function Home() {
         title="Umbrella Broadband | Managed Connectivity" 
         description="Umbrella Broadband provides fast, reliable, and secure connectivity solutions for landlords, businesses, and developers. Fully managed networks you can trust."
         keywords="managed broadband UK, business internet solutions, HMO WiFi, student accommodation broadband, VoIP phone systems, CCTV security"
+        image="/images/hero-aerial-v14.jpg"
       />
       <Navbar />
       <main className="flex-grow">

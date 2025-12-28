@@ -75,6 +75,7 @@ export default function Starlink() {
         title="Managed Starlink Services | Umbrella Broadband" 
         description="Professional Starlink installation and management for UK businesses. Emergency backup, rural connectivity, and events with 24/7 support."
         keywords="managed Starlink UK, Starlink business internet, emergency backup internet, rural broadband, satellite internet, Starlink installation"
+        image="/images/solutions/starlink-hero-desktop.jpg"
       />
       <Navbar />
       <main className="flex-grow">

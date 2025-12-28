@@ -37,6 +37,7 @@ export default function Sectors() {
         title="Sectors We Serve | Umbrella Broadband Solutions" 
         description="Tailored broadband and security solutions for Landlords, Developers, Businesses, and Student Accommodation. Find the right fit for your sector."
         keywords="HMO broadband, landlord internet, student accommodation WiFi, SME business internet, property developer connectivity, PBSA broadband"
+        image="/images/sectors-hero-desktop.jpg"
       />
       <Navbar />
       <main className="flex-grow">

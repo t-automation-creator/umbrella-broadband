@@ -74,6 +74,7 @@ export default function ManagedBroadband() {
         title="Managed Broadband | Umbrella Broadband" 
         description="Fully managed broadband for businesses and landlords. High-speed fibre, 24/7 monitoring, and dedicated UK support."
         keywords="managed broadband UK, business internet, landlord broadband, HMO internet, managed WiFi, fibre broadband"
+        image="/images/solutions/broadband-hero-desktop.jpg"
       />
       <Navbar />
       <main className="flex-grow">

@@ -73,6 +73,8 @@ export default function CaseStudyDetail() {
         title={`${caseStudy.title} | ${caseStudy.clientName} Case Study | Umbrella Broadband`} 
         description={caseStudy.challenge ? caseStudy.challenge.substring(0, 155) + '...' : `Discover how Umbrella Broadband helped ${caseStudy.clientName} achieve reliable connectivity. Read the full case study.`}
         keywords={`${caseStudy.clientName} case study, ${caseStudy.industry || 'business'} broadband, UK connectivity solutions, managed broadband success`}
+        image={caseStudy.imageUrl || "/images/og-image.jpg"}
+        type="article"
       />
       <Navbar />
       <main className="flex-grow">

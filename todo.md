@@ -410,3 +410,16 @@
 - [x] Created og-image.jpg for social sharing previews
 - [x] Updated SEO component to dynamically set OG tags on all pages
 
+## Page-Specific OG Images
+- [x] Update Home page to use hero image for OG (/images/hero-aerial-v14.jpg)
+- [x] Update About page to use hero image for OG (/images/about-hero.jpg)
+- [x] Update Sectors page to use hero image for OG (/images/sectors-hero-desktop.jpg)
+- [x] Update Managed Broadband page to use hero image for OG
+- [x] Update VoIP page to use hero image for OG
+- [x] Update CCTV page to use hero image for OG
+- [x] Update Access Control page to use hero image for OG
+- [x] Update Starlink page to use hero image for OG
+- [x] Update Case Study Detail page to use dynamic image from case study
+- [x] Blog Post Detail already uses dynamic image from post
+- Note: Contact, Blog listing, Case Studies listing, and Solutions listing pages don't have hero images
+

@@ -124,6 +124,7 @@ export default function AccessControl() {
         title="Access Control Solutions | Umbrella Broadband" 
         description="Professional access control and intercom installation for UK businesses. Keyless entry, video intercoms, and biometric systems."
         keywords="access control systems UK, video intercom, keyless entry, door entry systems, biometric access, commercial access control"
+        image="/images/solutions/access-control-hero-desktop.jpg"
       />
       <Navbar />
       <main className="flex-grow">

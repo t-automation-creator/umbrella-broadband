@@ -97,6 +97,7 @@ export default function CCTV() {
         title="CCTV & Security Systems | Umbrella Broadband" 
         description="Professional CCTV installation and monitoring for UK businesses. HD cameras, cloud recording, remote viewing, and 24/7 support."
         keywords="CCTV installation UK, business security cameras, IP camera systems, cloud CCTV, remote monitoring, commercial CCTV"
+        image="/images/solutions/cctv-hero-desktop.jpg"
       />
       <Navbar />
       <main className="flex-grow">
