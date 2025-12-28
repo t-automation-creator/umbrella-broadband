@@ -326,3 +326,7 @@
 ## VoIP Page SEO Fix
 - [x] Reduce keywords from 9 to 6 focused keywords
 
+## CCTV Page SEO Fix
+- [x] Reduce keywords from 9 to 6 focused keywords
+- [x] Shorten description from 195 to 128 characters
+

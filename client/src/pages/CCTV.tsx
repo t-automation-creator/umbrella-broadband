@@ -95,8 +95,8 @@ export default function CCTV() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
         title="CCTV & Security Systems | Umbrella Broadband" 
-        description="Professional CCTV installation and monitoring for businesses and landlords. HD cameras, cloud recording, remote viewing, and 24/7 monitoring. Protect your property with expert security solutions."
-        keywords="CCTV installation UK, business security cameras, IP camera systems, cloud CCTV, remote monitoring, security camera installation, commercial CCTV, student accommodation security, property surveillance"
+        description="Professional CCTV installation and monitoring for UK businesses. HD cameras, cloud recording, remote viewing, and 24/7 support."
+        keywords="CCTV installation UK, business security cameras, IP camera systems, cloud CCTV, remote monitoring, commercial CCTV"
       />
       <Navbar />
       <main className="flex-grow">
