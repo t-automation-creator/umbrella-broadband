@@ -53,6 +53,7 @@ function BlogEditContent() {
   const [rawText, setRawText] = useState("");
   const [imagePrompt, setImagePrompt] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [sources, setSources] = useState("");
 
   useEffect(() => {
     if (existingPost) {
@@ -64,6 +65,7 @@ function BlogEditContent() {
       setImageUrl(existingPost.imageUrl || "");
       setAuthor(existingPost.author || "");
       setPublished(existingPost.published);
+      setSources(existingPost.sources || "");
     }
   }, [existingPost]);
 
@@ -211,6 +213,7 @@ function BlogEditContent() {
         category: category.trim() || undefined,
         imageUrl: imageUrl.trim() || undefined,
         author: author.trim() || undefined,
+        sources: sources.trim() || undefined,
         published,
       });
     } else {
@@ -221,8 +224,9 @@ function BlogEditContent() {
         excerpt: excerpt.trim() || null,
         content: content.trim() || null,
         category: category.trim() || null,
-        imageUrl: imageUrl.trim() || null, // Explicitly set to null to clear image
+        imageUrl: imageUrl.trim() || null,
         author: author.trim() || null,
+        sources: sources.trim() || null,
         published,
       });
     }
@@ -456,15 +460,44 @@ function BlogEditContent() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content">Content</Label>
+              <Label htmlFor="content">Content (HTML)</Label>
               <Textarea
                 id="content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="Full post content (supports Markdown)"
+                placeholder="Full post content with HTML formatting"
                 rows={12}
                 className="font-mono text-sm"
               />
+              <div className="text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg space-y-2">
+                <p className="font-semibold">Formatting Guide:</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <div><code className="bg-background px-1 rounded">&lt;strong&gt;bold&lt;/strong&gt;</code> → <strong>bold</strong></div>
+                  <div><code className="bg-background px-1 rounded">&lt;em&gt;italic&lt;/em&gt;</code> → <em>italic</em></div>
+                  <div><code className="bg-background px-1 rounded">&lt;a href="url"&gt;link&lt;/a&gt;</code> → link</div>
+                  <div><code className="bg-background px-1 rounded">&lt;h2&gt;Heading&lt;/h2&gt;</code> → large heading</div>
+                  <div><code className="bg-background px-1 rounded">&lt;h3&gt;Heading&lt;/h3&gt;</code> → medium heading</div>
+                  <div><code className="bg-background px-1 rounded">&lt;h4&gt;Heading&lt;/h4&gt;</code> → small heading</div>
+                </div>
+                <p className="mt-2">Lists:</p>
+                <code className="bg-background px-1 rounded block">&lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;</code>
+                <code className="bg-background px-1 rounded block mt-1">&lt;ol&gt;&lt;li&gt;First&lt;/li&gt;&lt;li&gt;Second&lt;/li&gt;&lt;/ol&gt;</code>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="sources">Sources & References (JSON)</Label>
+              <Textarea
+                id="sources"
+                value={sources}
+                onChange={(e) => setSources(e.target.value)}
+                placeholder='[{"title": "Source Name", "url": "https://example.com"}]'
+                rows={3}
+                className="font-mono text-sm"
+              />
+              <p className="text-xs text-muted-foreground">
+                JSON array format: <code className="bg-muted px-1 rounded">[{'{'}"title": "Name", "url": "https://..."{'}'}, ...]</code>
+              </p>
             </div>
 
             <div className="flex items-center space-x-2">

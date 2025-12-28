@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Calendar, User, ArrowLeft, Tag } from "lucide-react";
+import { Calendar, User, ArrowLeft, Tag, ExternalLink } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { useParams, Link } from "wouter";
 
@@ -132,15 +132,12 @@ export default function BlogPost() {
             )}
 
             {/* Main Content */}
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg max-w-none prose-headings:text-primary prose-headings:font-heading prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2 prose-a:text-secondary prose-a:underline hover:prose-a:text-primary prose-strong:text-gray-900 prose-ul:list-disc prose-ul:pl-6 prose-ol:list-decimal prose-ol:pl-6 prose-li:my-1">
               {post.content ? (
                 <div 
-                  className="text-gray-700 leading-relaxed space-y-6"
+                  className="text-gray-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ 
                     __html: post.content
-                      .split('\n\n')
-                      .map(p => `<p>${p}</p>`)
-                      .join('') 
                   }}
                 />
               ) : (
@@ -149,6 +146,39 @@ export default function BlogPost() {
                 </p>
               )}
             </div>
+
+            {/* Sources Section */}
+            {post.sources && (() => {
+              try {
+                const sources = JSON.parse(post.sources);
+                if (Array.isArray(sources) && sources.length > 0) {
+                  return (
+                    <div className="mt-12 pt-8 border-t border-gray-200">
+                      <h3 className="text-xl font-bold text-primary mb-4 font-heading">Sources & References</h3>
+                      <ul className="space-y-2">
+                        {sources.map((source: { title: string; url: string }, index: number) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-gray-500 text-sm mt-1">[{index + 1}]</span>
+                            <a 
+                              href={source.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-secondary hover:text-primary transition-colors flex items-center gap-1"
+                            >
+                              {source.title}
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                }
+              } catch (e) {
+                return null;
+              }
+              return null;
+            })()}
 
             {/* Share & Navigation */}
             <div className="mt-12 pt-8 border-t border-gray-200">

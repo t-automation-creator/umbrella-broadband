@@ -33,7 +33,8 @@ export const blogPosts = mysqlTable("blog_posts", {
   title: varchar("title", { length: 255 }).notNull(),
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   excerpt: text("excerpt"),
-  content: text("content"),
+  content: text("content"), // Supports HTML: <a>, <strong>, <em>, <ul>, <ol>, <li>, <h2>, <h3>, <h4>, <p>
+  sources: text("sources"), // JSON array of sources: [{title: string, url: string}]
   category: varchar("category", { length: 100 }),
   imageUrl: text("imageUrl"),
   author: varchar("author", { length: 100 }),

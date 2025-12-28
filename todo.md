@@ -363,3 +363,10 @@
 - [x] Add description (dynamic based on excerpt or fallback)
 - [x] Add SEO to loading state with H1/H2 headings
 
+## Blog Post Rich Text and Sources Feature
+- [x] Add support for inline hyperlinks in blog post content
+- [x] Add support for bullet points, bold, italic, headings formatting
+- [x] Add sources/references field to blog post schema
+- [x] Display sources section at bottom of blog posts
+- [x] Add formatting guide in admin blog editor
+
