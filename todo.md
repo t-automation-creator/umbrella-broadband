@@ -343,3 +343,10 @@
 - [x] Add keywords (4 focused keywords added)
 - [x] Extend title to 'Case Studies | Umbrella Broadband Success Stories' (49 characters)
 
+## Case Study Detail Page SEO Fix
+- [x] Add keywords (dynamic based on case study content)
+- [x] H1 heading already exists (case study title)
+- [x] H2 headings already exist (The Challenge, Our Solution, The Results)
+- [x] Extended title to include client name and Umbrella Broadband
+- [x] Add description (dynamic based on challenge text or fallback)
+

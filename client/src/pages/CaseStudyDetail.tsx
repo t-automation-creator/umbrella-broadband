@@ -59,8 +59,9 @@ export default function CaseStudyDetail() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title={`${caseStudy.title} | Case Study`} 
-        description={caseStudy.challenge || `Read how we helped ${caseStudy.clientName} achieve their connectivity goals.`}
+        title={`${caseStudy.title} | ${caseStudy.clientName} Case Study | Umbrella Broadband`} 
+        description={caseStudy.challenge ? caseStudy.challenge.substring(0, 155) + '...' : `Discover how Umbrella Broadband helped ${caseStudy.clientName} achieve reliable connectivity. Read the full case study.`}
+        keywords={`${caseStudy.clientName} case study, ${caseStudy.industry || 'business'} broadband, UK connectivity solutions, managed broadband success`}
       />
       <Navbar />
       <main className="flex-grow">
