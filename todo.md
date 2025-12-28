@@ -370,3 +370,8 @@
 - [x] Display sources section at bottom of blog posts
 - [x] Add formatting guide in admin blog editor
 
+## Blog Editor WYSIWYG and Sources UI
+- [x] Add rich text editor with toolbar buttons (bold, italic, underline, headings, links, lists, undo/redo)
+- [x] Replace HTML textarea with TipTap WYSIWYG editor
+- [x] Create user-friendly sources input (add/remove source rows with title and URL fields)
+
