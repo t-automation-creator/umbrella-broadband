@@ -23,8 +23,19 @@ export default function BlogPost() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+        <SEO 
+          title="Loading Article | Umbrella Broadband Blog" 
+          description="Read the latest news and insights from Umbrella Broadband. Expert advice on connectivity, broadband, and technology."
+          keywords="broadband blog, UK connectivity news, technology insights"
+        />
         <Navbar />
         <main className="flex-grow">
+          <section className="bg-primary text-white py-16">
+            <div className="max-w-4xl mx-auto px-4">
+              <h1 className="text-4xl font-bold font-heading sr-only">Loading Article</h1>
+              <h2 className="text-2xl font-bold font-heading sr-only">Umbrella Broadband Blog</h2>
+            </div>
+          </section>
           <div className="max-w-4xl mx-auto px-4 py-20">
             <div className="animate-pulse space-y-8">
               <div className="h-8 bg-gray-200 rounded w-3/4" />
@@ -67,8 +78,9 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title={post.title} 
-        description={post.excerpt || `Read ${post.title} on Umbrella Broadband blog.`}
+        title={`${post.title} | Umbrella Broadband Blog`} 
+        description={post.excerpt ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? '...' : '') : `Read ${post.title} on Umbrella Broadband blog. Expert insights on connectivity and technology.`}
+        keywords={`${post.category || 'broadband'} news, ${post.title.split(' ').slice(0, 3).join(' ')}, UK connectivity blog, technology insights`}
       />
       <Navbar />
       <main className="flex-grow">

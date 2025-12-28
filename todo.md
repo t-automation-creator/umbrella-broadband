@@ -355,3 +355,11 @@
 - [x] Add H2 heading (Recent Articles)
 - [x] Extend title to 'Blog | Latest News & Insights | Umbrella Broadband' (50 characters)
 
+## Blog Post Detail Page SEO Fix
+- [x] Add keywords (dynamic based on post category and title)
+- [x] H1 heading already exists (post title)
+- [x] H2 heading already exists (Need Expert Connectivity Solutions?)
+- [x] Extended title to include 'Umbrella Broadband Blog'
+- [x] Add description (dynamic based on excerpt or fallback)
+- [x] Add SEO to loading state with H1/H2 headings
+
