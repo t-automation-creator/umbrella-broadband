@@ -380,3 +380,12 @@
 - [x] Parse HTML content for anchor tags
 - [x] Populate sources editor with extracted links (skips duplicates, internal links, mailto/tel)
 
+## Auto-Format Blog Content
+- [x] Add Auto-Format button to rich text editor toolbar
+- [x] Use AI to analyze text and add headings/paragraphs
+- [x] Structure content for optimal readability
+
+## Preserve Hyperlinks on Paste
+- [x] Keep hyperlinked text when pasting into the editor (linkOnPaste: true)
+- [x] Fix TypeScript errors in RichTextEditor
+

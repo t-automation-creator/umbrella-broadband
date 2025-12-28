@@ -18,12 +18,16 @@ import {
   Unlink,
   Undo,
   Redo,
+  Wand2,
+  Loader2,
 } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { toast } from 'sonner';
+import { trpc } from '@/lib/trpc';
 
 interface RichTextEditorProps {
   content: string;
@@ -35,6 +39,20 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
   const [linkUrl, setLinkUrl] = useState('');
   const [linkPopoverOpen, setLinkPopoverOpen] = useState(false);
 
+  const formatMutation = trpc.chat.formatContent.useMutation({
+    onSuccess: (data: { formattedContent: string }) => {
+      if (editor && data.formattedContent) {
+        editor.commands.setContent(data.formattedContent);
+        onChange(data.formattedContent);
+        toast.success('Content formatted successfully');
+      }
+    },
+    onError: (error) => {
+      console.error('Auto-format error:', error);
+      toast.error('Failed to auto-format content. Please try again.');
+    },
+  });
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -45,6 +63,8 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
       Underline,
       Link.configure({
         openOnClick: false,
+        autolink: true,
+        linkOnPaste: true, // Preserve links when pasting
         HTMLAttributes: {
           target: '_blank',
           rel: 'noopener noreferrer',
@@ -58,6 +78,15 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
     editorProps: {
       attributes: {
         class: 'prose prose-sm max-w-none min-h-[300px] p-4 focus:outline-none',
+      },
+      // Handle paste to preserve HTML formatting including links
+      handlePaste: (view, event) => {
+        const html = event.clipboardData?.getData('text/html');
+        if (html) {
+          // Let TipTap handle HTML paste natively - it will preserve links
+          return false; // Return false to let default handling occur
+        }
+        return false;
       },
     },
   });
@@ -87,6 +116,24 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
     setLinkUrl(previousUrl);
     setLinkPopoverOpen(true);
   }, [editor]);
+
+  // Auto-format content using AI
+  const autoFormat = useCallback(() => {
+    if (!editor) return;
+    
+    const currentContent = editor.getText();
+    if (!currentContent.trim()) {
+      toast.error('No content to format');
+      return;
+    }
+
+    if (currentContent.length < 10) {
+      toast.error('Content too short to format');
+      return;
+    }
+
+    formatMutation.mutate({ content: currentContent });
+  }, [editor, formatMutation]);
 
   if (!editor) {
     return null;
@@ -238,7 +285,7 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
         </div>
 
         {/* Undo/Redo */}
-        <div className="flex gap-1">
+        <div className="flex gap-1 pr-2 border-r">
           <Button
             type="button"
             variant="ghost"
@@ -258,6 +305,26 @@ export default function RichTextEditor({ content, onChange, placeholder }: RichT
             title="Redo"
           >
             <Redo className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Auto-Format */}
+        <div className="flex gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={autoFormat}
+            disabled={formatMutation.isPending}
+            title="Auto-Format with AI - Adds headings, paragraphs, and formatting for optimal readability"
+            className="gap-1"
+          >
+            {formatMutation.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Wand2 className="h-4 w-4" />
+            )}
+            <span className="hidden sm:inline">Auto-Format</span>
           </Button>
         </div>
       </div>

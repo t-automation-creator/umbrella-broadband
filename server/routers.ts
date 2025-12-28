@@ -1157,6 +1157,79 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk (sa
 
         return { success: true };
       }),
+
+    // AI: Format blog content with headings and paragraphs
+    formatContent: adminProcedure
+      .input(z.object({ content: z.string().min(10) }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are a content formatter for a professional business blog. Your task is to take raw text and format it for optimal readability.
+
+Rules:
+1. Break the content into logical sections with H2 headings (<h2>) for main topics and H3 headings (<h3>) for subtopics
+2. Split long paragraphs into shorter, digestible ones (3-4 sentences max per paragraph)
+3. Use <p> tags for paragraphs
+4. Use <ul> and <li> for lists when appropriate (e.g., features, benefits, steps)
+5. Use <strong> for key terms or important phrases (sparingly, 1-2 per paragraph max)
+6. Preserve any existing links (<a> tags) exactly as they are
+7. Do NOT add any new content - only format the existing text
+8. Do NOT add introductions or conclusions that weren't in the original
+9. Return ONLY the formatted HTML, no explanations or markdown code blocks
+
+Example output structure:
+<h2>Main Topic</h2>
+<p>First paragraph with <strong>key term</strong> highlighted.</p>
+<p>Second paragraph continues the discussion.</p>
+<h3>Subtopic</h3>
+<ul>
+<li>First point</li>
+<li>Second point</li>
+</ul>`;
+
+        try {
+          const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${forgeKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: "gpt-4o-mini",
+              messages: [
+                { role: "system", content: systemPrompt },
+                { role: "user", content: `Format this content for optimal readability:\n\n${input.content}` },
+              ],
+              max_tokens: 4000,
+              temperature: 0.3,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI formatting failed" });
+          }
+
+          const data = await response.json();
+          let formattedContent = data.choices?.[0]?.message?.content;
+          
+          if (!formattedContent) {
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No formatted content returned" });
+          }
+
+          // Clean up any markdown code blocks if present
+          formattedContent = formattedContent.replace(/```html\n?/g, "").replace(/```\n?/g, "").trim();
+
+          return { formattedContent };
+        } catch (error) {
+          console.error("Format content error:", error);
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to format content" });
+        }
+      }),
   }),
 });
 
