@@ -12,7 +12,7 @@ export default function CookieConsent() {
     const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!consent) {
       // Show banner after a short delay for better UX
-      const timer = setTimeout(() => setIsVisible(true), 1000);
+      const timer = setTimeout(() => setIsVisible(true), 2000);
       return () => clearTimeout(timer);
     }
   }, []);
@@ -30,52 +30,45 @@ export default function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-in slide-in-from-bottom duration-500">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
-        <div className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-              <Cookie className="w-6 h-6 text-primary" />
+    <div className="fixed bottom-4 left-4 z-40 max-w-sm animate-in slide-in-from-left duration-500">
+      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 p-4">
+        <div className="flex items-start gap-3">
+          <Cookie className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              We use cookies to enhance your experience.{" "}
+              <a 
+                href="/privacy-policy" 
+                className="text-primary hover:underline"
+              >
+                Learn more
+              </a>
+            </p>
+            <div className="flex gap-2 mt-3">
+              <Button
+                onClick={handleAccept}
+                size="sm"
+                className="bg-primary hover:bg-primary/90 text-white text-xs px-3 h-8"
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={handleDecline}
+                variant="ghost"
+                size="sm"
+                className="text-gray-500 hover:text-gray-700 text-xs px-3 h-8"
+              >
+                Decline
+              </Button>
             </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-900 mb-2 font-heading">
-                We Value Your Privacy
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                We use cookies to enhance your browsing experience, serve personalised content, and analyse our traffic. 
-                By clicking "Accept All", you consent to our use of cookies. You can manage your preferences or decline 
-                non-essential cookies by clicking "Decline".
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Button
-                  onClick={handleAccept}
-                  className="bg-primary hover:bg-primary/90 text-white"
-                >
-                  Accept All
-                </Button>
-                <Button
-                  onClick={handleDecline}
-                  variant="outline"
-                  className="border-gray-300 text-gray-700 hover:bg-gray-50"
-                >
-                  Decline
-                </Button>
-                <a 
-                  href="/privacy-policy" 
-                  className="inline-flex items-center text-sm text-primary hover:underline self-center"
-                >
-                  Privacy Policy
-                </a>
-              </div>
-            </div>
-            <button
-              onClick={handleDecline}
-              className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600 transition-colors"
-              aria-label="Close cookie banner"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
+          <button
+            onClick={handleDecline}
+            className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 transition-colors -mt-1 -mr-1"
+            aria-label="Close cookie banner"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </div>

@@ -14,14 +14,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <Link href="/">
+            <Link href="/" className="block">
               <img 
                 src="/images/logo-white.png" 
                 alt="Logo" 
-                className="h-[88px] w-auto mb-6 cursor-pointer" 
+                className="h-[88px] w-auto mb-2 cursor-pointer -ml-3" 
               />
             </Link>
-            <p className="text-gray-300 max-w-sm mb-6 font-sans">
+            <p className="text-gray-300 max-w-xs font-sans text-sm leading-relaxed mb-6">
               Leading provider of tailored Connectivity, Technology and Security Solutions for homes and businesses across the UK.
             </p>
             {/* Social Media Icons */}

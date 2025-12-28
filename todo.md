@@ -295,3 +295,13 @@
 ## Chatbot Popup Timing
 - [x] Changed auto-open timer from 20 seconds to 45 seconds
 
+
+## Cookie Consent Banner Update
+- [x] Made cookie notification more subtle and less intrusive
+- [x] Moved to bottom-left corner with smaller design
+
+## Footer Logo/Text Alignment
+- [x] Made footer logo same size as header (88px)
+- [x] Left-aligned logo edge with text using negative margin (-ml-3)
+- [x] Reduced gap between logo and text (mb-2)
+
