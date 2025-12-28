@@ -312,3 +312,6 @@
 - [x] Reduce keywords from 9 to 6 focused keywords
 - [x] Fix title length - updated to 'Sectors We Serve | Umbrella Broadband Solutions' (48 characters)
 
+## Solutions Page SEO Fix
+- [x] Reduce keywords from 10 to 6 focused keywords (managed broadband, VoIP telephony, CCTV security, access control, business internet, network management)
+
