@@ -334,3 +334,8 @@
 - [x] Reduce keywords from 9 to 6 focused keywords
 - [x] Shorten description from 197 to 130 characters
 
+## Contact Page SEO Fix
+- [x] Add keywords (4 focused keywords added)
+- [x] Add H2 heading (Contact Information)
+- [x] Extend title to 'Contact Umbrella Broadband | Get in Touch Today' (49 characters)
+

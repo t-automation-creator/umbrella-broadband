@@ -60,8 +60,9 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Contact Us" 
+        title="Contact Umbrella Broadband | Get in Touch Today" 
         description="Get in touch with Umbrella Broadband for expert advice on your connectivity needs. Call us, email us, or visit our office in Leamington Spa."
+        keywords="contact Umbrella Broadband, broadband enquiries UK, Leamington Spa IT support, business internet contact"
       />
       <Navbar />
       <main className="flex-grow">
@@ -80,7 +81,7 @@ export default function Contact() {
               {/* Contact Info */}
               <div className="lg:col-span-1 space-y-8">
                 <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
-                  <h3 className="text-xl font-bold text-primary mb-6 font-heading">Contact Information</h3>
+                  <h2 className="text-xl font-bold text-primary mb-6 font-heading">Contact Information</h2>
                   <ul className="space-y-6">
                     <li className="flex items-start">
                       <MapPin className="w-6 h-6 text-secondary mr-4 mt-1 flex-shrink-0" />
