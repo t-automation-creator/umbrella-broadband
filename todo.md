@@ -305,3 +305,6 @@
 - [x] Left-aligned logo edge with text using negative margin (-ml-3)
 - [x] Reduced gap between logo and text (mb-2)
 
+## About Page SEO Fix
+- [x] Fix title length - updated to 'About Umbrella Broadband | UK Connectivity Experts' (52 characters)
+
