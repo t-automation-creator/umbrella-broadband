@@ -350,3 +350,8 @@
 - [x] Extended title to include client name and Umbrella Broadband
 - [x] Add description (dynamic based on challenge text or fallback)
 
+## Blog Page SEO Fix
+- [x] Add keywords (4 focused keywords added)
+- [x] Add H2 heading (Recent Articles)
+- [x] Extend title to 'Blog | Latest News & Insights | Umbrella Broadband' (50 characters)
+

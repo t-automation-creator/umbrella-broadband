@@ -102,8 +102,9 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
-        title="Latest News & Insights" 
+        title="Blog | Latest News & Insights | Umbrella Broadband" 
         description="Stay updated with the latest news, industry trends, and insights from Umbrella Broadband. Read our blog for expert advice."
+        keywords="broadband news UK, connectivity insights, business internet blog, technology updates"
       />
       <Navbar />
       <main className="flex-grow">
@@ -118,6 +119,7 @@ export default function Blog() {
 
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-2xl font-bold text-primary mb-8 font-heading">Recent Articles</h2>
             {isLoading ? (
               <div className="grid md:grid-cols-2 gap-8">
                 {[1, 2, 3].map((i) => (
