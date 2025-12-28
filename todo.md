@@ -315,3 +315,7 @@
 ## Solutions Page SEO Fix
 - [x] Reduce keywords from 10 to 6 focused keywords (managed broadband, VoIP telephony, CCTV security, access control, business internet, network management)
 
+## Starlink Page SEO Fix
+- [x] Reduce keywords from 9 to 6 focused keywords
+- [x] Shorten description from 180 to physiological 140 characters
+

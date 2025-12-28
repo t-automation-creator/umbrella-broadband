@@ -73,8 +73,8 @@ export default function Starlink() {
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
       <SEO 
         title="Managed Starlink Services | Umbrella Broadband" 
-        description="Professional Starlink installation and management for businesses. Emergency backup internet, rural connectivity, construction sites, and events. Rapid deployment with 24/7 support."
-        keywords="managed Starlink UK, Starlink business internet, emergency backup internet, rural broadband solutions, construction site internet, event WiFi, satellite internet for business, Starlink installation, Starlink managed service provider"
+        description="Professional Starlink installation and management for UK businesses. Emergency backup, rural connectivity, and events with 24/7 support."
+        keywords="managed Starlink UK, Starlink business internet, emergency backup internet, rural broadband, satellite internet, Starlink installation"
       />
       <Navbar />
       <main className="flex-grow">
