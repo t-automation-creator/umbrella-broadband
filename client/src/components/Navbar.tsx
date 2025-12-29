@@ -226,6 +226,11 @@ export default function Navbar() {
                   <Link href="/starlink">
                     <span className="block text-gray-300 hover:text-secondary cursor-pointer py-3">Managed Starlink</span>
                   </Link>
+                  <div className="border-t border-gray-600 mt-2 pt-2">
+                    <Link href="/solutions">
+                      <span className="block text-secondary hover:text-secondary/80 cursor-pointer py-3 font-medium">View All Solutions →</span>
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
