@@ -468,5 +468,7 @@
 - [x] Compress hero-aerial-v14.jpg (874KB → 403KB, quality 78%)
 - [x] Add preload hints for critical resources (hero image, fonts)
 - [x] Defer Google Tag Manager loading until after page load
+- [x] Compress hero-aerial-mobile-v4.jpg (712KB → 329KB, quality 78%)
+- [x] Add responsive preload hints (desktop/mobile hero images)
 - [ ] Test and verify score improvement
 
