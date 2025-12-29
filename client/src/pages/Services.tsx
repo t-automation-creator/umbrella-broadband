@@ -256,11 +256,8 @@ export default function Services() {
       <section className="py-20 bg-white">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              For Umbrella Solutions
-            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
-              Value-Added Services
+              Our Value-Added Services
             </h2>
             <p className="text-lg text-gray-600">
               Every Umbrella solution comes with access to our comprehensive service portfolio. 
