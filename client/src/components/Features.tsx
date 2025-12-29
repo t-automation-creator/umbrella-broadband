@@ -18,9 +18,9 @@ export default function Features() {
               <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                 <Wifi className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Managed Wi-Fi</h3>
+              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Connectivity Solutions</h3>
               <p className="text-gray-600 font-sans mb-4">
-                Custom network design and structured cabling ensuring seamless coverage across all properties.
+                End-to-end broadband, VoIP, and Wi-Fi solutions with custom network design and structured cabling for seamless coverage.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all">
                 Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -34,9 +34,9 @@ export default function Features() {
               <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                 <ShieldCheck className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Security Systems</h3>
+              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Security & Surveillance</h3>
               <p className="text-gray-600 font-sans mb-4">
-                Integrated CCTV, Access Control, and Video Intercom solutions to protect your assets.
+                Comprehensive CCTV, Access Control, and Video Intercom systems designed to protect your properties and tenants.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all">
                 Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -50,9 +50,9 @@ export default function Features() {
               <div className="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                 <Settings className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Management Services</h3>
+              <h3 className="text-xl font-bold text-primary mb-3 font-heading">Ongoing Support & Management</h3>
               <p className="text-gray-600 font-sans mb-4">
-                Proactive monitoring, maintenance, and support for all your connectivity and security infrastructure.
+                24/7 monitoring, proactive maintenance, and dedicated UK-based support for all your technology infrastructure.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all">
                 Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
