@@ -17,7 +17,7 @@ export default function CaseStudyPreview() {
             Success Stories
           </span>
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-heading">
-            Our Case Studies
+            Read Our Success Stories
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             See how we've helped businesses and organizations achieve reliable, high-speed connectivity and security solutions.
