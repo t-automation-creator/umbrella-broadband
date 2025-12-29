@@ -111,12 +111,21 @@ export default function Services() {
       <SEO 
         title="Managed Services | Umbrella Broadband"
         description="Fully managed connectivity services and takeover of existing infrastructure. From broadband to CCTV, we handle the technology so you can focus on your business."
-        image="/images/hero-aerial-v14.jpg"
+        image="/images/services-hero.webp"
       />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-20 lg:py-28">
-        <div className="absolute inset-0 bg-[url('/images/pattern-dots.svg')] opacity-5" />
+      <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-20 lg:py-28 overflow-hidden">
+        <div className="absolute inset-0">
+          <img 
+            src="/images/services-hero.webp" 
+            alt="Network connectivity and managed services" 
+            className="w-full h-full object-cover opacity-40"
+            width="1920"
+            height="1080"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent" />
         <div className="container relative">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1.5 bg-secondary/20 text-secondary rounded-full text-sm font-medium mb-6">
