@@ -6,7 +6,6 @@ export default function Hero() {
       {/* Background images - mobile and desktop versions */}
       <picture className="absolute inset-0 w-full h-full">
         <source media="(min-width: 768px)" srcSet="/images/hero-aerial-v14.jpg" />
-        <source media="(max-width: 767px)" srcSet="/images/hero-aerial-mobile-v4.webp" type="image/webp" />
         <img 
           src="/images/hero-aerial-mobile-v4.jpg" 
           alt="Aerial view of UK town with connected properties"
