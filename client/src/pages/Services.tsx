@@ -354,7 +354,6 @@ export default function Services() {
           <div className="grid md:grid-cols-4 gap-8">
             {processSteps.map((step, index) => (
               <div key={index} className="text-center">
-                <div className="text-5xl font-bold text-secondary/20 mb-4">{step.step}</div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
                 <p className="text-gray-600">{step.description}</p>
               </div>
@@ -374,15 +373,14 @@ export default function Services() {
               Whether you need services for a new Umbrella solution or want us to manage your existing infrastructure, 
               we're here to help. Get in touch to discuss your requirements.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
               <Link href="/contact">
-                <span className="btn btn-secondary cursor-pointer inline-flex items-center gap-2">
+                <span className="btn btn-primary cursor-pointer text-sm md:text-base">
                   Get in Touch
-                  <ArrowRight className="w-4 h-4" />
                 </span>
               </Link>
               <Link href="/solutions">
-                <span className="btn btn-outline border-white text-white hover:bg-white hover:text-primary cursor-pointer">
+                <span className="btn btn-outline-white cursor-pointer text-sm md:text-base">
                   View Our Solutions
                 </span>
               </Link>
