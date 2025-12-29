@@ -6,9 +6,9 @@ export default function Features() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-primary mb-4 font-heading">Comprehensive Connectivity</h2>
+          <h2 className="text-3xl font-bold text-primary mb-4 font-heading">A Technology Partner You Can Rely On for Every Property</h2>
           <p className="text-gray-600 max-w-2xl mx-auto font-sans">
-            We specialize in designing, installing, and managing network infrastructure with a focus on reliability and security.
+            We specialize in designing, installing, and managing technology across your properties, with a focus on reliability, security, and long-term support.
           </p>
         </div>
         <div className="grid md:grid-cols-3 gap-8 justify-center">

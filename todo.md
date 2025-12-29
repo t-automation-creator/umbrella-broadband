@@ -521,6 +521,7 @@
 - [ ] Add Services as 6th item on Solutions page linking to /services
 - [x] Add Management Services as 6th item on Solutions page linking to /services
 - [x] Add "View All Solutions" link to mobile dropdown menu
-- [ ] Update homepage headline (reverted - still ideating on best option)
+- [x] Update homepage headline to "A Technology Partner You Can Rely On for Every Property"
 - [x] Add case study preview section to homepage
 - [x] Move Tailored for Your Sector section below Comprehensive Connectivity on homepage
+- [x] Update Features section heading to "A Technology Partner You Can Rely On for Every Property" and new description
