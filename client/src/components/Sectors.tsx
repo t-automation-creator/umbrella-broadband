@@ -17,7 +17,7 @@ export default function Sectors() {
           <div className="order-1 lg:order-2">
             <h2 className="text-3xl font-bold text-primary mb-6 font-heading">Expertise Across Every Sector</h2>
             <p className="text-gray-600 mb-6 font-sans">
-              Whether you manage student accommodation, commercial offices, or residential developments, we provide bespoke network solutions that scale.
+              From student accommodation and HMOs to commercial offices and residential developments, we deliver end-to-end connectivity, security, and communication solutions tailored to your sector's unique needs.
             </p>
             <ul className="space-y-4 mb-8">
               {[
