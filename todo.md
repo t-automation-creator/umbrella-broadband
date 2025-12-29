@@ -501,3 +501,4 @@
 - [x] Generate new hero image with people working with tech in services context, aligned right
 - [x] Generate collage-style hero image showing property-based services (broadband, CCTV, access control installation in HMOs/student accommodation)
 
+- [x] Fix Services hero collage - people are cut off at top of image, need full visibility
