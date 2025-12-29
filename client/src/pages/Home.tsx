@@ -23,8 +23,8 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         <Features />
-        <AnimatedStats />
         <Sectors />
+        <AnimatedStats />
         <Partners />
         <CaseStudyPreview />
         <TestimonialsCarousel />

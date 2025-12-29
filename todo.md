@@ -523,3 +523,4 @@
 - [x] Add "View All Solutions" link to mobile dropdown menu
 - [ ] Update homepage headline (reverted - still ideating on best option)
 - [x] Add case study preview section to homepage
+- [x] Move Tailored for Your Sector section below Comprehensive Connectivity on homepage
