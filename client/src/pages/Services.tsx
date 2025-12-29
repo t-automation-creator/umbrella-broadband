@@ -240,11 +240,11 @@ export default function Services() {
               Our value-added services ensure your connectivity solutions are always performing at their best. 
               From 24/7 monitoring to proactive maintenance, we've got you covered.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Link href="/contact">
-                <span className="btn btn-secondary cursor-pointer">Get Started</span>
+                <span className="btn btn-primary cursor-pointer text-sm md:text-base">Get Started</span>
               </Link>
-              <a href="#existing" className="btn btn-outline border-white text-white hover:bg-white hover:text-primary cursor-pointer">
+              <a href="#existing" className="btn btn-outline-white cursor-pointer text-sm md:text-base">
                 Have Existing Systems?
               </a>
             </div>

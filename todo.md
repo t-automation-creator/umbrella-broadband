@@ -510,3 +510,4 @@
 - [x] Add Services link to footer quick links section
 - [x] Add SEO keywords meta tag to Services page
 - [x] Add JSON-LD structured data for services to improve search engine rich snippets
+- [x] Update Services page hero buttons to match homepage button style
