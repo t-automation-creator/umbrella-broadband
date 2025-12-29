@@ -496,3 +496,8 @@
 - [x] Refine Existing Infrastructure section: Takeover & Management, Support Contracts, Audits & Assessments, Upgrades & Modernisation
 - [x] Simplified page structure with clear two-part focus
 
+## Services Page Hero Image Fix
+- [x] Adjust hero image so icons are visible on right side (not hidden by left text overlay)
+- [x] Generate new hero image with people working with tech in services context, aligned right
+- [x] Generate collage-style hero image showing property-based services (broadband, CCTV, access control installation in HMOs/student accommodation)
+
