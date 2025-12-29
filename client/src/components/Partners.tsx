@@ -71,7 +71,7 @@ export default function Partners() {
     <section className="py-16 bg-primary overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
         <p className="text-center text-blue-200 mb-10 font-semibold tracking-wider font-heading">
-          TRUSTED BY INDUSTRY LEADERS
+          WE PARTNER WITH INDUSTRY LEADERS
         </p>
         <div className="relative overflow-hidden">
           {/* Gradient fade on edges */}
