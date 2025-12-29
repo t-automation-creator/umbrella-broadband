@@ -472,3 +472,7 @@
 - [x] Desktop hero remains compressed JPEG (403KB) - quality acceptable
 - [ ] Test and verify score improvement
 
+## Navigation Enhancement
+- [x] Make Solutions menu item clickable to go to /solutions page
+- [x] Keep dropdown functionality for sub-pages (hover on desktop, chevron on mobile)
+

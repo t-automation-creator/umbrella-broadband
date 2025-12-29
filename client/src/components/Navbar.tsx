@@ -81,13 +81,18 @@ export default function Navbar() {
                 onMouseEnter={() => setSolutionsOpen(true)}
                 onMouseLeave={() => setSolutionsOpen(false)}
               >
-                <button 
-                  className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none gap-1"
-                  onClick={() => setSolutionsOpen(!solutionsOpen)}
-                >
-                  Solutions
-                  <ChevronDown className={`w-4 h-4 transition-transform ${solutionsOpen ? 'rotate-180' : ''}`} />
-                </button>
+                <div className="flex items-center h-full">
+                  <Link href="/solutions" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                    Solutions
+                  </Link>
+                  <button 
+                    className="flex items-center h-full pr-[18px] -ml-3 hover:text-secondary transition-colors cursor-pointer"
+                    onClick={() => setSolutionsOpen(!solutionsOpen)}
+                    aria-label="Toggle solutions menu"
+                  >
+                    <ChevronDown className={`w-4 h-4 transition-transform ${solutionsOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                </div>
                 
                 {/* Dropdown Menu */}
                 {solutionsOpen && (
@@ -182,13 +187,18 @@ export default function Navbar() {
             
             {/* Mobile Solutions Dropdown */}
             <div>
-              <button 
-                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                className="flex items-center justify-between w-full text-white hover:text-secondary cursor-pointer py-3"
-              >
-                <span>Solutions</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
-              </button>
+              <div className="flex items-center justify-between w-full py-3">
+                <Link href="/solutions">
+                  <span className="text-white hover:text-secondary cursor-pointer">Solutions</span>
+                </Link>
+                <button 
+                  onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+                  className="text-white hover:text-secondary cursor-pointer p-1"
+                  aria-label="Toggle solutions menu"
+                >
+                  <ChevronDown className={`w-4 h-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`} />
+                </button>
+              </div>
               {mobileSolutionsOpen && (
                 <div className="pl-4">
                   <Link href="/managed-broadband">
