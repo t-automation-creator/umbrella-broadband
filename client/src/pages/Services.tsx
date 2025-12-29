@@ -119,7 +119,7 @@ export default function Services() {
       <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="/images/services-hero-v7.webp" 
+            src="/images/services-hero-v8.webp" 
             alt="Network connectivity and managed services" 
             className="w-full h-full object-cover opacity-70"
             width="1920"
