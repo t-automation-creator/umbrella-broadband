@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Wifi, ShieldCheck, Phone, Lock, Satellite, ArrowRight } from "lucide-react";
+import { Wifi, ShieldCheck, Phone, Lock, Satellite, Settings, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Solutions() {
@@ -35,6 +35,12 @@ export default function Solutions() {
       title: "Managed Starlink",
       description: "High-speed satellite internet for rural and hard-to-reach locations, fully managed with professional installation and support.",
       link: "/starlink"
+    },
+    {
+      icon: <Settings className="w-10 h-10" />,
+      title: "Management Services",
+      description: "Comprehensive support and maintenance for all your systems. 24/7 monitoring, proactive maintenance, and SLA-backed support.",
+      link: "/services"
     }
   ];
 

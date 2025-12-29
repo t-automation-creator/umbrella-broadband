@@ -517,3 +517,6 @@
 - [x] Make Solutions nav item clickable to go to /solutions
 - [x] Add "View All Solutions" link inside Solutions dropdown menu
 - [x] Add all missing solutions to the Solutions page and link them to their individual pages
+- [ ] Add Management Solutions as 6th solution on Solutions page
+- [ ] Add Services as 6th item on Solutions page linking to /services
+- [x] Add Management Services as 6th item on Solutions page linking to /services
