@@ -506,3 +506,4 @@
 - [ ] Fix Services hero image - remove grid lines between panels, fix ladder scene being cut off
 - [x] Fix Services hero image - remove grid lines, fix ladder cutoff, make brighter with less shadow overlay
 - [x] Create simpler Services hero with just 2 images instead of 4-panel collage
+- [x] Add Services page to main navigation bar

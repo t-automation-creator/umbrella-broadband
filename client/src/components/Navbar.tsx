@@ -126,6 +126,9 @@ export default function Navbar() {
                 )}
               </div>
               
+              <Link href="/services" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Services
+              </Link>
               <Link href="/case-studies" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
                 Case Studies
               </Link>
@@ -220,6 +223,9 @@ export default function Navbar() {
               )}
             </div>
             
+            <Link href="/services">
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Services</span>
+            </Link>
             <Link href="/case-studies">
               <span className="block text-white hover:text-secondary cursor-pointer py-3">Case Studies</span>
             </Link>
