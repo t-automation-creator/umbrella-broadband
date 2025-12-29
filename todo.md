@@ -502,3 +502,4 @@
 - [x] Generate collage-style hero image showing property-based services (broadband, CCTV, access control installation in HMOs/student accommodation)
 
 - [x] Fix Services hero collage - people are cut off at top of image, need full visibility
+- [x] Fix Services hero image positioning - top two people still cut off, need to adjust object-position or generate new image
