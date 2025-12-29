@@ -464,3 +464,9 @@
 - [x] Add explicit width/height to Partner logos (240x120)
 - [x] Images already have lazy loading where appropriate
 
+## Performance Optimization Phase 2
+- [x] Compress hero-aerial-v14.jpg (874KB → 403KB, quality 78%)
+- [x] Add preload hints for critical resources (hero image, fonts)
+- [x] Defer Google Tag Manager loading until after page load
+- [ ] Test and verify score improvement
+
