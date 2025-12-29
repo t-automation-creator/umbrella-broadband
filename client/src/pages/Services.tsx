@@ -134,7 +134,7 @@ export default function Services() {
               Value-Added Services
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading">
-              More Than Just Products, <span className="text-secondary">Complete Peace of Mind</span>
+              More Than Just Technology, <span className="text-secondary">Complete Peace of Mind</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
               Our value-added services ensure your connectivity solutions are always performing at their best. 
