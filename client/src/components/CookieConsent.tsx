@@ -30,8 +30,8 @@ export default function CookieConsent() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 z-40 max-w-sm animate-in slide-in-from-left duration-500">
-      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-gray-200 p-4">
+    <div className="fixed bottom-4 left-4 z-40 max-w-sm animate-in slide-in-from-left duration-500 will-change-transform">
+      <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4">
         <div className="flex items-start gap-3">
           <Cookie className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">

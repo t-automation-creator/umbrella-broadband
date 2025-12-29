@@ -9,6 +9,8 @@ export default function Sectors() {
           <div className="order-2 lg:order-1">
             <img loading="lazy" src="/images/sectors-tailored.jpg" 
               alt="Building Connectivity" 
+              width="1280"
+              height="1280"
               className="rounded-2xl shadow-xl w-full" 
             />
           </div>

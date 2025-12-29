@@ -454,3 +454,13 @@
 - [x] Add structured data to index.html
 - [ ] Test with Google Rich Results Test after publishing
 
+## Performance Optimization (PageSpeed Insights)
+- [x] Fix image dimensions (sectors-tailored.jpg, logo-white.png, partner logos)
+- [x] Compress sectors-tailored.jpg (1.4MB → 386KB, resized to 1280px)
+- [x] Fix cookie consent animation (removed backdrop-blur, added will-change-transform)
+- [x] Add explicit width/height to Navbar logo (125x88)
+- [x] Add explicit width/height to Footer logo (125x88)
+- [x] Add explicit width/height to Sectors image (1280x1280)
+- [x] Add explicit width/height to Partner logos (240x120)
+- [x] Images already have lazy loading where appropriate
+

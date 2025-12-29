@@ -18,6 +18,8 @@ export default function Footer() {
               <img 
                 src="/images/logo-white.png" 
                 alt="Logo" 
+                width="125"
+                height="88"
                 className="h-[88px] w-auto mb-2 cursor-pointer -ml-3" 
               />
             </Link>

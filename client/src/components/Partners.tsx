@@ -91,6 +91,8 @@ export default function Partners() {
               >
                 <img loading="lazy" src={partner.src} 
                   alt={partner.alt}
+                  width="240"
+                  height="120"
                   className="h-10 w-auto object-contain brightness-0 invert opacity-80 hover:opacity-100 transition-opacity" 
                 />
               </div>

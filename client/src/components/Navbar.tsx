@@ -56,6 +56,8 @@ export default function Navbar() {
               <img 
                 src="/images/logo-white.png" 
                 alt="Umbrella Broadband" 
+                width="125"
+                height="88"
                 className="block h-[88px] w-auto cursor-pointer mr-12" 
               />
             </Link>
