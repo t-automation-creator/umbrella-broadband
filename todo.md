@@ -521,3 +521,4 @@
 - [ ] Add Services as 6th item on Solutions page linking to /services
 - [x] Add Management Services as 6th item on Solutions page linking to /services
 - [x] Add "View All Solutions" link to mobile dropdown menu
+- [ ] Update homepage headline (reverted - still ideating on best option)
