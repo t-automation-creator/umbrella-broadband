@@ -446,3 +446,11 @@
 - [ ] User needs to publish and test if production now works
 - [ ] If still not working, may be platform limitation (CDN serving static files)
 
+## Schema.org Structured Data for AI Discoverability
+- [x] Create Organization schema
+- [x] Create LocalBusiness schema with services
+- [x] Create Service schemas for each offering (Managed Broadband, VoIP, CCTV, Access Control, Starlink)
+- [x] Add FAQ schema for common questions (6 FAQs)
+- [x] Add structured data to index.html
+- [ ] Test with Google Rich Results Test after publishing
+
