@@ -514,3 +514,6 @@
 - [x] Reduce Services page SEO keywords from 12 to 5-6 focused keywords
 - [x] Remove step numbers from Our Takeover Process section on Services page
 - [x] Update bottom CTA buttons on Services page to match nav bar style
+- [x] Make Solutions nav item clickable to go to /solutions
+- [x] Add "View All Solutions" link inside Solutions dropdown menu
+- [x] Add all missing solutions to the Solutions page and link them to their individual pages

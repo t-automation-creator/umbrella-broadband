@@ -1,39 +1,40 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Wifi, ShieldCheck, Phone, Server, Lock, Settings } from "lucide-react";
+import { Wifi, ShieldCheck, Phone, Lock, Satellite, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Solutions() {
   const solutions = [
     {
       icon: <Wifi className="w-10 h-10" />,
       title: "Managed Broadband",
-      description: "High-speed, reliable internet connectivity managed 24/7. We ensure optimal performance and seamless coverage for all users."
+      description: "High-speed, reliable internet connectivity managed 24/7. We ensure optimal performance and seamless coverage for all users.",
+      link: "/managed-broadband"
     },
     {
       icon: <Phone className="w-10 h-10" />,
-      title: "VoIP Telephony",
-      description: "Cost-effective, feature-rich cloud phone systems that keep your business connected anywhere, on any device."
+      title: "VoIP Phone Systems",
+      description: "Cost-effective, feature-rich cloud phone systems that keep your business connected anywhere, on any device.",
+      link: "/voip"
     },
     {
       icon: <ShieldCheck className="w-10 h-10" />,
       title: "CCTV & Security",
-      description: "Advanced surveillance systems with remote monitoring capabilities to protect your premises and assets around the clock."
+      description: "Advanced surveillance systems with remote monitoring capabilities to protect your premises and assets around the clock.",
+      link: "/cctv"
     },
     {
       icon: <Lock className="w-10 h-10" />,
       title: "Access Control Solutions",
-      description: "Secure, keyless entry systems for buildings and rooms, fully integrated with our network infrastructure for easy management."
+      description: "Secure, keyless entry systems for buildings and rooms, fully integrated with our network infrastructure for easy management.",
+      link: "/access-control"
     },
     {
-      icon: <Server className="w-10 h-10" />,
-      title: "Network Infrastructure",
-      description: "Robust structured cabling and network design that forms the backbone of your digital operations, built for scalability."
-    },
-    {
-      icon: <Settings className="w-10 h-10" />,
-      title: "Management Services",
-      description: "Comprehensive support and maintenance for all your systems. We ensure your broadband, security, and networks run smoothly 24/7."
+      icon: <Satellite className="w-10 h-10" />,
+      title: "Managed Starlink",
+      description: "High-speed satellite internet for rural and hard-to-reach locations, fully managed with professional installation and support.",
+      link: "/starlink"
     }
   ];
 
@@ -59,15 +60,20 @@ export default function Solutions() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {solutions.map((item, index) => (
-                <div key={index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                  <div className="w-16 h-16 bg-blue-50 rounded-lg flex items-center justify-center text-secondary mb-6">
-                    {item.icon}
+                <Link key={index} href={item.link}>
+                  <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-secondary/30 transition-all cursor-pointer group h-full">
+                    <div className="w-16 h-16 bg-blue-50 rounded-lg flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary/10 transition-colors">
+                      {item.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-primary mb-3 font-heading group-hover:text-secondary transition-colors">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      {item.description}
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all">
+                      Learn More <ArrowRight className="w-4 h-4" />
+                    </span>
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-3 font-heading">{item.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
