@@ -16,10 +16,10 @@ function getBaseUrl(req: express.Request): string {
 }
 
 // Inject dynamic OG meta tags into HTML
-async function injectOGMetaTags(html: string, path: string, baseUrl: string): Promise<string> {
+async function injectOGMetaTags(html: string, urlPath: string, baseUrl: string): Promise<string> {
   // Fetch OG config (may be async for dynamic content like blog posts)
-  const config = await getOGConfig(path);
-  const ogTags = generateOGMetaTags(config, path, baseUrl);
+  const config = await getOGConfig(urlPath);
+  const ogTags = generateOGMetaTags(config, urlPath, baseUrl);
   
   // Replace the existing OG meta tags block
   const ogStartMarker = '<!-- Open Graph / Facebook -->';
@@ -43,6 +43,16 @@ async function injectOGMetaTags(html: string, path: string, baseUrl: string): Pr
   
   // Fallback: insert before </head> if markers not found
   return html.replace('</head>', `${ogTags}\n  </head>`);
+}
+
+// Check if a request is for a static asset (not an HTML page)
+function isStaticAsset(urlPath: string): boolean {
+  const staticExtensions = [
+    '.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', 
+    '.woff', '.woff2', '.ttf', '.eot', '.webp', '.mp4', '.webm',
+    '.json', '.xml', '.txt', '.map', '.pdf'
+  ];
+  return staticExtensions.some(ext => urlPath.toLowerCase().endsWith(ext));
 }
 
 export async function setupVite(app: Express, server: Server) {
@@ -96,23 +106,47 @@ export function serveStatic(app: Express) {
     process.env.NODE_ENV === "development"
       ? path.resolve(import.meta.dirname, "../..", "dist", "public")
       : path.resolve(import.meta.dirname, "public");
+  
   if (!fs.existsSync(distPath)) {
     console.error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
 
-  app.use(express.static(distPath));
+  // Serve static assets directly (JS, CSS, images, etc.)
+  app.use(express.static(distPath, {
+    // Don't serve index.html for directory requests - we handle that below
+    index: false
+  }));
 
-  // fall through to index.html if the file doesn't exist
-  app.use("*", async (req, res) => {
-    const indexPath = path.resolve(distPath, "index.html");
-    let html = fs.readFileSync(indexPath, "utf-8");
+  // For all non-static requests, serve index.html with dynamic OG tags
+  app.use("*", async (req, res, next) => {
+    const urlPath = req.originalUrl;
     
-    // Inject dynamic OG meta tags for production
-    const baseUrl = getBaseUrl(req);
-    html = await injectOGMetaTags(html, req.originalUrl, baseUrl);
+    // Skip static assets - they should have been served above
+    if (isStaticAsset(urlPath)) {
+      return next();
+    }
     
-    res.set({ "Content-Type": "text/html" }).send(html);
+    try {
+      const indexPath = path.resolve(distPath, "index.html");
+      
+      if (!fs.existsSync(indexPath)) {
+        console.error(`index.html not found at ${indexPath}`);
+        return res.status(500).send("Server configuration error");
+      }
+      
+      let html = fs.readFileSync(indexPath, "utf-8");
+      
+      // Inject dynamic OG meta tags for production
+      const baseUrl = getBaseUrl(req);
+      console.log(`[OG] Injecting tags for: ${urlPath} with base: ${baseUrl}`);
+      html = await injectOGMetaTags(html, urlPath, baseUrl);
+      
+      res.status(200).set({ "Content-Type": "text/html" }).send(html);
+    } catch (error) {
+      console.error("[OG] Error serving HTML:", error);
+      next(error);
+    }
   });
 }

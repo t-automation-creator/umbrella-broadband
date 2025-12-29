@@ -437,3 +437,12 @@
 - [x] Update vite.ts to use async OG config fetching for dynamic content
 - [x] Test dynamic OG tags for blog posts and case studies
 
+## Bug Fix: Blog OG Images Not Showing on LinkedIn
+- [x] Test production site OG tags directly - Production has OLD code (not published)
+- [x] Identify why LinkedIn shows wrong image - Changes not deployed to production yet
+- [x] Dev server verified working correctly with dynamic OG tags
+- [x] Updated vite.ts with improved production HTML serving
+- [x] Verified localhost:3000 returns correct dynamic OG tags
+- [ ] User needs to publish and test if production now works
+- [ ] If still not working, may be platform limitation (CDN serving static files)
+
