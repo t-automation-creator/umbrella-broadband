@@ -67,15 +67,15 @@ export default function Solutions() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {solutions.map((item, index) => (
                 <Link key={index} href={item.link}>
-                  <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-secondary/30 transition-all cursor-pointer group h-full">
+                  <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-secondary/30 transition-all cursor-pointer group h-full flex flex-col">
                     <div className="w-16 h-16 bg-blue-50 rounded-lg flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary/10 transition-colors">
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-bold text-primary mb-3 font-heading group-hover:text-secondary transition-colors">{item.title}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-4">
+                    <p className="text-gray-600 leading-relaxed mb-4 flex-grow">
                       {item.description}
                     </p>
-                    <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all">
+                    <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all mt-auto">
                       Learn More <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>

@@ -531,3 +531,7 @@
 - [x] Optimize 4-card feature layout for mobile devices
 - [x] Update Sectors section description to reflect broad capabilities
 - [x] Lock "Learn more" links to bottom of feature cards for consistent alignment
+
+## Card Layout Consistency
+- [x] Apply bottom-anchored link pattern to Solutions page cards
+- [x] Apply bottom-anchored link pattern to Sectors page/component cards (also CaseStudyPreview)

@@ -41,7 +41,7 @@ export default function CaseStudyPreview() {
         ) : previewStudies.length > 0 ? (
           <div className="grid md:grid-cols-3 gap-8">
             {previewStudies.map((study) => (
-              <article key={study.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
+              <article key={study.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all group h-full flex flex-col">
                 <Link href={`/case-studies/${study.slug}`} className="block">
                   <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/10">
                     {study.imageUrl ? (
@@ -58,7 +58,7 @@ export default function CaseStudyPreview() {
                     )}
                   </div>
                 </Link>
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   {study.industry && (
                     <span className="text-secondary font-semibold text-sm mb-2 block">
                       {study.industry}
@@ -69,12 +69,12 @@ export default function CaseStudyPreview() {
                       {study.title}
                     </h3>
                   </Link>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
                     {study.clientName}
                   </p>
                   <Link 
                     href={`/case-studies/${study.slug}`}
-                    className="inline-flex items-center text-secondary font-medium text-sm group-hover:gap-2 transition-all"
+                    className="inline-flex items-center text-secondary font-medium text-sm group-hover:gap-2 transition-all mt-auto"
                   >
                     Read More <ArrowRight className="w-4 h-4 ml-1" />
                   </Link>
