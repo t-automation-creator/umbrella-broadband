@@ -509,3 +509,4 @@
 - [x] Add Services page to main navigation bar
 - [x] Add Services link to footer quick links section
 - [x] Add SEO keywords meta tag to Services page
+- [x] Add JSON-LD structured data for services to improve search engine rich snippets

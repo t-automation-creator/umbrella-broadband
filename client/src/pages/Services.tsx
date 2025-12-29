@@ -116,6 +116,106 @@ export default function Services() {
         image="/images/services-hero-v8.webp"
       />
       
+      {/* JSON-LD Structured Data for Services */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Managed IT Services",
+            "provider": {
+              "@type": "Organization",
+              "name": "Umbrella Broadband",
+              "url": "https://umbrellabroadband.co.uk",
+              "logo": "https://umbrellabroadband.co.uk/images/logo.png",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "46 Bath Street",
+                "addressLocality": "Leamington Spa",
+                "postalCode": "CV31 3AE",
+                "addressCountry": "GB"
+              },
+              "telephone": "+44-1926-298866"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Kingdom"
+            },
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Managed Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "24/7 Monitoring & Support",
+                    "description": "Round-the-clock monitoring of your systems with proactive alerts and UK-based support."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Proactive Maintenance",
+                    "description": "Regular maintenance and updates including firmware updates, security patches, and performance optimisation."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Network Management",
+                    "description": "Complete management of network infrastructure including configuration, security policies, and troubleshooting."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Installation & Setup",
+                    "description": "Professional installation and configuration of all systems for optimal performance."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Training & Onboarding",
+                    "description": "Comprehensive training for your team from basic operation to advanced features."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "SLA-Backed Support",
+                    "description": "Service level agreements with guaranteed response times and resolution targets."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Infrastructure Takeover & Management",
+                    "description": "Take over management of existing infrastructure with smooth transition and ongoing support."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Audits & Assessments",
+                    "description": "Comprehensive audits to identify issues, security vulnerabilities, and improvement opportunities."
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+      
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary via-primary to-primary-dark text-white py-20 lg:py-28 overflow-hidden">
         <div className="absolute inset-0">
