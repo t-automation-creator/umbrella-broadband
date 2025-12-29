@@ -490,3 +490,9 @@
 - [x] Optimize as WebP format (136KB)
 - [x] Add to Services page with gradient overlay
 
+## Services Page Restructure
+- [x] Remove duplicate solution cards (Managed Broadband, VoIP, CCTV, etc.)
+- [x] Add Value-Added Services section (for Umbrella solutions): 24/7 Monitoring, Maintenance, Network Management, Installation, Training, SLA Support
+- [x] Refine Existing Infrastructure section: Takeover & Management, Support Contracts, Audits & Assessments, Upgrades & Modernisation
+- [x] Simplified page structure with clear two-part focus
+
