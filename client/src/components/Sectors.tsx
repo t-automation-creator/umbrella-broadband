@@ -15,7 +15,7 @@ export default function Sectors() {
             />
           </div>
           <div className="order-1 lg:order-2">
-            <h2 className="text-3xl font-bold text-primary mb-6 font-heading">Tailored for Your Sector</h2>
+            <h2 className="text-3xl font-bold text-primary mb-6 font-heading">Expertise Across Every Sector</h2>
             <p className="text-gray-600 mb-6 font-sans">
               Whether you manage student accommodation, commercial offices, or residential developments, we provide bespoke network solutions that scale.
             </p>
