@@ -50,7 +50,7 @@ const valueAddedServices = [
   },
   {
     icon: Shield,
-    title: "SLA-Backed Support",
+    title: "SLA Backed Support",
     description: "Service level agreements that guarantee response times and resolution targets. Peace of mind knowing your systems are covered.",
     features: ["Guaranteed response times", "Resolution targets", "Regular reporting", "Escalation procedures"]
   }
@@ -190,7 +190,7 @@ export default function Services() {
                   "@type": "Offer",
                   "itemOffered": {
                     "@type": "Service",
-                    "name": "SLA-Backed Support",
+                    "name": "SLA Backed Support",
                     "description": "Service level agreements with guaranteed response times and resolution targets."
                   }
                 },
