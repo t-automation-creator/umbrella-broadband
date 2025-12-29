@@ -530,3 +530,4 @@
 - [x] Update Connectivity Solutions description to remove VoIP
 - [x] Optimize 4-card feature layout for mobile devices
 - [x] Update Sectors section description to reflect broad capabilities
+- [x] Lock "Learn more" links to bottom of feature cards for consistent alignment
