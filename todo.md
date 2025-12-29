@@ -468,7 +468,9 @@
 - [x] Compress hero-aerial-v14.jpg (874KB → 403KB, quality 78%)
 - [x] Add preload hints for critical resources (hero image, fonts)
 - [x] Defer Google Tag Manager loading until after page load
-- [x] Compress hero-aerial-mobile-v4.jpg (712KB → 329KB, quality 78%)
-- [x] Add responsive preload hints (desktop/mobile hero images)
+- [x] Reverted mobile hero JPEG compression (quality degraded)
+- [x] Converted mobile hero to WebP format (712KB → 409KB, quality 90%)
+- [x] Updated Hero.tsx to use WebP with JPEG fallback
+- [x] Updated preload hints for WebP mobile image
 - [ ] Test and verify score improvement
 
