@@ -112,7 +112,8 @@ export default function Services() {
       <SEO 
         title="Managed Services | Umbrella Broadband"
         description="Value-added services including 24/7 monitoring, proactive maintenance, network management, and support for both new and existing infrastructure."
-        image="/images/services-hero.webp"
+        keywords="managed IT services, 24/7 network monitoring, proactive maintenance, IT support UK, network management, infrastructure takeover, SLA support, CCTV maintenance, broadband support, property IT services, HMO IT support, student accommodation IT"
+        image="/images/services-hero-v8.webp"
       />
       
       {/* Hero Section */}

@@ -508,3 +508,4 @@
 - [x] Create simpler Services hero with just 2 images instead of 4-panel collage
 - [x] Add Services page to main navigation bar
 - [x] Add Services link to footer quick links section
+- [x] Add SEO keywords meta tag to Services page
