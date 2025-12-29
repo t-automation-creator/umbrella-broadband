@@ -26,7 +26,7 @@ export default function Hero() {
             Fast, reliable, and secure connectivity with full network management for landlords, businesses, and developers.
           </p>
           <div className="flex flex-wrap gap-3 md:gap-4">
-            <Link href="/solutions">
+            <Link href="/services">
               <span className="btn btn-primary cursor-pointer text-sm md:text-base">Our Solutions</span>
             </Link>
             <Link href="/contact">

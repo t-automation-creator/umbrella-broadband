@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Sectors from "./pages/Sectors";
 import Solutions from "./pages/Solutions";
+import Services from "./pages/Services";
 import Starlink from "./pages/Starlink";
 import ManagedBroadband from "./pages/ManagedBroadband";
 import VoIP from "./pages/VoIP";
@@ -49,6 +50,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/sectors" component={Sectors} />
       <Route path="/solutions" component={Solutions} />
+      <Route path="/services" component={Services} />
       <Route path="/starlink" component={Starlink} />
       <Route path="/managed-broadband" component={ManagedBroadband} />
       <Route path="/voip" component={VoIP} />

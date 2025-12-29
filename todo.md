@@ -476,3 +476,12 @@
 - [x] Make Solutions menu item clickable to go to /solutions page
 - [x] Keep dropdown functionality for sub-pages (hover on desktop, chevron on mobile)
 
+## Services Page (Management Services)
+- [x] Create /services page with two sections:
+  - Fully Managed Solutions (Umbrella's complete offerings)
+  - Infrastructure Takeover (managing existing systems)
+- [x] Content: Managed Broadband, VoIP, CCTV, Access Control, Starlink
+- [x] Takeover services: Network, Legacy Systems, Security, Support Contracts
+- [x] Add route to App.tsx
+- [x] Update "Our Solutions" button on homepage to link to /services
+
