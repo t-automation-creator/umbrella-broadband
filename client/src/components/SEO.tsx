@@ -36,6 +36,18 @@ export default function SEO({
       meta.setAttribute(attribute, value);
     };
     
+    // Convert relative image path to absolute URL
+    const getAbsoluteImageUrl = (imagePath: string): string => {
+      if (!imagePath) return '';
+      // If already absolute URL, return as-is
+      if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+        return imagePath;
+      }
+      // Convert relative path to absolute URL using current origin
+      const origin = window.location.origin;
+      return `${origin}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+    };
+    
     // Set meta description
     setMetaTag('meta[name="description"]', 'content', description);
 
@@ -44,22 +56,27 @@ export default function SEO({
       setMetaTag('meta[name="keywords"]', 'content', keywords);
     }
     
+    // Get absolute image URL
+    const absoluteImageUrl = getAbsoluteImageUrl(image);
+    
     // Set Open Graph tags
     setMetaTag('meta[property="og:title"]', 'content', title);
     setMetaTag('meta[property="og:description"]', 'content', description);
     setMetaTag('meta[property="og:type"]', 'content', type);
-    if (image) {
-      setMetaTag('meta[property="og:image"]', 'content', image);
-    }
-    if (url) {
-      setMetaTag('meta[property="og:url"]', 'content', url);
+    if (absoluteImageUrl) {
+      setMetaTag('meta[property="og:image"]', 'content', absoluteImageUrl);
     }
     
+    // Set og:url to current page URL if not provided
+    const pageUrl = url || window.location.href;
+    setMetaTag('meta[property="og:url"]', 'content', pageUrl);
+    
     // Set Twitter Card tags
+    setMetaTag('meta[name="twitter:card"]', 'content', 'summary_large_image');
     setMetaTag('meta[name="twitter:title"]', 'content', title);
     setMetaTag('meta[name="twitter:description"]', 'content', description);
-    if (image) {
-      setMetaTag('meta[name="twitter:image"]', 'content', image);
+    if (absoluteImageUrl) {
+      setMetaTag('meta[name="twitter:image"]', 'content', absoluteImageUrl);
     }
   }, [title, description, keywords, image, url, type]);
 

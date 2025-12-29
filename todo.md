@@ -423,3 +423,11 @@
 - [x] Blog Post Detail already uses dynamic image from post
 - Note: Contact, Blog listing, Case Studies listing, and Solutions listing pages don't have hero images
 
+## OG Image Absolute URL Fix
+- [x] Update SEO component to convert relative image paths to absolute URLs
+- [x] Add og:url meta tag for current page URL
+- [x] Add twitter:card meta tag for large image cards
+- [x] Create server-side OG config (og-config.ts) with page-specific meta tags
+- [x] Update vite.ts to inject dynamic OG meta tags based on URL
+- [x] Verified OG tags work for Home, About, Managed Broadband, Starlink pages
+
