@@ -511,3 +511,4 @@
 - [x] Add SEO keywords meta tag to Services page
 - [x] Add JSON-LD structured data for services to improve search engine rich snippets
 - [x] Update Services page hero buttons to match homepage button style
+- [x] Reduce Services page SEO keywords from 12 to 5-6 focused keywords
