@@ -1,6 +1,8 @@
 // Open Graph configuration for each page
 // This is used by the server to inject the correct OG meta tags for social media crawlers
 
+import { getBlogPostBySlug, getCaseStudyBySlug } from "../db";
+
 export interface OGConfig {
   title: string;
   description: string;
@@ -92,8 +94,8 @@ export const ogConfigs: Record<string, OGConfig> = {
   }
 };
 
-// Get OG config for a given path
-export function getOGConfig(path: string): OGConfig {
+// Get OG config for a given path (async for dynamic content)
+export async function getOGConfig(path: string): Promise<OGConfig> {
   // Exact match first
   if (ogConfigs[path]) {
     return ogConfigs[path];
@@ -102,8 +104,25 @@ export function getOGConfig(path: string): OGConfig {
   // Check for partial matches (for dynamic routes like /blog/slug)
   const pathParts = path.split('/').filter(Boolean);
   
-  // For blog posts, use blog default
+  // For blog posts, fetch from database
   if (pathParts[0] === 'blog' && pathParts.length > 1) {
+    const slug = pathParts[1];
+    try {
+      const post = await getBlogPostBySlug(slug);
+      if (post) {
+        return {
+          title: `${post.title} | Umbrella Broadband Blog`,
+          description: post.excerpt 
+            ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? '...' : '')
+            : `Read ${post.title} on Umbrella Broadband blog. Expert insights on connectivity and technology.`,
+          image: post.imageUrl || "/images/og-image.jpg",
+          type: "article"
+        };
+      }
+    } catch (error) {
+      console.error("[OG Config] Error fetching blog post:", error);
+    }
+    // Fallback for blog posts
     return {
       ...defaultOG,
       title: "Blog | Umbrella Broadband",
@@ -111,8 +130,25 @@ export function getOGConfig(path: string): OGConfig {
     };
   }
   
-  // For case study details, use case studies default
+  // For case study details, fetch from database
   if (pathParts[0] === 'case-studies' && pathParts.length > 1) {
+    const slug = pathParts[1];
+    try {
+      const caseStudy = await getCaseStudyBySlug(slug);
+      if (caseStudy) {
+        return {
+          title: `${caseStudy.title} | ${caseStudy.clientName} Case Study | Umbrella Broadband`,
+          description: caseStudy.challenge 
+            ? caseStudy.challenge.substring(0, 155) + '...'
+            : `Discover how Umbrella Broadband helped ${caseStudy.clientName} achieve reliable connectivity. Read the full case study.`,
+          image: caseStudy.imageUrl || "/images/og-image.jpg",
+          type: "article"
+        };
+      }
+    } catch (error) {
+      console.error("[OG Config] Error fetching case study:", error);
+    }
+    // Fallback for case studies
     return {
       ...defaultOG,
       title: "Case Study | Umbrella Broadband",
@@ -124,25 +160,34 @@ export function getOGConfig(path: string): OGConfig {
 }
 
 // Generate OG meta tags HTML
-export function generateOGMetaTags(path: string, baseUrl: string): string {
-  const config = getOGConfig(path);
-  const imageUrl = config.image.startsWith('http') 
-    ? config.image 
-    : `${baseUrl}${config.image}`;
+export function generateOGMetaTags(config: OGConfig, path: string, baseUrl: string): string {
+  const image = config.image || '/images/og-image.jpg';
+  const imageUrl = image.startsWith('http') 
+    ? image 
+    : `${baseUrl}${image}`;
   const pageUrl = `${baseUrl}${path}`;
   
   return `
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="${config.type || 'website'}" />
     <meta property="og:site_name" content="Umbrella Broadband" />
-    <meta property="og:title" content="${config.title}" />
-    <meta property="og:description" content="${config.description}" />
+    <meta property="og:title" content="${escapeHtml(config.title)}" />
+    <meta property="og:description" content="${escapeHtml(config.description)}" />
     <meta property="og:image" content="${imageUrl}" />
     <meta property="og:url" content="${pageUrl}" />
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="${config.title}" />
-    <meta name="twitter:description" content="${config.description}" />
+    <meta name="twitter:title" content="${escapeHtml(config.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(config.description)}" />
     <meta name="twitter:image" content="${imageUrl}" />`;
+}
+
+// Helper to escape HTML entities in meta content
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }

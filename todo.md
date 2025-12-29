@@ -431,3 +431,9 @@
 - [x] Update vite.ts to inject dynamic OG meta tags based on URL
 - [x] Verified OG tags work for Home, About, Managed Broadband, Starlink pages
 
+## Dynamic Blog Post OG Tags
+- [x] Create server-side function to fetch blog post by slug (already existed in db.ts)
+- [x] Update og-config.ts to support dynamic blog post and case study OG tags
+- [x] Update vite.ts to use async OG config fetching for dynamic content
+- [x] Test dynamic OG tags for blog posts and case studies
+

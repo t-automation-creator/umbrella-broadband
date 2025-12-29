@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
-import { generateOGMetaTags } from "./og-config";
+import { getOGConfig, generateOGMetaTags } from "./og-config";
 
 // Get base URL from environment or request
 function getBaseUrl(req: express.Request): string {
@@ -16,8 +16,10 @@ function getBaseUrl(req: express.Request): string {
 }
 
 // Inject dynamic OG meta tags into HTML
-function injectOGMetaTags(html: string, path: string, baseUrl: string): string {
-  const ogTags = generateOGMetaTags(path, baseUrl);
+async function injectOGMetaTags(html: string, path: string, baseUrl: string): Promise<string> {
+  // Fetch OG config (may be async for dynamic content like blog posts)
+  const config = await getOGConfig(path);
+  const ogTags = generateOGMetaTags(config, path, baseUrl);
   
   // Replace the existing OG meta tags block
   const ogStartMarker = '<!-- Open Graph / Facebook -->';
@@ -78,7 +80,7 @@ export async function setupVite(app: Express, server: Server) {
       
       // Inject dynamic OG meta tags based on the URL
       const baseUrl = getBaseUrl(req);
-      template = injectOGMetaTags(template, url, baseUrl);
+      template = await injectOGMetaTags(template, url, baseUrl);
       
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
@@ -103,13 +105,13 @@ export function serveStatic(app: Express) {
   app.use(express.static(distPath));
 
   // fall through to index.html if the file doesn't exist
-  app.use("*", (req, res) => {
+  app.use("*", async (req, res) => {
     const indexPath = path.resolve(distPath, "index.html");
     let html = fs.readFileSync(indexPath, "utf-8");
     
     // Inject dynamic OG meta tags for production
     const baseUrl = getBaseUrl(req);
-    html = injectOGMetaTags(html, req.originalUrl, baseUrl);
+    html = await injectOGMetaTags(html, req.originalUrl, baseUrl);
     
     res.set({ "Content-Type": "text/html" }).send(html);
   });

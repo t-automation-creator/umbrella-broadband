@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, slug, title FROM case_studies LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, slug, title FROM case_studies LIMIT 5;",
+  "rows": [
+    {
+      "id": "120001",
+      "slug": "vesto-stays-achieves-seamless-connectivity-for-guests",
+      "title": "VESTO Stays Achieves Seamless Connectivity for Guests"
+    },
+    {
+      "id": "150001",
+      "slug": "eliminating-wi-fi-dead-spots-for-student-cribs-in-manchester",
+      "title": "Eliminating Wi-Fi Dead Spots for Student Cribs in Manchester"
+    },
+    {
+      "id": "180001",
+      "slug": "station-house-high-density-connectivity-for-226-bed-student-accommodation",
+      "title": "Station House: High-Density Connectivity for 226-Bed Student Accommodation"
+    },
+    {
+      "id": "210001",
+      "slug": "jephson-hotel-upgrading-a-legacy-network-to-managed-modern-connectivity",
+      "title": "Jephson Hotel: Upgrading a Legacy Network to Managed Modern Connectivity"
+    },
+    {
+      "id": "210002",
+      "slug": "seamless-connectivity-for-40-bed-birmingham-property",
+      "title": "Connectivity Upgrade for 40 Bed Birmingham Property"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tslug\ttitle\n120001\tvesto-stays-achieves-seamless-connectivity-for-guests\tVESTO Stays Achieves Seamless Connectivity for Guests\n150001\teliminating-wi-fi-dead-spots-for-student-cribs-in-manchester\tEliminating Wi-Fi Dead Spots for Student Cribs in Manchester\n180001\tstation-house-high-density-connectivity-for-226-bed-student-accommodation\tStation House: High-Density Connectivity for 226-Bed Student Accommodation\n210001\tjephson-hotel-upgrading-a-legacy-network-to-managed-modern-connectivity\tJephson Hotel: Upgrading a Legacy Network to Managed Modern Connectivity\n210002\tseamless-connectivity-for-40-bed-birmingham-property\tConnectivity Upgrade for 40 Bed Birmingham Property\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}
