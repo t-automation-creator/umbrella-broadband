@@ -526,3 +526,5 @@
 - [x] Move Tailored for Your Sector section below Comprehensive Connectivity on homepage
 - [x] Update Features section heading to "A Technology Partner You Can Rely On for Every Property" and new description
 - [x] Update three feature cards: Connectivity Solutions, Security & Surveillance, Ongoing Support & Management
+- [x] Add 4th feature card "Communication Solutions" for VoIP/telephony
+- [x] Update Connectivity Solutions description to remove VoIP
