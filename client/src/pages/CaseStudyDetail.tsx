@@ -96,7 +96,7 @@ export default function CaseStudyDetail() {
               </div>
             )}
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-heading leading-tight text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-heading leading-tight">
               {caseStudy.title}
             </h1>
             

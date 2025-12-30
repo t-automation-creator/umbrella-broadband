@@ -104,7 +104,7 @@ export default function BlogPost() {
               </div>
             )}
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading leading-tight text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 font-heading leading-tight">
               {post.title}
             </h1>
             

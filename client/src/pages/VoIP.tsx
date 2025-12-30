@@ -96,7 +96,7 @@ export default function VoIP() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1a365d]/90 via-[#1a365d]/70 to-transparent"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 w-full">
-            <div className="max-w-xl text-center md:text-left mx-auto md:mx-0">
+            <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 bg-green-500/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <Phone className="w-4 h-4" />
                 Business Telephony
@@ -109,7 +109,7 @@ export default function VoIP() {
                 Cost-effective, feature-rich cloud phone systems that keep your business 
                 connected anywhere, on any device. Enterprise features at SME prices.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/contact" className="btn bg-green-500 hover:bg-green-600 text-white px-8 py-3 text-center">
                   Get a Quote
                 </Link>

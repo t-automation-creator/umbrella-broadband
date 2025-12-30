@@ -20,7 +20,7 @@ export default function About() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-6 font-heading text-center md:text-left">About Umbrella Broadband</h1>
+                <h1 className="text-4xl lg:text-5xl font-bold text-primary mb-6 font-heading">About Umbrella Broadband</h1>
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                   Welcome to Umbrella Broadband, a leading provider of tailored Connectivity, Technology and Security Solutions. Building upon the success of our sister company, Student Internet, we have been delivering fully managed broadband services to students, landlords, and developers across the UK.
                 </p>

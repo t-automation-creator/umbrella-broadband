@@ -142,7 +142,7 @@ export default function AccessControl() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a5f]/90 via-[#1e3a5f]/70 to-transparent"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 w-full">
-            <div className="max-w-xl text-center md:text-left mx-auto md:mx-0">
+            <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <KeyRound className="w-4 h-4" />
                 Security Solutions
@@ -155,7 +155,7 @@ export default function AccessControl() {
                 Control who enters your building with modern keyless entry and video intercom systems. 
                 Manage access remotely, track entry logs, and enhance security.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/contact" className="btn bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 text-center">
                   Get a Quote
                 </Link>
