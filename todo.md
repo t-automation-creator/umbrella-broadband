@@ -544,3 +544,6 @@
 
 ## Chatbot Visibility
 - [x] Remove chatbot from all admin pages
+
+## Text Centering Fix
+- [x] Fix expertise text centering issue
