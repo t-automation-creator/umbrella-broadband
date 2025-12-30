@@ -547,3 +547,4 @@
 
 ## Text Centering Fix
 - [x] Fix expertise text centering issue
+- [x] Move Explore Sectors button below the image

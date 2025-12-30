@@ -13,6 +13,12 @@ export default function Sectors() {
               height="1280"
               className="rounded-2xl shadow-xl w-full" 
             />
+            {/* Button below image on mobile only */}
+            <div className="mt-8 text-center lg:hidden">
+              <Link href="/sectors">
+                <span className="btn btn-primary cursor-pointer">Explore Sectors</span>
+              </Link>
+            </div>
           </div>
           <div className="order-1 lg:order-2 text-center lg:text-left">
             <h2 className="text-3xl font-bold text-primary mb-6 font-heading">Expertise Across Every Sector</h2>
@@ -32,7 +38,8 @@ export default function Sectors() {
                 </li>
               ))}
             </ul>
-            <div>
+            {/* Button visible on desktop only */}
+            <div className="hidden lg:block">
               <Link href="/sectors">
                 <span className="btn btn-primary cursor-pointer">Explore Sectors</span>
               </Link>
