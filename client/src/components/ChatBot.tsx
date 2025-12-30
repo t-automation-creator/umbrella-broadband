@@ -89,6 +89,12 @@ const quickReplies = [
 
 export default function ChatBot() {
   const [location] = useLocation();
+  
+  // Don't render chatbot on admin pages
+  if (location.startsWith('/admin')) {
+    return null;
+  }
+  
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {

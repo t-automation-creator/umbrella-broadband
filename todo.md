@@ -535,3 +535,12 @@
 ## Card Layout Consistency
 - [x] Apply bottom-anchored link pattern to Solutions page cards
 - [x] Apply bottom-anchored link pattern to Sectors page/component cards (also CaseStudyPreview)
+
+## Mobile Card Layout Testing
+- [x] Test homepage Features section cards on mobile
+- [x] Test Solutions page cards on mobile
+- [x] Test CaseStudyPreview cards on mobile
+- [x] Fix any layout issues found (no issues - flexbox layout works correctly on mobile)
+
+## Chatbot Visibility
+- [x] Remove chatbot from all admin pages
