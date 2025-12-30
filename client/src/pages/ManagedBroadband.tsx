@@ -92,7 +92,7 @@ export default function ManagedBroadband() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 pt-8 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 w-full">
-            <div className="max-w-xl">
+            <div className="max-w-xl text-center md:text-left mx-auto md:mx-0">
               <div className="inline-flex items-center gap-2 bg-secondary/20 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
                 <Wifi className="w-4 h-4" />
                 Connectivity Solutions
@@ -105,7 +105,7 @@ export default function ManagedBroadband() {
                 High-speed, reliable internet connectivity that's fully managed 24/7. 
                 We ensure optimal performance and seamless coverage so you can focus on what matters.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link href="/contact" className="btn bg-secondary hover:bg-secondary/90 text-white px-8 py-3 text-center">
                   Get a Quote
                 </Link>

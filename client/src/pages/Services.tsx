@@ -229,18 +229,18 @@ export default function Services() {
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent" />
         <div className="container relative">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl text-center md:text-left mx-auto md:mx-0">
             <span className="inline-block px-4 py-1.5 bg-secondary/20 text-secondary rounded-full text-sm font-medium mb-6">
               Value-Added Services
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-heading">
               More Than Just Technology, <span className="text-secondary">Complete Peace of Mind</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
+            <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto md:mx-0">
               Our value-added services ensure your connectivity solutions are always performing at their best. 
               From 24/7 monitoring to proactive maintenance, we've got you covered.
             </p>
-            <div className="flex flex-wrap gap-3 md:gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
               <Link href="/contact">
                 <span className="btn btn-primary cursor-pointer text-sm md:text-base">Get Started</span>
               </Link>

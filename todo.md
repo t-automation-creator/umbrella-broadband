@@ -544,3 +544,6 @@
 
 ## Chatbot Visibility
 - [x] Remove chatbot from all admin pages
+
+## Mobile H1 Centering
+- [x] Center all H1 headings on mobile devices
