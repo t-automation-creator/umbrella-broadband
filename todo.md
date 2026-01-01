@@ -550,3 +550,4 @@
 - [x] Move Explore Sectors button below the image
 - [ ] Fix meta description that mentions 'landing page'
 - [x] Fix missing menu on Services page on mobile
+- [x] Audit all pages for missing Navbar/Footer
