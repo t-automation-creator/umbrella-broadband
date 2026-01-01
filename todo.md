@@ -548,3 +548,5 @@
 ## Text Centering Fix
 - [x] Fix expertise text centering issue
 - [x] Move Explore Sectors button below the image
+- [ ] Fix meta description that mentions 'landing page'
+- [x] Fix missing menu on Services page on mobile

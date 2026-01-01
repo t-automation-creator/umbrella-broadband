@@ -1,5 +1,7 @@
 import { Link } from "wouter";
 import SEO from "@/components/SEO";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { 
   Monitor,
   Wrench,
@@ -108,7 +110,9 @@ const processSteps = [
 
 export default function Services() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col font-sans">
+      <Navbar />
+      <main className="flex-grow">
       <SEO 
         title="Managed Services | Umbrella Broadband"
         description="Value-added services including 24/7 monitoring, proactive maintenance, network management, and support for both new and existing infrastructure."
@@ -385,6 +389,8 @@ export default function Services() {
           </div>
         </div>
       </section>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 }
