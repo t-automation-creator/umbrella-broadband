@@ -553,3 +553,4 @@
 - [x] Audit all pages for missing Navbar/Footer
 - [x] Fix Services page text alignment to match other pages
 - [x] Fix text alignment for all sections on Services page
+- [x] Add TinyAdz tracking script to website
