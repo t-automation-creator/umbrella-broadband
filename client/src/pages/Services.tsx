@@ -232,7 +232,7 @@ export default function Services() {
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent" />
-        <div className="container relative">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
           <div className="max-w-3xl">
             <span className="inline-block px-4 py-1.5 bg-secondary/20 text-secondary rounded-full text-sm font-medium mb-6">
               Value-Added Services

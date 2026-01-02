@@ -551,3 +551,4 @@
 - [ ] Fix meta description that mentions 'landing page'
 - [x] Fix missing menu on Services page on mobile
 - [x] Audit all pages for missing Navbar/Footer
+- [x] Fix Services page text alignment to match other pages
