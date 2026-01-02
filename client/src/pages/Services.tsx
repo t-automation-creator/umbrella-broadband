@@ -258,7 +258,7 @@ export default function Services() {
 
       {/* Value-Added Services Section */}
       <section className="py-20 bg-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
               Our Value-Added Services
@@ -296,7 +296,7 @@ export default function Services() {
 
       {/* Existing Infrastructure Section */}
       <section id="existing" className="py-20 bg-gray-50">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1.5 bg-secondary/10 text-secondary rounded-full text-sm font-medium mb-4">
               For Existing Infrastructure
@@ -341,7 +341,7 @@ export default function Services() {
 
       {/* Process Section */}
       <section className="py-20 bg-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
               Our Takeover Process
@@ -365,7 +365,7 @@ export default function Services() {
 
       {/* CTA Section */}
       <section className="py-20 bg-primary text-white">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-heading">
               Ready to Experience Better Support?
