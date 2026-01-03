@@ -142,6 +142,9 @@ export default function Navbar() {
               <Link href="/blog" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
                 Blog
               </Link>
+              <Link href="/support" className="flex items-center h-full px-[18px] hover:text-secondary transition-colors cursor-pointer font-medium leading-none">
+                Support
+              </Link>
             </div>
           </div>
           
@@ -243,6 +246,9 @@ export default function Navbar() {
             </Link>
             <Link href="/blog">
               <span className="block text-white hover:text-secondary cursor-pointer py-3">Blog</span>
+            </Link>
+            <Link href="/support">
+              <span className="block text-white hover:text-secondary cursor-pointer py-3">Support</span>
             </Link>
             <Link href="/contact">
               <span className="block text-white hover:text-secondary cursor-pointer py-3">Contact</span>

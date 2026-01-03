@@ -555,3 +555,6 @@
 - [x] Fix text alignment for all sections on Services page
 - [x] Add TinyAdz tracking script to website
 - [x] Add Report a Fault option to chatbot
+- [x] Create Support page with fault reporting form
+- [x] Add Support page route to App.tsx
+- [x] Add Support link to Navbar

@@ -28,6 +28,7 @@ import AdminCaseStudyEdit from "./pages/admin/CaseStudyEdit";
 import AdminChatLeads from "./pages/admin/ChatLeads";
 import AdminAuthGuard from "./components/AdminAuthGuard";
 import CaseStudies from "./pages/CaseStudies";
+import Support from "./pages/Support";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
@@ -57,6 +58,7 @@ function Router() {
       <Route path="/cctv" component={CCTV} />
       <Route path="/access-control" component={AccessControl} />
       <Route path="/contact" component={Contact} />
+      <Route path="/support" component={Support} />
       <Route path="/case-studies" component={CaseStudies} />
       <Route path="/case-studies/:slug" component={CaseStudyDetail} />
       <Route path="/blog" component={Blog} />
