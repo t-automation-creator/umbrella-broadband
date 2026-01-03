@@ -122,7 +122,7 @@ export default function Support() {
                   If you experience any technical issues, please <strong>raise a fault</strong> through our <strong>Fault Reporting System</strong>. Every report is logged and reviewed by our support team to ensure a prompt resolution.
                 </p>
                 <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-                  You can also contact the office on the following number: <a href="tel:01926298866" className="font-bold text-primary hover:text-secondary transition-colors">01926 29 88 66</a>
+                  You can also contact us on: <a href="tel:01926298866" className="font-bold text-primary hover:text-secondary transition-colors whitespace-nowrap">01926 29 88 66</a>
                 </p>
 
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-heading">
