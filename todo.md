@@ -558,3 +558,4 @@
 - [x] Create Support page with fault reporting form
 - [x] Add Support page route to App.tsx
 - [x] Add Support link to Navbar
+- [x] Configure fault report email to support@umbrella-broadband.co.uk with CC

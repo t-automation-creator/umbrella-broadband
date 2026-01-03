@@ -4,12 +4,16 @@ import { Resend } from "resend";
 export type EmailType = "sales" | "support";
 
 // Recipient email addresses
-// TODO: Change back to real addresses after domain verification in Resend
-// Real addresses: enquiries@student-internet.co.uk (sales), support@umbrella-broadband.co.uk (support)
 const EMAIL_RECIPIENTS = {
   sales: "taylor.deakyne@gmail.com",
-  support: "taylor.deakyne@gmail.com",
+  support: "support@umbrella-broadband.co.uk",
 };
+
+// CC recipients for support emails
+const SUPPORT_CC_RECIPIENTS = [
+  "gavin@umbrella-broadband.co.uk",
+  "Tyler@umbrella-broadband.co.uk",
+];
 
 // Initialize Resend client
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -39,9 +43,13 @@ export async function sendEmail(
 
     const recipient = payload.to || EMAIL_RECIPIENTS[type];
     
+    // Add CC recipients for support emails (only when sending to support inbox, not customer confirmations)
+    const ccRecipients = type === "support" && !payload.to ? SUPPORT_CC_RECIPIENTS : undefined;
+    
     const { data, error } = await resend.emails.send({
       from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
       to: [recipient],
+      cc: ccRecipients,
       subject: payload.subject,
       text: payload.text,
       html: payload.html,
