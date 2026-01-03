@@ -83,6 +83,7 @@ interface SupportFormData {
 const quickReplies = [
   { label: "Get a quote", action: "quote" },
   { label: "Schedule a callback", action: "callback" },
+  { label: "Report a fault", action: "fault" },
   { label: "I need support", action: "support" },
   { label: "Speak to someone", action: "speak" },
 ];
@@ -295,6 +296,14 @@ export default function ChatBot() {
           message: "What are your prices? Can you tell me about your pricing?",
           conversationHistory: [],
         });
+        break;
+      case "fault":
+        setMessages((prev) => [
+          ...prev,
+          { role: "user", content: "I need to report a fault" },
+          { role: "assistant", content: "I'm sorry to hear you're experiencing issues. Please fill in the form below with details about the fault and our technical team will investigate as soon as possible." },
+        ]);
+        setShowSupportForm(true);
         break;
       case "support":
         setMessages((prev) => [
