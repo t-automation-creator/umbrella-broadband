@@ -36,7 +36,8 @@ import {
 } from "./db";
 import { storagePut } from "./storage";
 import sharp from "sharp";
-import { sendSalesEnquiry, sendSupportTicket, sendSalesConfirmation, sendSupportConfirmation } from "./services/email";
+import { sendSalesEnquiry, sendSalesConfirmation } from "./services/email";
+import { sendSupportTicketToTeam, sendSupportConfirmationToCustomer } from "./services/support-email";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -1037,6 +1038,18 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk (sa
         return { success: true };
       }),
 
+    // DEBUG: Check API key
+    debugApiKey: publicProcedure
+      .query(() => {
+        const apiKey = process.env.RESEND_API_KEY;
+        return {
+          apiKeyExists: !!apiKey,
+          apiKeyPreview: apiKey ? `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}` : 'UNDEFINED',
+          apiKeyStartsWithRe: apiKey?.startsWith('re_') ? 'YES' : 'NO',
+          fullKey: apiKey, // For debugging only
+        };
+      }),
+
     // Submit support ticket (sends to support email)
     submitSupportTicket: publicProcedure
       .input(z.object({
@@ -1053,16 +1066,14 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk (sa
       .mutation(async ({ input }) => {
         // Send support ticket via SMTP
         try {
-          const result = await sendSupportTicket({
+          const result = await sendSupportTicketToTeam({
             name: input.name,
             email: input.email,
             phone: input.phone,
-            company: input.company,
-            propertyAddress: input.propertyAddress,
-            issueType: input.issueType,
-            urgency: input.urgency,
+            address: input.propertyAddress,
+            issueType: input.issueType || "General Issue",
+            urgency: input.urgency || "medium",
             description: input.description,
-            conversationSummary: input.conversationSummary,
           });
 
           if (!result.success) {
@@ -1074,10 +1085,10 @@ Contact info: Phone: 01926 298866, Email: enquiries@umbrella-broadband.co.uk (sa
 
         // Send customer confirmation email
         try {
-          await sendSupportConfirmation({
+          await sendSupportConfirmationToCustomer({
             name: input.name,
             email: input.email,
-            issueType: input.issueType,
+            issueType: input.issueType || "General Issue",
           });
         } catch (confirmError) {
           console.error("Failed to send support confirmation email:", confirmError);

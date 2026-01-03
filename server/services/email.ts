@@ -1,4 +1,18 @@
 import { Resend } from "resend";
+import * as fs from "fs";
+import * as path from "path";
+
+// Direct file logging for debugging
+function debugLog(message: string) {
+  const timestamp = new Date().toISOString();
+  const logLine = `[${timestamp}] ${message}\n`;
+  const logPath = path.join(process.cwd(), "email-debug.log");
+  try {
+    fs.appendFileSync(logPath, logLine);
+  } catch (e) {
+    console.error("Failed to write debug log:", e);
+  }
+}
 
 // Email types for routing
 export type EmailType = "sales" | "support";
@@ -15,12 +29,18 @@ const SUPPORT_CC_RECIPIENTS = [
   "Tyler@umbrella-broadband.co.uk",
 ];
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Get Resend client (lazy initialization to ensure current API key is used)
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  const keyPreview = apiKey ? `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}` : 'UNDEFINED';
+  debugLog(`API Key: ${keyPreview}`);
+  debugLog(`API Key starts with 're_': ${apiKey?.startsWith('re_') ? 'YES' : 'NO'}`);
+  return new Resend(apiKey);
+}
 
-// Sender email - use Resend's default domain initially
-const SENDER_EMAIL = "onboarding@resend.dev";
-const SENDER_NAME = "Umbrella Broadband";
+// Sender email - use env var or hardcoded verified domain
+// Format: "Display Name <email@domain.com>"
+const RESEND_FROM = process.env.RESEND_FROM || "Umbrella Broadband <support@umbrella-broadband.co.uk>";
 
 // Email payload interface
 export interface EmailPayload {
@@ -46,9 +66,14 @@ export async function sendEmail(
     // Add CC recipients for support emails (only when sending to support inbox, not customer confirmations)
     const ccRecipients = type === "support" && !payload.to ? SUPPORT_CC_RECIPIENTS : undefined;
     
+    debugLog(`Sending ${type} email from: ${RESEND_FROM}`);
+    debugLog(`To: ${recipient}, CC: ${ccRecipients?.join(', ') || 'none'}`);
+    const resend = getResendClient();
+    const fromAddress = "Umbrella Broadband <support@umbrella-broadband.co.uk>";
+    debugLog(`About to send with from: ${fromAddress}`);
     const { data, error } = await resend.emails.send({
-      from: `${SENDER_NAME} <${SENDER_EMAIL}>`,
-      to: [recipient],
+      from: fromAddress,
+      to: recipient,
       cc: ccRecipients,
       subject: payload.subject,
       text: payload.text,
@@ -56,11 +81,14 @@ export async function sendEmail(
     });
 
     if (error) {
-      console.error(`[Email] Failed to send ${type} email:`, error.message);
+      debugLog(`ERROR: Failed to send ${type} email: ${error.message}`);
+      debugLog(`ERROR details: ${JSON.stringify(error)}`);
       return { success: false, error: error.message };
     }
 
-    console.log(`[Email] ${type} email sent successfully:`, data?.id);
+    debugLog(`SUCCESS: ${type} email sent with ID: ${data?.id}`);
+    debugLog(`Response data: ${JSON.stringify(data)}`);
+
     return { success: true, messageId: data?.id };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
@@ -126,73 +154,7 @@ export async function sendSalesEnquiry(data: {
   return sendEmail("sales", { subject, text: textParts, html: htmlParts });
 }
 
-// Send support ticket email
-export async function sendSupportTicket(data: {
-  name: string;
-  email: string;
-  phone?: string;
-  company?: string;
-  propertyAddress?: string;
-  issueType?: string;
-  urgency?: "low" | "medium" | "high" | "critical";
-  description: string;
-  conversationSummary?: string;
-}): Promise<{ success: boolean; error?: string }> {
-  const urgencyLabel = {
-    low: "🟢 Low",
-    medium: "🟡 Medium",
-    high: "🟠 High",
-    critical: "🔴 Critical",
-  }[data.urgency || "medium"];
-  
-  const subject = `Support Ticket: ${data.issueType || "General Issue"} - ${data.name}`;
-  
-  const textParts = [
-    "New Support Ticket",
-    "=".repeat(40),
-    "",
-    `Urgency: ${urgencyLabel}`,
-    `Issue Type: ${data.issueType || "General"}`,
-    "",
-    `Name: ${data.name}`,
-    `Email: ${data.email}`,
-    data.phone ? `Phone: ${data.phone}` : null,
-    data.company ? `Company: ${data.company}` : null,
-    data.propertyAddress ? `Property Address: ${data.propertyAddress}` : null,
-    "",
-    `Issue Description:\n${data.description}`,
-    data.conversationSummary ? `\nConversation Summary:\n${data.conversationSummary}` : null,
-    "",
-    "---",
-    "This support ticket was submitted via the Umbrella Broadband website.",
-  ].filter(Boolean).join("\n");
-  
-  const urgencyColor = {
-    low: "#22c55e",
-    medium: "#eab308",
-    high: "#f97316",
-    critical: "#ef4444",
-  }[data.urgency || "medium"];
-  
-  const htmlParts = [
-    `<h2>New Support Ticket</h2>`,
-    `<p style='display: inline-block; padding: 4px 12px; background: ${urgencyColor}; color: white; border-radius: 4px; font-weight: bold;'>${urgencyLabel}</p>`,
-    `<p><strong>Issue Type:</strong> ${data.issueType || "General"}</p>`,
-    "<table style='border-collapse: collapse; width: 100%; max-width: 600px; margin-top: 16px;'>",
-    `<tr><td style='padding: 8px; border-bottom: 1px solid #eee;'><strong>Name:</strong></td><td style='padding: 8px; border-bottom: 1px solid #eee;'>${data.name}</td></tr>`,
-    `<tr><td style='padding: 8px; border-bottom: 1px solid #eee;'><strong>Email:</strong></td><td style='padding: 8px; border-bottom: 1px solid #eee;'><a href='mailto:${data.email}'>${data.email}</a></td></tr>`,
-    data.phone ? `<tr><td style='padding: 8px; border-bottom: 1px solid #eee;'><strong>Phone:</strong></td><td style='padding: 8px; border-bottom: 1px solid #eee;'><a href='tel:${data.phone}'>${data.phone}</a></td></tr>` : null,
-    data.company ? `<tr><td style='padding: 8px; border-bottom: 1px solid #eee;'><strong>Company:</strong></td><td style='padding: 8px; border-bottom: 1px solid #eee;'>${data.company}</td></tr>` : null,
-    data.propertyAddress ? `<tr><td style='padding: 8px; border-bottom: 1px solid #eee;'><strong>Property Address:</strong></td><td style='padding: 8px; border-bottom: 1px solid #eee;'>${data.propertyAddress}</td></tr>` : null,
-    "</table>",
-    `<h3>Issue Description:</h3><p style='white-space: pre-wrap; background: #f5f5f5; padding: 16px; border-radius: 8px;'>${data.description}</p>`,
-    data.conversationSummary ? `<h3>Conversation Summary:</h3><p style='white-space: pre-wrap;'>${data.conversationSummary}</p>` : null,
-    "<hr style='margin-top: 20px;'>",
-    "<p style='color: #666; font-size: 12px;'>This support ticket was submitted via the Umbrella Broadband website.</p>",
-  ].filter(Boolean).join("\n");
-  
-  return sendEmail("support", { subject, text: textParts, html: htmlParts });
-}
+// NOTE: Support ticket functions moved to support-email.ts to avoid conflicts
 
 // Send customer confirmation email for sales enquiry
 export async function sendSalesConfirmation(data: {
@@ -247,50 +209,4 @@ Website: www.umbrella-broadband.co.uk`;
 }
 
 // Send customer confirmation email for support ticket
-export async function sendSupportConfirmation(data: {
-  name: string;
-  email: string;
-  issueType?: string;
-  ticketReference?: string;
-}): Promise<{ success: boolean; error?: string }> {
-  const subject = `Support Ticket Received - Umbrella Broadband`;
-  
-  const text = `Dear ${data.name},
-
-Thank you for contacting Umbrella Broadband Support. We have received your support request regarding "${data.issueType || "your issue"}" and our technical team is reviewing it.
-
-${data.ticketReference ? `Your ticket reference is: ${data.ticketReference}` : ""}
-
-We aim to respond to all support requests within 24 hours during business hours. For urgent issues, please call our support line on 01926 298866.
-
-Best regards,
-The Umbrella Broadband Support Team
-
----
-Umbrella Broadband Support
-Phone: 01926 298866
-Email: support@umbrella-broadband.co.uk
-Website: www.umbrella-broadband.co.uk`;
-  
-  const html = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <div style="background: linear-gradient(135deg, #0d9488 0%, #0891b2 100%); padding: 30px; text-align: center;">
-        <h1 style="color: white; margin: 0; font-size: 24px;">Umbrella Broadband Support</h1>
-      </div>
-      <div style="padding: 30px; background: #ffffff;">
-        <p style="font-size: 16px; color: #333;">Dear ${data.name},</p>
-        <p style="font-size: 16px; color: #333;">Thank you for contacting Umbrella Broadband Support. We have received your support request regarding "<strong>${data.issueType || "your issue"}</strong>" and our technical team is reviewing it.</p>
-        ${data.ticketReference ? `<p style="font-size: 16px; color: #333; background: #f0f9ff; padding: 12px; border-radius: 8px;"><strong>Your ticket reference:</strong> ${data.ticketReference}</p>` : ""}
-        <p style="font-size: 16px; color: #333;">We aim to respond to all support requests within 24 hours during business hours. For urgent issues, please call our support line on <a href="tel:01926298866" style="color: #0d9488;">01926 298866</a>.</p>
-        <p style="font-size: 16px; color: #333;">Best regards,<br>The Umbrella Broadband Support Team</p>
-      </div>
-      <div style="background: #f5f5f5; padding: 20px; text-align: center; font-size: 12px; color: #666;">
-        <p style="margin: 0;">Umbrella Broadband Support</p>
-        <p style="margin: 5px 0;">Phone: 01926 298866 | Email: support@umbrella-broadband.co.uk</p>
-        <p style="margin: 5px 0;"><a href="https://www.umbrella-broadband.co.uk" style="color: #0d9488;">www.umbrella-broadband.co.uk</a></p>
-      </div>
-    </div>
-  `;
-  
-  return sendEmail("support", { to: data.email, subject, text, html });
-}
+// NOTE: Support confirmation function moved to support-email.ts to avoid conflicts

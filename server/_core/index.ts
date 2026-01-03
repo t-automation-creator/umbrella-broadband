@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "../logger"; // Initialize logging
 import express from "express";
 import cookieParser from "cookie-parser";
 import { createServer } from "http";
@@ -29,6 +30,10 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 }
 
 async function startServer() {
+  // DEBUG: Log the API key at startup
+  const apiKey = process.env.RESEND_API_KEY;
+  console.log("[STARTUP DEBUG] RESEND_API_KEY:", apiKey ? `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}` : "NOT SET");
+  console.log("[STARTUP DEBUG] API Key starts with 're_':", apiKey?.startsWith('re_') ? 'YES' : 'NO');
   const app = express();
   const server = createServer(app);
   // Configure body parser with larger size limit for file uploads

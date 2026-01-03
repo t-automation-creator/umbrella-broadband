@@ -20,10 +20,11 @@ describe("Resend API Key Validation", () => {
   it("should be able to send a test email", async () => {
     const resend = new Resend(process.env.RESEND_API_KEY);
     
-    // Send a test email to verify the API key works
+    // Send a test email to verify the API key works (matching form pattern with CC)
     const { data, error } = await resend.emails.send({
-      from: "Umbrella Broadband <onboarding@resend.dev>",
-      to: ["enquiries@student-internet.co.uk"],
+      from: "Umbrella Broadband <support@umbrella-broadband.co.uk>",
+      to: "support@umbrella-broadband.co.uk",
+      cc: ["gavin@umbrella-broadband.co.uk", "Tyler@umbrella-broadband.co.uk"],
       subject: "Test Email - Resend Integration",
       text: "This is a test email to verify the Resend integration is working correctly.",
     });
