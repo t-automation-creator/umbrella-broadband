@@ -155,7 +155,7 @@ export default function Support() {
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
                     <Mail className="w-8 h-8 text-primary mb-3" />
                     <h4 className="font-semibold text-gray-900 mb-1">Email Us</h4>
-                    <a href="mailto:support@umbrella-broadband.co.uk" className="text-primary hover:text-secondary transition-colors font-medium text-sm">
+                    <a href="mailto:support@umbrella-broadband.co.uk" className="text-primary hover:text-secondary transition-colors font-medium text-sm whitespace-nowrap">
                       support@umbrella-broadband.co.uk
                     </a>
                   </div>
