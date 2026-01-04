@@ -39,7 +39,7 @@ async function startServer() {
   const server = createServer(app);
   
   // Start URL validation scheduler
-  startValidationScheduler(30); // Run validation every 30 minutes
+  startValidationScheduler(24 * 60); // Run validation once per day (1440 minutes)
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
