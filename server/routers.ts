@@ -38,6 +38,7 @@ import { storagePut } from "./storage";
 import sharp from "sharp";
 import { sendSalesEnquiry, sendSalesConfirmation } from "./services/email";
 import { sendSupportTicketToTeam, sendSupportConfirmationToCustomer } from "./services/support-email";
+import { urlValidationRouter } from "./routers/url-validation";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -179,6 +180,7 @@ const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
 
 export const appRouter = router({
   system: systemRouter,
+  urlValidation: urlValidationRouter,
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

@@ -6,6 +6,7 @@ import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
+import { startValidationScheduler } from "../services/validation-scheduler";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
@@ -36,6 +37,9 @@ async function startServer() {
   console.log("[STARTUP DEBUG] API Key starts with 're_':", apiKey?.startsWith('re_') ? 'YES' : 'NO');
   const app = express();
   const server = createServer(app);
+  
+  // Start URL validation scheduler
+  startValidationScheduler(30); // Run validation every 30 minutes
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

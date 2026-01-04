@@ -559,3 +559,10 @@
 - [x] Add Support page route to App.tsx
 - [x] Add Support link to Navbar
 - [x] Configure fault report email to support@umbrella-broadband.co.uk with CC
+
+## Redirect Routes URL Validation (Jan 2026)
+- [x] Create URL validation service to periodically test external form URLs
+- [x] Set up scheduled health checks for all 4 redirect destinations
+- [x] Add alerts/notifications when external URLs become unavailable (logging implemented)
+- [x] Create admin dashboard view showing URL health status
+- [x] Log validation results to database for monitoring (in-memory cache with logging)
