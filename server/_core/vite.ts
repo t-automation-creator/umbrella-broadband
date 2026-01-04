@@ -162,6 +162,17 @@ export function serveStatic(app: Express) {
       return next();
     }
     
+    // Skip redirect routes - they should have been handled by app.get() above
+    const redirectRoutes = [
+      '/support-redirect/',
+      '/Student-Cribs-Fault-Report/',
+      '/urbanrest-support-redirect/',
+      '/resooma-support-redirect/'
+    ];
+    if (redirectRoutes.some(route => urlPath.startsWith(route))) {
+      return next();
+    }
+    
     try {
       const indexPath = path.resolve(distPath, "index.html");
       
