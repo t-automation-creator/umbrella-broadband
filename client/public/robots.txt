@@ -1,4 +1,17 @@
 User-agent: *
 Allow: /
 
+# Disallow redirect pages - these are not meant to be indexed
+Disallow: /support-redirect/
+Disallow: /Student-Cribs-Fault-Report/
+Disallow: /urbanrest-support-redirect/
+Disallow: /resooma-support-redirect/
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /admin-login/
+
+# Disallow API endpoints
+Disallow: /api/
+
 Sitemap: https://www.umbrella-broadband.co.uk/sitemap.xml
