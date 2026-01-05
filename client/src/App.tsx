@@ -30,6 +30,10 @@ import AdminAuthGuard from "./components/AdminAuthGuard";
 import CaseStudies from "./pages/CaseStudies";
 import Support from "./pages/Support";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
+import SupportRedirect from "./pages/SupportRedirect";
+import StudentCribsFaultReport from "./pages/StudentCribsFaultReport";
+import UrbanrestSupportRedirect from "./pages/UrbanrestSupportRedirect";
+import ResoomaSupportRedirect from "./pages/ResoomaSupportRedirect";
 import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
@@ -63,6 +67,12 @@ function Router() {
       <Route path="/case-studies/:slug" component={CaseStudyDetail} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
+      
+      {/* Redirect routes */}
+      <Route path="/support-redirect/" component={SupportRedirect} />
+      <Route path="/Student-Cribs-Fault-Report/" component={StudentCribsFaultReport} />
+      <Route path="/urbanrest-support-redirect/" component={UrbanrestSupportRedirect} />
+      <Route path="/resooma-support-redirect/" component={ResoomaSupportRedirect} />
       
       {/* Admin login (public) */}
       <Route path="/admin/login" component={AdminLogin} />
