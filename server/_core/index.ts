@@ -45,10 +45,8 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // Parse cookies for session management
   app.use(cookieParser());
-  // OAuth callback under /api/oauth/callback
-  registerOAuthRoutes(app);
   
-  // Redirect routes MUST be registered BEFORE Vite/static middleware
+  // Redirect routes MUST be registered FIRST - before all other middleware
   app.get("/support-redirect/", (req, res) => {
     res.redirect("https://forms.monday.com/forms/236f7d6c52a0be10dd9a6541dfc318e9?r=use1");
   });
@@ -64,6 +62,9 @@ async function startServer() {
   app.get("/resooma-support-redirect/", (req, res) => {
     res.redirect("https://forms.monday.com/forms/d94222cdbf7f7ad9647ba19a9be84e53?r=use1");
   });
+  
+  // OAuth callback under /api/oauth/callback
+  registerOAuthRoutes(app);
   
   // tRPC API
   app.use(
