@@ -100,24 +100,7 @@ export async function setupVite(app: Express, server: Server) {
     }
   });
 }
-
 export function serveStatic(app: Express) {
-  // Add redirect routes BEFORE static middleware
-  app.get("/support-redirect/", (req, res) => {
-    res.redirect("https://forms.monday.com/forms/236f7d6c52a0be10dd9a6541dfc318e9?r=use1");
-  });
-  
-  app.get("/Student-Cribs-Fault-Report/", (req, res) => {
-    res.redirect("https://wkf.ms/4dfAxf7");
-  });
-  
-  app.get("/urbanrest-support-redirect/", (req, res) => {
-    res.redirect("https://forms.monday.com/forms/354bc6605fbffcfc231c6c54b88c69e9?r=use1");
-  });
-  
-  app.get("/resooma-support-redirect/", (req, res) => {
-    res.redirect("https://forms.monday.com/forms/d94222cdbf7f7ad9647ba19a9be84e53?r=use1");
-  });
 
   const distPath =
     process.env.NODE_ENV === "development"
@@ -145,14 +128,8 @@ export function serveStatic(app: Express) {
       return next();
     }
     
-    // Skip redirect routes - they should have been handled by app.get() above
-    const redirectRoutes = [
-      '/support-redirect/',
-      '/Student-Cribs-Fault-Report/',
-      '/urbanrest-support-redirect/',
-      '/resooma-support-redirect/'
-    ];
-    if (redirectRoutes.some(route => urlPath.startsWith(route))) {
+    // Skip API calls - they should be handled by tRPC middleware
+    if (urlPath.startsWith('/api/')) {
       return next();
     }
     
