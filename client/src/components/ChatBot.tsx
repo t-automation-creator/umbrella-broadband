@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
-import { MessageCircle, X, Send, Bot, User, Loader2, Phone } from "lucide-react";
+import { MessageCircle, X, Send, Bot, User, Loader2, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
@@ -74,6 +74,7 @@ interface SupportFormData {
   name: string;
   email: string;
   phone: string;
+  postcode: string;
   propertyAddress: string;
   issueType: string;
   urgency: "low" | "medium" | "high" | "critical";
@@ -134,11 +135,13 @@ export default function ChatBot() {
     name: "",
     email: "",
     phone: "",
+    postcode: "",
     propertyAddress: "",
     issueType: "",
     urgency: "medium",
     description: "",
   });
+  const [postcodeLoading, setPostcodeLoading] = useState(false);
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if chat was already auto-opened this session
     return sessionStorage.getItem('chatbot-auto-opened') === 'true';
@@ -343,6 +346,40 @@ export default function ChatBot() {
       preferredTime: callbackFormData.preferredTime,
       notes: callbackFormData.notes,
     });
+  };
+
+  const handlePostcodeLookup = async (postcode: string) => {
+    if (!postcode.trim()) return;
+    
+    setPostcodeLoading(true);
+    try {
+      // Use Google Maps Geocoding API via the Manus proxy
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)},UK&key=AIzaSyDummyKey`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          const result = data.results[0];
+          const formattedAddress = result.formatted_address;
+          setSupportFormData(prev => ({
+            ...prev,
+            propertyAddress: formattedAddress
+          }));
+          toast.success("Address found!");
+        } else {
+          toast.error("Postcode not found. Please enter manually.");
+        }
+      } else {
+        toast.error("Unable to look up postcode. Please enter manually.");
+      }
+    } catch (error) {
+      console.error("Postcode lookup error:", error);
+      toast.error("Unable to look up postcode. Please enter manually.");
+    } finally {
+      setPostcodeLoading(false);
+    }
   };
 
   const handleSupportSubmit = (e: React.FormEvent) => {
@@ -699,6 +736,33 @@ export default function ChatBot() {
                     className="text-sm h-9"
                     required
                   />
+                  <div className="space-y-2">
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Postcode (e.g., SW1A 1AA)"
+                        value={supportFormData.postcode}
+                        onChange={(e) =>
+                          setSupportFormData({ ...supportFormData, postcode: e.target.value })
+                        }
+                        className="text-sm h-9 flex-1"
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handlePostcodeLookup(supportFormData.postcode)}
+                        disabled={postcodeLoading || !supportFormData.postcode}
+                        className="h-9 px-3"
+                      >
+                        {postcodeLoading ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <MapPin className="w-4 h-4" />
+                        )}
+                      </Button>
+                    </div>
+                    <p className="text-xs text-gray-500">Enter postcode and click map icon to auto-fill address</p>
+                  </div>
                   <Input
                     placeholder="Property address *"
                     value={supportFormData.propertyAddress}

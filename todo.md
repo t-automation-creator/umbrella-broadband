@@ -566,3 +566,12 @@
 - [x] Add alerts/notifications when external URLs become unavailable (logging implemented)
 - [x] Create admin dashboard view showing URL health status
 - [x] Log validation results to database for monitoring (in-memory cache with logging)
+
+## Postcode to Address Lookup (Jan 2026)
+- [x] Add postcode field to ChatBot support form
+- [x] Add postcode field to Support page fault form
+- [x] Integrate Google Maps Geocoding API for postcode lookup
+- [x] Auto-populate address field from postcode
+- [x] Add error handling for invalid postcodes
+- [ ] Test postcode lookup on ChatBot form
+- [ ] Test postcode lookup on Support page form

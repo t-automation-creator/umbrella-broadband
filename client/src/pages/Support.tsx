@@ -16,10 +16,13 @@ import {
   Headphones,
   Clock,
   FileText,
-  ArrowRight
+  ArrowRight,
+  MapPin,
+  Loader2
 } from "lucide-react";
 
 interface FaultFormData {
+  postcode: string;
   address: string;
   contactName: string;
   contactPhone: string;
@@ -31,6 +34,7 @@ interface FaultFormData {
 
 export default function Support() {
   const [formData, setFormData] = useState<FaultFormData>({
+    postcode: "",
     address: "",
     contactName: "",
     contactPhone: "",
@@ -41,6 +45,7 @@ export default function Support() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [postcodeLoading, setPostcodeLoading] = useState(false);
 
   const submitSupportMutation = trpc.chat.submitSupportTicket.useMutation({
     onSuccess: () => {
@@ -78,6 +83,39 @@ export default function Support() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePostcodeLookup = async (postcode: string) => {
+    if (!postcode.trim()) return;
+    
+    setPostcodeLoading(true);
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)},UK&key=AIzaSyDummyKey`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          const result = data.results[0];
+          const formattedAddress = result.formatted_address;
+          setFormData(prev => ({
+            ...prev,
+            address: formattedAddress
+          }));
+          toast.success("Address found!");
+        } else {
+          toast.error("Postcode not found. Please enter manually.");
+        }
+      } else {
+        toast.error("Unable to look up postcode. Please enter manually.");
+      }
+    } catch (error) {
+      console.error("Postcode lookup error:", error);
+      toast.error("Unable to look up postcode. Please enter manually.");
+    } finally {
+      setPostcodeLoading(false);
+    }
   };
 
   return (
@@ -188,6 +226,38 @@ export default function Support() {
                     </p>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
+                      {/* Postcode Lookup */}
+                      <div className="space-y-2">
+                        <Label htmlFor="postcode" className="text-gray-700 font-medium">
+                          Postcode (Optional)
+                        </Label>
+                        <div className="flex gap-2">
+                          <Input
+                            id="postcode"
+                            name="postcode"
+                            value={formData.postcode}
+                            onChange={handleChange}
+                            placeholder="Enter postcode (e.g., SW1A 1AA)"
+                            className="flex-1"
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handlePostcodeLookup(formData.postcode)}
+                            disabled={postcodeLoading || !formData.postcode}
+                            className="px-4"
+                          >
+                            {postcodeLoading ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <MapPin className="w-4 h-4" />
+                            )}
+                          </Button>
+                        </div>
+                        <p className="text-xs text-gray-500">Enter postcode and click the map icon to auto-fill your address</p>
+                      </div>
+
                       {/* Address */}
                       <div>
                         <Label htmlFor="address" className="text-gray-700 font-medium">
