@@ -11,7 +11,7 @@ export default function About() {
         title="About Umbrella Broadband | UK Connectivity Experts" 
         description="Learn about Umbrella Broadband's mission to deliver seamless, high-speed internet and security solutions. We are dedicated to keeping you connected."
         keywords="about umbrella broadband, UK internet provider, managed broadband company, connectivity solutions provider, business internet company, student internet provider, landlord broadband partner"
-        image="/images/about-hero.jpg"
+        image="/images/about-hero.webp"
       />
       <Navbar />
       <main className="flex-grow">
@@ -32,9 +32,9 @@ export default function About() {
                 </Link>
               </div>
               <div className="relative">
-                <img loading="lazy" src="/images/about-hero.jpg" 
-                  alt="Our Team" 
-                  className="w-full object-contain" 
+                <img loading="lazy" src="/images/about-hero.webp" 
+                  alt="Umbrella Broadband - Connectivity Solutions" 
+                  className="w-full object-cover rounded-lg shadow-lg" 
                 />
               </div>
             </div>
