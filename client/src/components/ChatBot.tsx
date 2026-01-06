@@ -144,6 +144,9 @@ export default function ChatBot() {
   const [postcodeLoading, setPostcodeLoading] = useState(false);
   const [addressSuggestions, setAddressSuggestions] = useState<string[]>([]);
   const [showAddressDropdown, setShowAddressDropdown] = useState(false);
+  const [postcodeSuggestions, setPostcodeSuggestions] = useState<string[]>([]);
+  const [showPostcodeDropdown, setShowPostcodeDropdown] = useState(false);
+  const postcodeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const validateUKPostcode = (postcode: string): boolean => {
     const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
@@ -410,6 +413,48 @@ export default function ChatBot() {
     setShowAddressDropdown(false);
     setAddressSuggestions([]);
     toast.success("Address selected!");
+  };
+
+  const handlePostcodeChange = (value: string) => {
+    setSupportFormData(prev => ({ ...prev, postcode: value }));
+    
+    if (postcodeTimeoutRef.current) {
+      clearTimeout(postcodeTimeoutRef.current);
+    }
+    
+    if (value.length < 2) {
+      setPostcodeSuggestions([]);
+      setShowPostcodeDropdown(false);
+      return;
+    }
+    
+    postcodeTimeoutRef.current = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `https://api.postcodes.io/postcodes?q=${encodeURIComponent(value)}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data.result && data.result.length > 0) {
+            const postcodes = data.result.map((item: any) => item.postcode);
+            setPostcodeSuggestions(postcodes.slice(0, 5));
+            setShowPostcodeDropdown(true);
+          } else {
+            setPostcodeSuggestions([]);
+            setShowPostcodeDropdown(false);
+          }
+        }
+      } catch (error) {
+        console.error("Postcode autocomplete error:", error);
+        setPostcodeSuggestions([]);
+      }
+    }, 300);
+  };
+
+  const handleSelectPostcode = (postcode: string) => {
+    setSupportFormData(prev => ({ ...prev, postcode }));
+    setShowPostcodeDropdown(false);
+    setPostcodeSuggestions([]);
   };
 
   const handleSupportSubmit = (e: React.FormEvent) => {
@@ -768,14 +813,29 @@ export default function ChatBot() {
                   />
                   <div className="space-y-2">
                     <div className="flex gap-2">
-                      <Input
-                        placeholder="Postcode (e.g., SW1A 1AA)"
-                        value={supportFormData.postcode}
-                        onChange={(e) =>
-                          setSupportFormData({ ...supportFormData, postcode: e.target.value })
-                        }
-                        className="text-sm h-9 flex-1"
-                      />
+                      <div className="flex-1 relative">
+                        <Input
+                          placeholder="Postcode (e.g., SW1A 1AA)"
+                          value={supportFormData.postcode}
+                          onChange={(e) => handlePostcodeChange(e.target.value)}
+                          className="text-sm h-9 w-full"
+                          autoComplete="off"
+                        />
+                        {showPostcodeDropdown && postcodeSuggestions.length > 0 && (
+                          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+                            {postcodeSuggestions.map((pc, idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => handleSelectPostcode(pc)}
+                                className="w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
+                              >
+                                {pc}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                       <Button
                         type="button"
                         size="sm"

@@ -598,3 +598,13 @@
 - [x] Test postcode validation with various formats (CV32 6LD, SW1A 1AA, M1 1AE)
 - [x] Verify error message no longer appears on valid postcodes
 - [x] Simplify regex to accept all valid UK postcode formats
+
+## Postcode Autocomplete Suggestions (Jan 2026)
+- [x] Add postcode autocomplete state to ChatBot component
+- [x] Implement postcode API integration for ChatBot
+- [x] Add autocomplete dropdown UI to ChatBot form
+- [x] Add postcode autocomplete state to Support page component
+- [x] Implement postcode API integration for Support page
+- [x] Add autocomplete dropdown UI to Support page form
+- [x] Test autocomplete suggestions on ChatBot form
+- [x] Test autocomplete suggestions on Support page form

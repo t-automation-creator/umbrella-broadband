@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
+import { useRef } from "react";
 import SEO from "@/components/SEO";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -48,6 +49,9 @@ export default function Support() {
   const [postcodeLoading, setPostcodeLoading] = useState(false);
   const [addressSuggestions, setAddressSuggestions] = useState<string[]>([]);
   const [showAddressDropdown, setShowAddressDropdown] = useState(false);
+  const [postcodeSuggestions, setPostcodeSuggestions] = useState<string[]>([]);
+  const [showPostcodeDropdown, setShowPostcodeDropdown] = useState(false);
+  const postcodeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const validateUKPostcode = (postcode: string): boolean => {
     const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
@@ -147,6 +151,48 @@ export default function Support() {
     setShowAddressDropdown(false);
     setAddressSuggestions([]);
     toast.success("Address selected!");
+  };
+
+  const handlePostcodeChange = (value: string) => {
+    setFormData(prev => ({ ...prev, postcode: value }));
+    
+    if (postcodeTimeoutRef.current) {
+      clearTimeout(postcodeTimeoutRef.current);
+    }
+    
+    if (value.length < 2) {
+      setPostcodeSuggestions([]);
+      setShowPostcodeDropdown(false);
+      return;
+    }
+    
+    postcodeTimeoutRef.current = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `https://api.postcodes.io/postcodes?q=${encodeURIComponent(value)}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          if (data.result && data.result.length > 0) {
+            const postcodes = data.result.map((item: any) => item.postcode);
+            setPostcodeSuggestions(postcodes.slice(0, 5));
+            setShowPostcodeDropdown(true);
+          } else {
+            setPostcodeSuggestions([]);
+            setShowPostcodeDropdown(false);
+          }
+        }
+      } catch (error) {
+        console.error("Postcode autocomplete error:", error);
+        setPostcodeSuggestions([]);
+      }
+    }, 300);
+  };
+
+  const handleSelectPostcode = (postcode: string) => {
+    setFormData(prev => ({ ...prev, postcode }));
+    setShowPostcodeDropdown(false);
+    setPostcodeSuggestions([]);
   };
 
   return (
@@ -263,14 +309,31 @@ export default function Support() {
                           Postcode (Optional)
                         </Label>
                         <div className="flex gap-2">
-                          <Input
-                            id="postcode"
-                            name="postcode"
-                            value={formData.postcode}
-                            onChange={handleChange}
-                            placeholder="Enter postcode (e.g., SW1A 1AA)"
-                            className="flex-1"
-                          />
+                          <div className="flex-1 relative">
+                            <Input
+                              id="postcode"
+                              name="postcode"
+                              value={formData.postcode}
+                              onChange={(e) => handlePostcodeChange(e.target.value)}
+                              placeholder="Enter postcode (e.g., SW1A 1AA)"
+                              className="w-full"
+                              autoComplete="off"
+                            />
+                            {showPostcodeDropdown && postcodeSuggestions.length > 0 && (
+                              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 max-h-40 overflow-y-auto">
+                                {postcodeSuggestions.map((pc, idx) => (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => handleSelectPostcode(pc)}
+                                    className="w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0"
+                                  >
+                                    {pc}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                           <Button
                             type="button"
                             size="sm"
