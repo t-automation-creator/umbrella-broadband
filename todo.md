@@ -591,3 +591,9 @@
 - [x] Add postcode format helper text to Support page fault form
 - [x] Test helper text display on ChatBot form
 - [x] Test helper text display on Support page form
+
+## Postcode Validation Fix (Jan 2026)
+- [x] Fix UK postcode regex validation in ChatBot component
+- [x] Fix UK postcode regex validation in Support page component
+- [x] Test postcode validation with various formats
+- [x] Verify error message no longer appears on valid postcodes
