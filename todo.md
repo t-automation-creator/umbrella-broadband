@@ -575,3 +575,13 @@
 - [x] Add error handling for invalid postcodes
 - [ ] Test postcode lookup on ChatBot form
 - [ ] Test postcode lookup on Support page form
+
+## Postcode Lookup Enhancements (Jan 2026)
+- [x] Add UK postcode format validation (regex)
+- [x] Implement address selection dropdown for multiple results
+- [x] Optimize mobile layout for postcode lookup button
+- [x] Test postcode validation on ChatBot form
+- [x] Test postcode validation on Support page form
+- [x] Test address dropdown on ChatBot form
+- [x] Test address dropdown on Support page form
+- [x] Test mobile responsiveness on both forms

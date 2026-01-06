@@ -142,6 +142,13 @@ export default function ChatBot() {
     description: "",
   });
   const [postcodeLoading, setPostcodeLoading] = useState(false);
+  const [addressSuggestions, setAddressSuggestions] = useState<string[]>([]);
+  const [showAddressDropdown, setShowAddressDropdown] = useState(false);
+
+  const validateUKPostcode = (postcode: string): boolean => {
+    const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
+    return postcodeRegex.test(postcode.trim());
+  };
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {
     // Check if chat was already auto-opened this session
     return sessionStorage.getItem('chatbot-auto-opened') === 'true';
@@ -351,9 +358,16 @@ export default function ChatBot() {
   const handlePostcodeLookup = async (postcode: string) => {
     if (!postcode.trim()) return;
     
+    if (!validateUKPostcode(postcode)) {
+      toast.error("Invalid postcode format. Please check and try again.");
+      return;
+    }
+    
     setPostcodeLoading(true);
+    setAddressSuggestions([]);
+    setShowAddressDropdown(false);
+    
     try {
-      // Use Google Maps Geocoding API via the Manus proxy
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)},UK&key=AIzaSyDummyKey`
       );
@@ -361,13 +375,19 @@ export default function ChatBot() {
       if (response.ok) {
         const data = await response.json();
         if (data.results && data.results.length > 0) {
-          const result = data.results[0];
-          const formattedAddress = result.formatted_address;
-          setSupportFormData(prev => ({
-            ...prev,
-            propertyAddress: formattedAddress
-          }));
-          toast.success("Address found!");
+          const addresses = data.results.map((result: any) => result.formatted_address);
+          
+          if (addresses.length === 1) {
+            setSupportFormData(prev => ({
+              ...prev,
+              propertyAddress: addresses[0]
+            }));
+            toast.success("Address found!");
+          } else {
+            setAddressSuggestions(addresses);
+            setShowAddressDropdown(true);
+            toast.success(`Found ${addresses.length} addresses. Please select one.`);
+          }
         } else {
           toast.error("Postcode not found. Please enter manually.");
         }
@@ -380,6 +400,16 @@ export default function ChatBot() {
     } finally {
       setPostcodeLoading(false);
     }
+  };
+
+  const handleSelectAddress = (address: string) => {
+    setSupportFormData(prev => ({
+      ...prev,
+      propertyAddress: address
+    }));
+    setShowAddressDropdown(false);
+    setAddressSuggestions([]);
+    toast.success("Address selected!");
   };
 
   const handleSupportSubmit = (e: React.FormEvent) => {
@@ -752,7 +782,8 @@ export default function ChatBot() {
                         variant="outline"
                         onClick={() => handlePostcodeLookup(supportFormData.postcode)}
                         disabled={postcodeLoading || !supportFormData.postcode}
-                        className="h-9 px-3"
+                        className="h-9 px-2 sm:px-3 flex-shrink-0"
+                        title="Look up address"
                       >
                         {postcodeLoading ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -763,6 +794,23 @@ export default function ChatBot() {
                     </div>
                     <p className="text-xs text-gray-500">Enter postcode and click map icon to auto-fill address</p>
                   </div>
+                  {showAddressDropdown && addressSuggestions.length > 0 && (
+                    <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+                      <p className="text-xs font-medium text-blue-900 mb-2">Select an address:</p>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {addressSuggestions.map((address, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => handleSelectAddress(address)}
+                            className="w-full text-left px-3 py-2 text-xs bg-white border border-blue-100 rounded hover:bg-blue-100 transition-colors"
+                          >
+                            {address}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <Input
                     placeholder="Property address *"
                     value={supportFormData.propertyAddress}
