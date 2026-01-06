@@ -287,7 +287,10 @@ export default function Support() {
                             )}
                           </Button>
                         </div>
-                        <p className="text-xs text-gray-500">Enter postcode and click the map icon to auto-fill your address</p>
+                        <div className="space-y-1">
+                          <p className="text-xs text-gray-500">Enter postcode and click the map icon to auto-fill your address</p>
+                          <p className="text-xs text-gray-400">Valid formats: SW1A 1AA, M1 1AE, B33 8TH</p>
+                        </div>
                       </div>
 
                       {showAddressDropdown && addressSuggestions.length > 0 && (

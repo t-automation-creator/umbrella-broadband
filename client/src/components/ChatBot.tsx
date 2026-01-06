@@ -792,7 +792,10 @@ export default function ChatBot() {
                         )}
                       </Button>
                     </div>
-                    <p className="text-xs text-gray-500">Enter postcode and click map icon to auto-fill address</p>
+                    <div className="space-y-1">
+                      <p className="text-xs text-gray-500">Enter postcode and click map icon to auto-fill address</p>
+                      <p className="text-xs text-gray-400">Valid formats: SW1A 1AA, M1 1AE, B33 8TH</p>
+                    </div>
                   </div>
                   {showAddressDropdown && addressSuggestions.length > 0 && (
                     <div className="bg-blue-50 border border-blue-200 rounded-md p-3">

@@ -585,3 +585,9 @@
 - [x] Test address dropdown on ChatBot form
 - [x] Test address dropdown on Support page form
 - [x] Test mobile responsiveness on both forms
+
+## Postcode Format Helper Text (Jan 2026)
+- [x] Add postcode format helper text to ChatBot support form
+- [x] Add postcode format helper text to Support page fault form
+- [x] Test helper text display on ChatBot form
+- [x] Test helper text display on Support page form
