@@ -351,6 +351,14 @@ export default function ChatBot() {
       toast.error("Please provide an email address");
       return;
     }
+    if (!supportFormData.phone) {
+      toast.error("Please provide a phone number");
+      return;
+    }
+    if (!supportFormData.propertyAddress) {
+      toast.error("Please provide a property address");
+      return;
+    }
     if (!supportFormData.description) {
       toast.error("Please describe your issue");
       return;
@@ -683,20 +691,22 @@ export default function ChatBot() {
                   />
                   <Input
                     type="tel"
-                    placeholder="Phone number (optional)"
+                    placeholder="Phone number *"
                     value={supportFormData.phone}
                     onChange={(e) =>
                       setSupportFormData({ ...supportFormData, phone: e.target.value })
                     }
                     className="text-sm h-9"
+                    required
                   />
                   <Input
-                    placeholder="Property address (optional)"
+                    placeholder="Property address *"
                     value={supportFormData.propertyAddress}
                     onChange={(e) =>
                       setSupportFormData({ ...supportFormData, propertyAddress: e.target.value })
                     }
                     className="text-sm h-9"
+                    required
                   />
                   <select
                     value={supportFormData.issueType}
