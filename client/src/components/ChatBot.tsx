@@ -146,7 +146,7 @@ export default function ChatBot() {
   const [showAddressDropdown, setShowAddressDropdown] = useState(false);
 
   const validateUKPostcode = (postcode: string): boolean => {
-    const postcodeRegex = /^[A-Z]{1,2}\d{1,2}\s?[A-Z]\d[A-Z]{2}$|^[A-Z]{1,2}\d[A-Z]\s?\d[A-Z]{2}$/i;
+    const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
     return postcodeRegex.test(postcode.trim());
   };
   const [hasAutoOpened, setHasAutoOpened] = useState(() => {

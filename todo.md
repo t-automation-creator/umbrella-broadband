@@ -595,5 +595,6 @@
 ## Postcode Validation Fix (Jan 2026)
 - [x] Fix UK postcode regex validation in ChatBot component
 - [x] Fix UK postcode regex validation in Support page component
-- [x] Test postcode validation with various formats
+- [x] Test postcode validation with various formats (CV32 6LD, SW1A 1AA, M1 1AE)
 - [x] Verify error message no longer appears on valid postcodes
+- [x] Simplify regex to accept all valid UK postcode formats
