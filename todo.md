@@ -686,3 +686,4 @@
 
 ## Sector Image Update (Jan 2026)
 - [x] Replace Retail and Hospitality sector image with professional hotel/retail building photograph
+- [x] Replace HMO sector image with professional brick property photograph
