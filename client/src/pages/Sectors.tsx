@@ -8,7 +8,7 @@ export default function Sectors() {
     {
       title: "Landlords & HMOs",
       description: "Reliable, high-speed internet is a top priority for tenants. We provide fully managed broadband solutions that eliminate connectivity headaches for landlords, ensuring happy tenants and higher retention rates.",
-      image: null,
+      image: "/images/sectors/landlords.jpg",
       features: ["Zero downtime guarantee", "24/7 tenant support", "Seamless installation"]
     },
     {
