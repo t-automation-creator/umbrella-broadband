@@ -682,3 +682,7 @@
 - [x] Replace Property Developers cartoon image with construction site photograph
 - [x] Verify all images display fully without cutoff
 - [x] Test all sector images on Sectors page
+
+
+## Sector Image Update (Jan 2026)
+- [x] Replace Retail and Hospitality sector image with professional hotel/retail building photograph
