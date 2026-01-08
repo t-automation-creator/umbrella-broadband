@@ -666,3 +666,10 @@
 - [x] Add minimal foliage (2-3 plants/trees per image)
 - [x] Test all sector images display correctly on Sectors page
 - [x] Verify Retail and Hospitality sector image is generated
+
+## Image Visibility and Container Fixes (Jan 2026)
+- [x] Update image container styling to prevent cutoff
+- [x] Change from object-cover with fixed height to object-contain
+- [x] Add Retail and Hospitality sector to Sectors page
+- [x] Verify all 5 sector images display fully without cutoff
+- [x] Test on different viewport sizes
