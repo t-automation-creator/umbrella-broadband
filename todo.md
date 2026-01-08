@@ -656,3 +656,10 @@
 - [x] Make street and house number fields required
 - [x] Test address composition on Support page
 - [x] Test address composition on ChatBot form
+
+## Add Retail and Hospitality Sector (Jan 2026)
+- [x] Add Retail and Hospitality sector to Sectors page
+- [x] Add 3 relevant bullet points for Retail and Hospitality
+- [x] Redesign all sector images with grounded color palette
+- [x] Test Retail and Hospitality sector display
+- [x] Verify all sector images display correctly
