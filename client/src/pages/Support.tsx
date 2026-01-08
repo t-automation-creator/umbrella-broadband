@@ -109,8 +109,12 @@ export default function Support() {
     setShowAddressDropdown(false);
     
     try {
+      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
+      const forgeUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL || "https://forge.butterfly-effect.dev";
+      const proxyUrl = `${forgeUrl}/v1/maps/proxy/maps/api/geocode/json`;
+      
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)},UK&key=AIzaSyDummyKey`
+        `${proxyUrl}?address=${encodeURIComponent(postcode)},UK&key=${apiKey}`
       );
       
       if (response.ok) {

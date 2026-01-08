@@ -608,3 +608,17 @@
 - [x] Add autocomplete dropdown UI to Support page form
 - [x] Test autocomplete suggestions on ChatBot form
 - [x] Test autocomplete suggestions on Support page form
+
+## Google Maps API Verification (Jan 2026)
+- [ ] Verify Manus proxy is intercepting Google Maps API calls
+- [ ] Test postcode lookup with valid UK postcode
+- [ ] Check browser console for API errors
+- [ ] Verify address is populated correctly
+- [ ] Test on both ChatBot and Support page forms
+
+## Google Maps Proxy Configuration (Jan 2026)
+- [ ] Update ChatBot postcode lookup to use Manus proxy endpoint
+- [ ] Update Support page postcode lookup to use Manus proxy endpoint
+- [ ] Test Google Maps Geocoding through proxy on ChatBot form
+- [ ] Test Google Maps Geocoding through proxy on Support page form
+- [ ] Verify address auto-population works with proxy
