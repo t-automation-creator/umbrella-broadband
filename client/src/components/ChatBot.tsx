@@ -371,35 +371,18 @@ export default function ChatBot() {
     setShowAddressDropdown(false);
     
     try {
-      const apiKey = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
-      const forgeUrl = import.meta.env.VITE_FRONTEND_FORGE_API_URL || "https://forge.butterfly-effect.dev";
-      const proxyUrl = `${forgeUrl}/v1/maps/proxy/maps/api/geocode/json`;
+      const response = await fetch(`/api/postcode/lookup?postcode=${encodeURIComponent(postcode)}`);
+      const data = await response.json();
+      const result = data;
       
-      const response = await fetch(
-        `${proxyUrl}?address=${encodeURIComponent(postcode)},UK&key=${apiKey}`
-      );
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data.results && data.results.length > 0) {
-          const addresses = data.results.map((result: any) => result.formatted_address);
-          
-          if (addresses.length === 1) {
-            setSupportFormData(prev => ({
-              ...prev,
-              propertyAddress: addresses[0]
-            }));
-            toast.success("Address found!");
-          } else {
-            setAddressSuggestions(addresses);
-            setShowAddressDropdown(true);
-            toast.success(`Found ${addresses.length} addresses. Please select one.`);
-          }
-        } else {
-          toast.error("Postcode not found. Please enter manually.");
-        }
+      if (result && result.address) {
+        setSupportFormData(prev => ({
+          ...prev,
+          propertyAddress: result.address
+        }));
+        toast.success("Address found!");
       } else {
-        toast.error("Unable to look up postcode. Please enter manually.");
+        toast.error("Postcode not found. Please enter manually.");
       }
     } catch (error) {
       console.error("Postcode lookup error:", error);

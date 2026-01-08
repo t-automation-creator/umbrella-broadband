@@ -1306,7 +1306,49 @@ Rules:
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to generate excerpt" });
         }
       }),
+   }),
+
+  // Postcode lookup router
+  postcode: router({
+    lookup: publicProcedure
+      .input(z.object({ postcode: z.string().min(2) }))
+      .query(async ({ input }) => {
+        try {
+          const cleanPostcode = input.postcode.replace(/\s+/g, '');
+          const response = await fetch(
+            `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+          );
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              throw new TRPCError({ code: "NOT_FOUND", message: "Postcode not found" });
+            }
+            throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Unable to look up postcode" });
+          }
+
+          const data = await response.json();
+          if (!data.result) {
+            throw new TRPCError({ code: "NOT_FOUND", message: "Postcode not found" });
+          }
+
+          const result = data.result;
+          const address = `${result.postcode}, ${result.parish || result.district}, ${result.region}`;
+
+          return {
+            postcode: result.postcode,
+            address: address,
+            district: result.district,
+            region: result.region,
+            parish: result.parish,
+          };
+        } catch (error) {
+          if (error instanceof TRPCError) {
+            throw error;
+          }
+          console.error("Postcode lookup error:", error);
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to look up postcode" });
+        }
+      }),
   }),
 });
-
 export type AppRouter = typeof appRouter;

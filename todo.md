@@ -622,3 +622,18 @@
 - [ ] Test Google Maps Geocoding through proxy on ChatBot form
 - [ ] Test Google Maps Geocoding through proxy on Support page form
 - [ ] Verify address auto-population works with proxy
+
+### Replace Google Maps with Postcodes.io (Jan 2026)
+- [x] Update ChatBot postcode lookup to use postcodes.io API
+- [x] Update Support page postcode lookup to use postcodes.io API
+- [x] Test address lookup on ChatBot form
+- [x] Test address lookup on Support page form
+- [x] Verify address auto-population works correctly
+## Backend Postcode Proxy Endpoint (Jan 2026)
+- [x] Create /api/postcode/lookup endpoint in server to proxy postcodes.io
+- [x] Update ChatBot to call backend endpoint instead of direct API
+- [x] Update Support page to call backend endpoint instead of direct API
+- [x] Register endpoint in setupVite before catch-all route
+- [x] Register endpoint in serveStatic for production
+- [x] Test postcode lookup on ChatBot form
+- [x] Test postcode lookup on Support page form (CV32 6LD → Royal Leamington Spa, West Midlands)

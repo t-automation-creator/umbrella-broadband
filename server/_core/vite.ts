@@ -70,6 +70,49 @@ export async function setupVite(app: Express, server: Server) {
   });
 
   app.use(vite.middlewares);
+  
+  // REST endpoint for postcode lookup - MUST be before catch-all route
+  app.get('/api/postcode/lookup', async (req, res) => {
+    try {
+      const { postcode } = req.query;
+      
+      if (!postcode || typeof postcode !== 'string') {
+        return res.status(400).json({ error: 'Postcode is required' });
+      }
+      
+      const cleanPostcode = postcode.replace(/\s+/g, '');
+      const response = await fetch(
+        `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+      );
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          return res.status(404).json({ error: 'Postcode not found' });
+        }
+        return res.status(500).json({ error: 'Unable to look up postcode' });
+      }
+      
+      const data = await response.json();
+      if (!data.result) {
+        return res.status(404).json({ error: 'Postcode not found' });
+      }
+      
+      const result = data.result;
+      const address = `${result.postcode}, ${result.parish || result.district}, ${result.region}`;
+      
+      res.json({
+        postcode: result.postcode,
+        address: address,
+        district: result.district,
+        region: result.region,
+        parish: result.parish,
+      });
+    } catch (error) {
+      console.error('Postcode lookup error:', error);
+      res.status(500).json({ error: 'Failed to look up postcode' });
+    }
+  });
+  
   app.use("*", async (req, res, next) => {
     const url = req.originalUrl;
 
@@ -112,6 +155,48 @@ export function serveStatic(app: Express) {
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );
   }
+
+  // REST endpoint for postcode lookup - MUST be before catch-all routes
+  app.get('/api/postcode/lookup', async (req, res) => {
+    try {
+      const { postcode } = req.query;
+      
+      if (!postcode || typeof postcode !== 'string') {
+        return res.status(400).json({ error: 'Postcode is required' });
+      }
+      
+      const cleanPostcode = postcode.replace(/\s+/g, '');
+      const response = await fetch(
+        `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+      );
+      
+      if (!response.ok) {
+        if (response.status === 404) {
+          return res.status(404).json({ error: 'Postcode not found' });
+        }
+        return res.status(500).json({ error: 'Unable to look up postcode' });
+      }
+      
+      const data = await response.json();
+      if (!data.result) {
+        return res.status(404).json({ error: 'Postcode not found' });
+      }
+      
+      const result = data.result;
+      const address = `${result.postcode}, ${result.parish || result.district}, ${result.region}`;
+      
+      res.json({
+        postcode: result.postcode,
+        address: address,
+        district: result.district,
+        region: result.region,
+        parish: result.parish,
+      });
+    } catch (error) {
+      console.error('Postcode lookup error:', error);
+      res.status(500).json({ error: 'Failed to look up postcode' });
+    }
+  });
 
   // Serve static assets directly (JS, CSS, images, etc.)
   app.use(express.static(distPath, {
