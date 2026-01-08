@@ -36,6 +36,7 @@ async function startServer() {
   console.log("[STARTUP DEBUG] RESEND_API_KEY:", apiKey ? `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 4)}` : "NOT SET");
   console.log("[STARTUP DEBUG] API Key starts with 're_':", apiKey?.startsWith('re_') ? 'YES' : 'NO');
   const app = express();
+  app.disable('x-powered-by'); // Disable Express signature
   const server = createServer(app);
   
   // Start URL validation scheduler
@@ -45,6 +46,44 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // Parse cookies for session management
   app.use(cookieParser());
+  
+  // Security headers middleware
+  app.use((req, res, next) => {
+    // Content Security Policy - prevents XSS attacks
+    res.setHeader(
+      "Content-Security-Policy",
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://maps.googleapis.com; frame-src 'self';"
+    );
+    
+    // Strict-Transport-Security - enforces HTTPS
+    res.setHeader(
+      "Strict-Transport-Security",
+      "max-age=31536000; includeSubDomains; preload"
+    );
+    
+    // X-Content-Type-Options - prevents MIME sniffing
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    
+    // X-Frame-Options - prevents clickjacking
+    res.setHeader("X-Frame-Options", "SAMEORIGIN");
+    
+    // X-XSS-Protection - enables XSS filter in older browsers
+    res.setHeader("X-XSS-Protection", "1; mode=block");
+    
+    // Referrer-Policy - controls referrer information
+    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    
+    // Permissions-Policy - restricts browser features
+    res.setHeader(
+      "Permissions-Policy",
+      "geolocation=(self), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+    );
+    
+    // Remove X-Powered-By header to hide server information
+    res.removeHeader("X-Powered-By");
+    
+    next();
+  });
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);

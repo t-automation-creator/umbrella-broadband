@@ -1,0 +1,19 @@
+# Security Policy for Umbrella Broadband
+
+# Contact information for security issues
+Contact: mailto:security@umbrella-broadband.com
+
+# Preferred language for security reports
+Preferred-Languages: en
+
+# Canonical URL for this file
+Canonical: https://umbrella-broadband.com/.well-known/security.txt
+
+# Policy information
+Policy: https://umbrella-broadband.com/security-policy
+
+# Acknowledgments page
+Acknowledgments: https://umbrella-broadband.com/security-acknowledgments
+
+# Expires: This file should be updated at least once per year
+Expires: 2026-12-31T23:59:59.000Z
