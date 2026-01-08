@@ -28,12 +28,6 @@ export default function Sectors() {
       description: "Students demand fast, reliable internet for study and entertainment. Our managed service ensures high-density coverage and secure access for hundreds of users simultaneously.",
       image: "/images/sectors/student.jpg",
       features: ["High-density Wi-Fi", "Secure personal networks", "Content filtering options"]
-    },
-    {
-      title: "Retail and Hospitality",
-      description: "Modern retail stores and hospitality venues require seamless connectivity for customer experience and operations. We deliver reliable broadband, secure payment systems, and guest WiFi solutions tailored to your venue's needs.",
-      image: "/images/sectors/retail-hospitality.jpg",
-      features: ["Guest WiFi networks", "Reliable POS systems", "24/7 operational support"]
     }
   ];
 
