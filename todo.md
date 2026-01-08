@@ -637,3 +637,11 @@
 - [x] Register endpoint in serveStatic for production
 - [x] Test postcode lookup on ChatBot form
 - [x] Test postcode lookup on Support page form (CV32 6LD → Royal Leamington Spa, West Midlands)
+
+## Always Show Address Dropdown (Jan 2026)
+- [x] Update ChatBot postcode lookup to always show address dropdown
+- [x] Update Support page postcode lookup to always show address dropdown
+- [x] Test single address results show in dropdown
+- [x] Test multiple address results show in dropdown
+- [x] Test address selection and auto-fill on ChatBot
+- [x] Test address selection and auto-fill on Support page

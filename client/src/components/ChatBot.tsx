@@ -375,12 +375,11 @@ export default function ChatBot() {
       const data = await response.json();
       const result = data;
       
-      if (result && result.address) {
-        setSupportFormData(prev => ({
-          ...prev,
-          propertyAddress: result.address
-        }));
-        toast.success("Address found!");
+      if (result && result.addresses && result.addresses.length > 0) {
+        // Always show address dropdown, even for single results
+        setAddressSuggestions(result.addresses);
+        setShowAddressDropdown(true);
+        toast.success("Address options found!");
       } else {
         toast.error("Postcode not found. Please enter manually.");
       }

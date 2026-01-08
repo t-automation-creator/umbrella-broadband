@@ -98,11 +98,20 @@ export async function setupVite(app: Express, server: Server) {
       }
       
       const result = data.result;
-      const address = `${result.postcode}, ${result.parish || result.district}, ${result.region}`;
+      
+      // Build address lines for display
+      const addressLines = [];
+      if (result.postcode) addressLines.push(result.postcode);
+      if (result.parish) addressLines.push(result.parish);
+      if (result.district) addressLines.push(result.district);
+      if (result.region) addressLines.push(result.region);
+      
+      const address = addressLines.join(', ');
       
       res.json({
         postcode: result.postcode,
         address: address,
+        addresses: [address], // Return as array for dropdown
         district: result.district,
         region: result.region,
         parish: result.parish,
@@ -183,11 +192,20 @@ export function serveStatic(app: Express) {
       }
       
       const result = data.result;
-      const address = `${result.postcode}, ${result.parish || result.district}, ${result.region}`;
+      
+      // Build address lines for display
+      const addressLines = [];
+      if (result.postcode) addressLines.push(result.postcode);
+      if (result.parish) addressLines.push(result.parish);
+      if (result.district) addressLines.push(result.district);
+      if (result.region) addressLines.push(result.region);
+      
+      const address = addressLines.join(', ');
       
       res.json({
         postcode: result.postcode,
         address: address,
+        addresses: [address], // Return as array for dropdown
         district: result.district,
         region: result.region,
         parish: result.parish,
