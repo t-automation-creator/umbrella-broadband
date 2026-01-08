@@ -8,7 +8,7 @@ export default function Sectors() {
     {
       title: "Landlords & HMOs",
       description: "Reliable, high-speed internet is a top priority for tenants. We provide fully managed broadband solutions that eliminate connectivity headaches for landlords, ensuring happy tenants and higher retention rates.",
-      image: "/images/sectors/landlords.jpg",
+      image: null,
       features: ["Zero downtime guarantee", "24/7 tenant support", "Seamless installation"]
     },
     {
@@ -80,10 +80,12 @@ export default function Sectors() {
           {sectors.map((sector, index) => (
             <div key={index} className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
               <div className={index % 2 === 1 ? 'lg:col-start-2' : ''}>
-                <img loading="lazy" src={sector.image} 
-                  alt={sector.title} 
-                  className="rounded-2xl shadow-xl w-full object-contain" 
-                />
+                {sector.image && (
+                  <img loading="lazy" src={sector.image} 
+                    alt={sector.title} 
+                    className="rounded-2xl shadow-xl w-full object-contain" 
+                  />
+                )}
               </div>
               <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
                 <h2 className="text-3xl font-bold text-primary mb-6 font-heading">{sector.title}</h2>
