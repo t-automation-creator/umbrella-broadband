@@ -4,6 +4,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import net from "net";
+import { rateLimit } from "express-rate-limit";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { registerOAuthRoutes } from "./oauth";
 import { startValidationScheduler } from "../services/validation-scheduler";
@@ -96,6 +97,34 @@ async function startServer() {
     
     next();
   });
+  
+  // Rate limiting configuration
+  // Strict rate limit for authentication endpoints
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 5 requests per windowMs
+    message: 'Too many authentication attempts, please try again after 15 minutes',
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    // Skip rate limiting in development
+    skip: () => process.env.NODE_ENV === 'development',
+  });
+  
+  // General API rate limit
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes',
+    standardHeaders: true,
+    legacyHeaders: false,
+    skip: () => process.env.NODE_ENV === 'development',
+  });
+  
+  // Apply rate limiting to OAuth routes (authentication)
+  app.use('/api/oauth', authLimiter);
+  
+  // Apply general rate limiting to all API routes
+  app.use('/api', apiLimiter);
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
