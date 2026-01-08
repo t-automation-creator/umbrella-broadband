@@ -82,6 +82,18 @@ async function startServer() {
     // Remove X-Powered-By header to hide server information
     res.removeHeader("X-Powered-By");
     
+    // Cross-Origin-Opener-Policy - prevents cross-origin attacks
+    res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+    
+    // Cross-Origin-Resource-Policy - restricts resource loading
+    res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+    
+    // Cross-Origin-Embedder-Policy - enables cross-origin isolation
+    res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+    
+    // Expect-CT - certificate transparency (deprecated but still useful)
+    res.setHeader("Expect-CT", "max-age=86400, enforce");
+    
     next();
   });
   
@@ -102,6 +114,26 @@ async function startServer() {
   } else {
     serveStatic(app);
   }
+  
+  // Error handling middleware - sanitize error messages in production
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    // Log the full error for debugging
+    console.error('[ERROR]', err);
+    
+    // In production, send generic error message
+    if (process.env.NODE_ENV === 'production') {
+      res.status(err.status || 500).json({
+        error: 'An error occurred while processing your request',
+        message: 'Please try again later or contact support if the problem persists'
+      });
+    } else {
+      // In development, send detailed error for debugging
+      res.status(err.status || 500).json({
+        error: err.message,
+        stack: err.stack
+      });
+    }
+  });
 
   const preferredPort = parseInt(process.env.PORT || "3000");
   const port = await findAvailablePort(preferredPort);
