@@ -75,6 +75,8 @@ interface SupportFormData {
   email: string;
   phone: string;
   postcode: string;
+  houseNumber: string;
+  street: string;
   propertyAddress: string;
   issueType: string;
   urgency: "low" | "medium" | "high" | "critical";
@@ -136,6 +138,8 @@ export default function ChatBot() {
     email: "",
     phone: "",
     postcode: "",
+    houseNumber: "",
+    street: "",
     propertyAddress: "",
     issueType: "",
     urgency: "medium",
@@ -453,14 +457,17 @@ export default function ChatBot() {
       toast.error("Please provide a phone number");
       return;
     }
-    if (!supportFormData.propertyAddress) {
-      toast.error("Please provide a property address");
+    if (!supportFormData.houseNumber || !supportFormData.street || !supportFormData.postcode) {
+      toast.error("Please provide house number, street, and postcode");
       return;
     }
     if (!supportFormData.description) {
       toast.error("Please describe your issue");
       return;
     }
+
+    // Auto-generate full address
+    const fullAddress = `${supportFormData.houseNumber}, ${supportFormData.street}, ${supportFormData.postcode}`;
 
     // Generate conversation summary
     const conversationSummary = messages
@@ -470,6 +477,7 @@ export default function ChatBot() {
 
     submitSupportMutation.mutate({
       ...supportFormData,
+      propertyAddress: fullAddress,
       conversationSummary,
     });
   };
@@ -845,26 +853,24 @@ export default function ChatBot() {
                   </div>
                   {showAddressDropdown && addressSuggestions.length > 0 && (
                     <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                      <p className="text-xs font-medium text-blue-900 mb-2">Select an address:</p>
-                      <div className="space-y-2 max-h-40 overflow-y-auto">
-                        {addressSuggestions.map((address, index) => (
-                          <button
-                            key={index}
-                            type="button"
-                            onClick={() => handleSelectAddress(address)}
-                            className="w-full text-left px-3 py-2 text-xs bg-white border border-blue-100 rounded hover:bg-blue-100 transition-colors"
-                          >
-                            {address}
-                          </button>
-                        ))}
-                      </div>
+                      <p className="text-xs font-medium text-blue-900 mb-2">Postcode found. Now enter your street and house number:</p>
+                      <p className="text-xs text-blue-700">{addressSuggestions[0]}</p>
                     </div>
                   )}
                   <Input
-                    placeholder="Property address *"
-                    value={supportFormData.propertyAddress}
+                    placeholder="House Number / Building Name *"
+                    value={supportFormData.houseNumber}
                     onChange={(e) =>
-                      setSupportFormData({ ...supportFormData, propertyAddress: e.target.value })
+                      setSupportFormData({ ...supportFormData, houseNumber: e.target.value })
+                    }
+                    className="text-sm h-9"
+                    required
+                  />
+                  <Input
+                    placeholder="Street Name *"
+                    value={supportFormData.street}
+                    onChange={(e) =>
+                      setSupportFormData({ ...supportFormData, street: e.target.value })
                     }
                     className="text-sm h-9"
                     required

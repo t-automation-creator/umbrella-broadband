@@ -24,6 +24,8 @@ import {
 
 interface FaultFormData {
   postcode: string;
+  houseNumber: string;
+  street: string;
   address: string;
   contactName: string;
   contactPhone: string;
@@ -36,6 +38,8 @@ interface FaultFormData {
 export default function Support() {
   const [formData, setFormData] = useState<FaultFormData>({
     postcode: "",
+    houseNumber: "",
+    street: "",
     address: "",
     contactName: "",
     contactPhone: "",
@@ -77,10 +81,13 @@ export default function Support() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.address || !formData.contactName || !formData.contactPhone || !formData.contactEmail || !formData.faultSummary || !formData.faultDetails) {
-      toast.error("Please fill in all required fields");
+    if (!formData.houseNumber || !formData.street || !formData.postcode || !formData.contactName || !formData.contactPhone || !formData.contactEmail || !formData.faultSummary || !formData.faultDetails) {
+      toast.error("Please fill in all required fields including house number, street, and postcode");
       return;
     }
+
+    // Auto-generate full address
+    const fullAddress = `${formData.houseNumber}, ${formData.street}, ${formData.postcode}`;
 
     setIsSubmitting(true);
 
@@ -88,7 +95,7 @@ export default function Support() {
       name: formData.contactName,
       email: formData.contactEmail,
       phone: formData.contactPhone,
-      propertyAddress: formData.address,
+      propertyAddress: fullAddress,
       issueType: "Fault Report",
       urgency: "medium",
       description: `MAC Address: ${formData.macAddress || "Not provided"}\n\nFault Summary: ${formData.faultSummary}\n\nFault Details: ${formData.faultDetails}`,
@@ -349,34 +356,53 @@ export default function Support() {
 
                       {showAddressDropdown && addressSuggestions.length > 0 && (
                         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                          <p className="text-sm font-medium text-blue-900 mb-3">Select an address:</p>
-                          <div className="space-y-2 max-h-48 overflow-y-auto">
-                            {addressSuggestions.map((address, index) => (
-                              <button
-                                key={index}
-                                type="button"
-                                onClick={() => handleSelectAddress(address)}
-                                className="w-full text-left px-4 py-2 text-sm bg-white border border-blue-100 rounded-md hover:bg-blue-100 transition-colors"
-                              >
-                                {address}
-                              </button>
-                            ))}
-                          </div>
+                          <p className="text-sm font-medium text-blue-900 mb-3">Postcode found. Now enter your street and house number:</p>
+                          <p className="text-xs text-blue-700">{addressSuggestions[0]}</p>
                         </div>
                       )}
 
-                      {/* Address */}
+                      {/* House Number */}
+                      <div>
+                        <Label htmlFor="houseNumber" className="text-gray-700 font-medium">
+                          House Number / Building Name <span className="text-red-500">*</span>
+                        </Label>
+                        <Input
+                          id="houseNumber"
+                          name="houseNumber"
+                          value={formData.houseNumber}
+                          onChange={handleChange}
+                          placeholder="e.g., 42, Flat 3, The Oaks"
+                          required
+                        />
+                      </div>
+
+                      {/* Street */}
+                      <div>
+                        <Label htmlFor="street" className="text-gray-700 font-medium">
+                          Street Name <span className="text-red-500">*</span>
+                        </Label>
+                        <Input
+                          id="street"
+                          name="street"
+                          value={formData.street}
+                          onChange={handleChange}
+                          placeholder="e.g., High Street, Main Road"
+                          required
+                        />
+                      </div>
+
+                      {/* Full Address Display */}
                       <div>
                         <Label htmlFor="address" className="text-gray-700 font-medium">
-                          Address <span className="text-red-500">*</span>
+                          Full Address <span className="text-red-500">*</span>
                         </Label>
-                        <p className="text-sm text-gray-500 mb-2">Please supply your full address including postcode</p>
+                        <p className="text-sm text-gray-500 mb-2">Your complete address will be auto-generated</p>
                         <Input
                           id="address"
                           name="address"
                           value={formData.address}
                           onChange={handleChange}
-                          placeholder="Enter your full address"
+                          placeholder="Auto-generated from house number, street, and postcode"
                           maxLength={255}
                           required
                         />

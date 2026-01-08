@@ -645,3 +645,14 @@
 - [x] Test multiple address results show in dropdown
 - [x] Test address selection and auto-fill on ChatBot
 - [x] Test address selection and auto-fill on Support page
+
+## Manual Street and House Number Input (Jan 2026)
+- [x] Add street name input field to Support page form
+- [x] Add house number input field to Support page form
+- [x] Update Support page to combine street + house number + postcode for full address
+- [x] Add street name input field to ChatBot support form
+- [x] Add house number input field to ChatBot support form
+- [x] Update ChatBot to combine street + house number + postcode for full address
+- [x] Make street and house number fields required
+- [x] Test address composition on Support page
+- [x] Test address composition on ChatBot form
