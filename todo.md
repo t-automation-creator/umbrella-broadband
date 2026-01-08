@@ -673,3 +673,12 @@
 - [x] Add Retail and Hospitality sector to Sectors page
 - [x] Verify all 5 sector images display fully without cutoff
 - [x] Test on different viewport sizes
+
+## Replace Sector Images with Realistic Photographs (Jan 2026)
+- [x] Replace HMO cartoon image with brick property photograph
+- [x] Replace PBSA cartoon image with modern student accommodation photograph
+- [x] Replace SME Businesses cartoon image with business building photograph
+- [x] Replace Retail and Hospitality cartoon image with café storefront photograph
+- [x] Replace Property Developers cartoon image with construction site photograph
+- [x] Verify all images display fully without cutoff
+- [x] Test all sector images on Sectors page
