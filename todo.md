@@ -656,3 +656,13 @@
 - [x] Make street and house number fields required
 - [x] Test address composition on Support page
 - [x] Test address composition on ChatBot form
+
+## Sector Images Regeneration (Jan 2026)
+- [x] Generate 5 new cartoon isometric sector images from scratch
+- [x] Ensure sector-specific content for each image (residential, construction, office, student, retail)
+- [x] Use generic neutral color palette (grays, beiges, tans, whites)
+- [x] Add dark blue accents on doors, windows, equipment, and WiFi symbols
+- [x] Include data cables running through/around structures ending at WiFi symbols
+- [x] Add minimal foliage (2-3 plants/trees per image)
+- [x] Test all sector images display correctly on Sectors page
+- [x] Verify Retail and Hospitality sector image is generated
