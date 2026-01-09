@@ -19,7 +19,7 @@ interface SourcesEditorProps {
 export default function SourcesEditor({ value, onChange, content }: SourcesEditorProps) {
   const [sources, setSources] = useState<Source[]>([]);
 
-  // Parse initial value
+  // Parse initial value only on mount
   useEffect(() => {
     if (value) {
       try {
@@ -34,7 +34,7 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
     } else {
       setSources([]);
     }
-  }, [value]);
+  }, []); // Empty dependency array - only run on mount
 
   // Update parent when sources change
   const updateSources = (newSources: Source[]) => {

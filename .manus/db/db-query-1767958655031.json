@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, title, slug, imageUrl FROM blog_posts WHERE title LIKE '%UK Leaseholders%' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, slug, imageUrl FROM blog_posts WHERE title LIKE '%UK Leaseholders%' LIMIT 1;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 446
+}

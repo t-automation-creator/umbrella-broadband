@@ -722,3 +722,8 @@
 - [x] Create SEO optimization API endpoint
 - [x] Add Manus Optimise for SEO button to editor
 - [x] Test SEO optimization functionality
+
+## Bug Fix: Sources Editor Disappearing Issue (Jan 2026)
+- [x] Identified root cause: useEffect was re-running on every value change
+- [x] Fixed by changing dependency array from [value] to []
+- [x] Now sources persist when adding manually without disappearing
