@@ -765,6 +765,79 @@ Results: ${input.results}`;
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
         }
       }),
+
+    // Optimize blog post for SEO
+    optimizeBlogPostForSEO: adminProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        excerpt: z.string().min(1),
+        content: z.string().min(1),
+        category: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are an SEO expert for Umbrella Broadband, a UK-based internet service provider.
+
+Optimize the given blog post for search engines. Return a JSON object with these exact fields:
+- title: Optimized title (40-60 chars, include target keywords, compelling)
+- excerpt: Optimized excerpt (150-160 chars, include keywords, compelling preview)
+- content: Optimized content with better structure, keyword placement, and readability
+- seoNotes: Brief explanation of changes made (2-3 sentences)
+
+Focus on:
+1. Including relevant keywords naturally (broadband, connectivity, managed services, etc.)
+2. Better structure with clear sections
+3. Improved readability and engagement
+4. Meta description optimization
+5. Internal linking opportunities
+
+Return ONLY valid JSON, no markdown code blocks.`;
+
+        const userContent = `Current Title: ${input.title}
+Current Excerpt: ${input.excerpt}
+Category: ${input.category || 'General'}
+Content Preview: ${input.content.substring(0, 500)}`;
+
+        const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${forgeKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userContent },
+            ],
+            max_tokens: 1500,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "SEO optimization failed" });
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+        
+        if (!content) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No optimization generated" });
+        }
+
+        try {
+          const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          return JSON.parse(cleanContent);
+        } catch {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse SEO optimization response" });
+        }
+      }),
   }),
 
   // Image upload router

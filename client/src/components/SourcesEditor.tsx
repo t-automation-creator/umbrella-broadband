@@ -34,7 +34,7 @@ export default function SourcesEditor({ value, onChange, content }: SourcesEdito
     } else {
       setSources([]);
     }
-  }, []);
+  }, [value]);
 
   // Update parent when sources change
   const updateSources = (newSources: Source[]) => {

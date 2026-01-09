@@ -60,6 +60,7 @@ function BlogEditContent() {
   const [isUploading, setIsUploading] = useState(false);
   const [sources, setSources] = useState("");
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [seoOptimizing, setSeoOptimizing] = useState(false);
 
   useEffect(() => {
     if (existingPost) {
@@ -92,6 +93,20 @@ function BlogEditContent() {
     },
     onError: (error) => {
       toast.error(error.message || "Failed to update post");
+    },
+  });
+
+  const seoOptimizeMutation = trpc.ai.optimizeBlogPostForSEO.useMutation({
+    onSuccess: (data) => {
+      setTitle(data.title || title);
+      setExcerpt(data.excerpt || excerpt);
+      setContent(data.content || content);
+      toast.success("Post optimized for SEO! Review the changes and adjust as needed.");
+      setSeoOptimizing(false);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to optimize for SEO");
+      setSeoOptimizing(false);
     },
   });
 
@@ -272,6 +287,39 @@ function BlogEditContent() {
         </div>
         
         <div className="flex gap-2">
+          {/* SEO Optimization Button */}
+          <Button 
+            type="button"
+            variant="outline" 
+            className="gap-2"
+            onClick={() => {
+              if (!title.trim() || !excerpt.trim() || !content.trim()) {
+                toast.error("Please fill in title, excerpt, and content before optimizing for SEO");
+                return;
+              }
+              setSeoOptimizing(true);
+              seoOptimizeMutation.mutate({
+                title: title.trim(),
+                excerpt: excerpt.trim(),
+                content: content.trim(),
+                category: category.trim() || undefined,
+              });
+            }}
+            disabled={seoOptimizeMutation.isPending}
+          >
+            {seoOptimizeMutation.isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Optimizing...
+              </>
+            ) : (
+              <>
+                <Wand2 className="h-4 w-4" />
+                Manus Optimise for SEO
+              </>
+            )}
+          </Button>
+
           {/* Preview Button */}
           <Button 
             type="button"

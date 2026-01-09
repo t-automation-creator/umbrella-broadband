@@ -712,3 +712,13 @@
 - [x] Add line break support to blog title field
 - [x] Update preview to display formatted headlines with line breaks
 - [x] Add visual guide for headline formatting in editor
+
+## Blog Resources/Sources Bug Fix (Jan 2026)
+- [x] Investigate resources deletion bug when adding manually
+- [x] Fix the issue where previous resources are deleted
+- [x] Test resources can be added without deletion
+
+## Blog SEO Optimization Feature (Jan 2026)
+- [x] Create SEO optimization API endpoint
+- [x] Add Manus Optimise for SEO button to editor
+- [x] Test SEO optimization functionality
