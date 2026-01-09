@@ -696,3 +696,4 @@
 - [x] Implement live rendering of blog post content
 - [x] Add preview button to editor UI
 - [x] Test preview functionality
+- [x] Convert preview to full-screen display
