@@ -689,3 +689,10 @@
 - [x] Replace HMO sector image with professional brick property photograph
 # Updated Thu Jan  8 14:52:02 EST 2026
 # Checkpoint 1767903522
+
+## Blog Post Editor Preview Feature (Jan 2026)
+- [x] Build preview function for admin blog post editor
+- [x] Create preview modal/panel component
+- [x] Implement live rendering of blog post content
+- [x] Add preview button to editor UI
+- [x] Test preview functionality

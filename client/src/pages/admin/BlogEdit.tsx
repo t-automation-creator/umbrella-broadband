@@ -16,9 +16,10 @@ import {
 } from "@/components/ui/dialog";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Sparkles, Loader2, Upload, Image as ImageIcon, Wand2 } from "lucide-react";
+import { ArrowLeft, Save, Sparkles, Loader2, Upload, Image as ImageIcon, Wand2, Eye } from "lucide-react";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Link, useLocation, useParams } from "wouter";
+import BlogPreviewModal from "@/components/BlogPreviewModal";
 
 // Lazy load the rich text editor to reduce initial bundle size
 const RichTextEditor = lazy(() => import("@/components/RichTextEditor"));
@@ -58,6 +59,7 @@ function BlogEditContent() {
   const [imagePrompt, setImagePrompt] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [sources, setSources] = useState("");
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
     if (existingPost) {
@@ -269,14 +271,26 @@ function BlogEditContent() {
           </div>
         </div>
         
-        {/* Create with Manus Button */}
-        <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
-          <DialogTrigger asChild>
-            <Button variant="outline" className="gap-2">
-              <Sparkles className="h-4 w-4" />
-              Create with Manus
-            </Button>
-          </DialogTrigger>
+        <div className="flex gap-2">
+          {/* Preview Button */}
+          <Button 
+            type="button"
+            variant="outline" 
+            className="gap-2"
+            onClick={() => setPreviewOpen(true)}
+          >
+            <Eye className="h-4 w-4" />
+            Preview
+          </Button>
+
+          {/* Create with Manus Button */}
+          <Dialog open={aiDialogOpen} onOpenChange={setAiDialogOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <Sparkles className="h-4 w-4" />
+                Create with Manus
+              </Button>
+            </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -327,6 +341,7 @@ function BlogEditContent() {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit}>
@@ -546,6 +561,19 @@ function BlogEditContent() {
           </CardContent>
         </Card>
       </form>
+
+      {/* Blog Preview Modal */}
+      <BlogPreviewModal
+        open={previewOpen}
+        onOpenChange={setPreviewOpen}
+        title={title}
+        excerpt={excerpt}
+        content={content}
+        imageUrl={imageUrl}
+        category={category}
+        author={author}
+        publishedDate={new Date()}
+      />
     </div>
   );
 }
