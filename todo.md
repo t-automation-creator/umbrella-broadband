@@ -702,3 +702,8 @@
 - [x] Investigate full-screen preview implementation issue
 - [x] Fix identified bugs (Dialog styling conflicts, HTML parsing, component structure)
 - [x] Test corrected preview
+
+## Blog Preview Image Display Fix (Jan 2026)
+- [x] Fix blank image preview in full-screen modal
+- [x] Add fallback placeholder for missing images
+- [x] Test image loading and display

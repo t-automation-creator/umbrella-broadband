@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Eye, X } from "lucide-react";
+import { Eye, X, ImageIcon } from "lucide-react";
 import { format } from "date-fns";
+import { useState } from "react";
 
 interface BlogPreviewModalProps {
   open: boolean;
@@ -25,7 +26,20 @@ export default function BlogPreviewModal({
   author,
   publishedDate,
 }: BlogPreviewModalProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   if (!open) return null;
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoaded(false);
+  };
 
   return (
     <div className="fixed inset-0 z-50 bg-white overflow-hidden flex flex-col">
@@ -49,16 +63,36 @@ export default function BlogPreviewModal({
       <div className="flex-1 overflow-y-auto bg-gray-50">
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Hero Image */}
-          {imageUrl && (
+          {imageUrl && !imageError && (
             <div className="relative w-full h-96 rounded-lg overflow-hidden bg-gray-200 mb-8 shadow-md">
               <img
                 src={imageUrl}
                 alt={title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded ? "opacity-100" : "opacity-0"
+                }`}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
               />
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+                  <div className="text-center">
+                    <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500">Loading image...</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Image Error Placeholder */}
+          {imageError && (
+            <div className="relative w-full h-96 rounded-lg overflow-hidden bg-gray-100 mb-8 shadow-md border-2 border-dashed border-gray-300 flex items-center justify-center">
+              <div className="text-center">
+                <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                <p className="text-sm text-gray-500">Image failed to load</p>
+                <p className="text-xs text-gray-400 mt-1">Check the image URL in the editor</p>
+              </div>
             </div>
           )}
 
