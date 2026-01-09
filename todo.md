@@ -697,3 +697,8 @@
 - [x] Add preview button to editor UI
 - [x] Test preview functionality
 - [x] Convert preview to full-screen display
+
+## Blog Preview Full-Screen Fix (Jan 2026)
+- [x] Investigate full-screen preview implementation issue
+- [x] Fix identified bugs (Dialog styling conflicts, HTML parsing, component structure)
+- [x] Test corrected preview
