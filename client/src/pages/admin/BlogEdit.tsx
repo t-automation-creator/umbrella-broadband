@@ -352,13 +352,15 @@ function BlogEditContent() {
           <CardContent className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="title">Title *</Label>
-                <Input
+                <Label htmlFor="title">Title * (Use Shift+Enter for line breaks)</Label>
+                <Textarea
                   id="title"
                   value={title}
                   onChange={(e) => handleTitleChange(e.target.value)}
-                  placeholder="Enter post title"
+                  placeholder="Enter post title. Use Shift+Enter to add line breaks for better formatting."
                   required
+                  rows={3}
+                  className="resize-none"
                 />
               </div>
               <div className="space-y-2">

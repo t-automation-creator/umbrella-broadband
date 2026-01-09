@@ -106,7 +106,7 @@ export default function BlogPreviewModal({
               </div>
             )}
             
-            <h1 className="text-5xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-5xl font-bold text-gray-900 leading-tight whitespace-pre-line">
               {title || "Untitled Post"}
             </h1>
 

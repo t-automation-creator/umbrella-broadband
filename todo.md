@@ -707,3 +707,8 @@
 - [x] Fix blank image preview in full-screen modal
 - [x] Add fallback placeholder for missing images
 - [x] Test image loading and display
+
+## Blog Headline Text Optimization (Jan 2026)
+- [x] Add line break support to blog title field
+- [x] Update preview to display formatted headlines with line breaks
+- [x] Add visual guide for headline formatting in editor
