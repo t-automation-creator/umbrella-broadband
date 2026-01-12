@@ -200,6 +200,12 @@ export default function BlogPost() {
                   Get in Touch
                 </Link>
               </div>
+              
+              <div className="mt-8 pt-6 border-t border-gray-100">
+                <p className="text-xs text-gray-500">
+                  Related resources: <a href="https://www.b2b-directory-uk.co.uk/telecommunications.html" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-secondary transition-colors underline">UK Telecommunications Directory</a>
+                </p>
+              </div>
             </div>
           </div>
         </article>

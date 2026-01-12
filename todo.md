@@ -727,3 +727,7 @@
 - [x] Identified root cause: useEffect was re-running on every value change
 - [x] Fixed by changing dependency array from [value] to []
 - [x] Now sources persist when adding manually without disappearing
+
+## Add Telecommunications Directory Link (Jan 2026)
+- [x] Add Telecommunications Directory link to blog post detail pages
+- [x] Place link inconspicuously in blog footer/resources section
