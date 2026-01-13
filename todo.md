@@ -731,3 +731,11 @@
 ## Add Telecommunications Directory Link (Jan 2026)
 - [x] Add Telecommunications Directory link to blog post detail pages
 - [x] Place link inconspicuously in blog footer/resources section
+
+## SimilarWeb Traffic Tracking Investigation (Jan 2026)
+- [x] Check if Google Analytics is properly installed and recording traffic
+- [x] Fixed GA loading from deferred to immediate to capture all traffic
+- [ ] Verify domain is correctly set up in SimilarWeb
+- [ ] Check Cloudflare settings for bot blocking rules
+- [x] Review analytics endpoint configuration (Umami + TinyAdz also installed)
+- [ ] Investigate why Nov/Dec traffic not recorded by SimilarWeb
