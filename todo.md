@@ -744,3 +744,10 @@
 - [x] Change bed count from 40 to 32 in title and content
 - [x] Update quote giver name to Sunil K
 - [x] Rewrite "Our solution" section with new content
+
+## Update Sectors Page Wording (Jan 2026)
+- [x] Update Property Developers features
+- [x] Update Landlords & HMOs features (remove Zero Downtime, add Single Point Billing)
+- [x] Update SME features (remove Cyber Security, add Managed Security Systems)
+- [x] Update PBSA features (add three new features)
+- [x] Add Retail & Hospitality sector with features

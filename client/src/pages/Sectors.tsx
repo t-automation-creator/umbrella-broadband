@@ -9,31 +9,31 @@ export default function Sectors() {
       title: "Landlords & HMOs",
       description: "Reliable, high-speed internet is a top priority for tenants. We provide fully managed broadband solutions that eliminate connectivity headaches for landlords, ensuring happy tenants and higher retention rates.",
       image: "/images/sectors/landlords.jpg",
-      features: ["Zero downtime guarantee", "24/7 tenant support", "Seamless installation"]
+      features: ["Single point billing", "24/7 tenant support", "Seamless installation"]
     },
     {
       title: "Property Developers",
       description: "Future-proof your developments with our pre-installed network infrastructure. We work with developers from the planning stage to ensure every unit is connectivity-ready from day one.",
       image: "/images/sectors/developers.jpg",
-      features: ["Infrastructure planning", "Managed network services", "Value-added connectivity"]
+      features: ["Broadband, Network & Security Consultants", "Vendor-agnostic technology integrator", "End-to-end network architecture ownership"]
     },
     {
       title: "SME Businesses",
       description: "Business continuity relies on robust connectivity. Our enterprise-grade broadband and VoIP solutions are designed to keep your business running smoothly, with dedicated support when you need it.",
       image: "/images/sectors/business.jpg",
-      features: ["Dedicated leased lines", "VoIP telephony systems", "Cyber security packages"]
+      features: ["Dedicated leased lines", "VoIP telephony systems", "Managed security systems"]
     },
     {
       title: "Purpose Built Student Accommodation (PBSA)",
       description: "Students demand fast, reliable internet for study and entertainment. Our managed service ensures high-density coverage and secure access for hundreds of users simultaneously.",
       image: "/images/sectors/student.jpg",
-      features: ["High-density Wi-Fi", "Secure personal networks", "Content filtering options"]
+      features: ["Full building Wi-Fi coverage", "24/7 student support desk", "New or Existing Network Design"]
     },
     {
       title: "Retail and Hospitality",
       description: "Modern retail stores and hospitality venues require seamless connectivity for customer experience and operations. We deliver reliable broadband, secure payment systems, and guest WiFi solutions tailored to your venue's needs.",
       image: "/images/sectors/retail-hospitality.jpg",
-      features: ["Guest WiFi networks", "Reliable POS systems", "24/7 operational support"]
+      features: ["Branded captive portals for guest Wi-Fi", "Resilient connectivity with failover options", "Centralised network monitoring and management"]
     }
   ];
 
