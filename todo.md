@@ -739,3 +739,8 @@
 - [ ] Check Cloudflare settings for bot blocking rules
 - [x] Review analytics endpoint configuration (Umami + TinyAdz also installed)
 - [ ] Investigate why Nov/Dec traffic not recorded by SimilarWeb
+
+## Update 1256 Pershore Road Case Study (Jan 2026)
+- [x] Change bed count from 40 to 32 in title and content
+- [x] Update quote giver name to Sunil K
+- [x] Rewrite "Our solution" section with new content

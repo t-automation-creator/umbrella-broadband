@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, title, clientName, slug FROM case_studies WHERE title LIKE '%40%' OR title LIKE '%bed%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, clientName, slug FROM case_studies WHERE title LIKE '%40%' OR title LIKE '%bed%';",
+  "rows": [
+    {
+      "id": "210002",
+      "title": "Connectivity Upgrade for 40 Bed Birmingham Property",
+      "clientName": "Private Landlord",
+      "slug": "seamless-connectivity-for-40-bed-birmingham-property"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tclientName\tslug\n210002\tConnectivity Upgrade for 40 Bed Birmingham Property\tPrivate Landlord\tseamless-connectivity-for-40-bed-birmingham-property\n",
+  "stderr": "",
+  "execution_time_ms": 57
+}
