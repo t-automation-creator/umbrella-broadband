@@ -1,5 +1,5 @@
-import express, { type Express } from "express";
 import fs from "fs";
+import express, { type Request, type Response } from "express";
 import { type Server } from "http";
 import { nanoid } from "nanoid";
 import path from "path";
@@ -23,21 +23,17 @@ async function injectOGMetaTags(html: string, urlPath: string, baseUrl: string):
   
   // Replace the existing OG meta tags block
   const ogStartMarker = '<!-- Open Graph / Facebook -->';
-  const twitterEndMarker = '<meta name="twitter:image"';
+  const schemaMarker = '<!-- Schema.org Structured Data';
   
   // Find and replace the OG tags section
   const ogStartIndex = html.indexOf(ogStartMarker);
   if (ogStartIndex !== -1) {
-    // Find the end of the twitter:image tag
-    const twitterImageIndex = html.indexOf(twitterEndMarker, ogStartIndex);
-    if (twitterImageIndex !== -1) {
-      // Find the closing > of the twitter:image tag
-      const closingIndex = html.indexOf('/>', twitterImageIndex);
-      if (closingIndex !== -1) {
-        const beforeOG = html.substring(0, ogStartIndex);
-        const afterOG = html.substring(closingIndex + 2);
-        return beforeOG + ogTags + afterOG;
-      }
+    // Find the start of the Schema.org comment (marks end of OG/Twitter section)
+    const schemaIndex = html.indexOf(schemaMarker, ogStartIndex);
+    if (schemaIndex !== -1) {
+      const beforeOG = html.substring(0, ogStartIndex);
+      const afterOG = html.substring(schemaIndex);
+      return beforeOG + ogTags + '\n    ' + afterOG;
     }
   }
   
@@ -55,7 +51,7 @@ function isStaticAsset(urlPath: string): boolean {
   return staticExtensions.some(ext => urlPath.toLowerCase().endsWith(ext));
 }
 
-export async function setupVite(app: Express, server: Server) {
+export async function setupVite(app: express.Application, server: Server) {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -72,7 +68,7 @@ export async function setupVite(app: Express, server: Server) {
   app.use(vite.middlewares);
   
   // REST endpoint for postcode lookup - MUST be before catch-all route
-  app.get('/api/postcode/lookup', async (req, res) => {
+  app.get('/api/postcode/lookup', async (req: Request, res: Response) => {
     try {
       const { postcode } = req.query;
       
@@ -122,7 +118,7 @@ export async function setupVite(app: Express, server: Server) {
     }
   });
   
-  app.use("*", async (req, res, next) => {
+  app.use("*", async (req: Request, res: Response, next: any) => {
     const url = req.originalUrl;
 
     try {
@@ -152,7 +148,7 @@ export async function setupVite(app: Express, server: Server) {
     }
   });
 }
-export function serveStatic(app: Express) {
+export function serveStatic(app: express.Application) {
 
   const distPath =
     process.env.NODE_ENV === "development"
@@ -166,7 +162,7 @@ export function serveStatic(app: Express) {
   }
 
   // REST endpoint for postcode lookup - MUST be before catch-all routes
-  app.get('/api/postcode/lookup', async (req, res) => {
+  app.get('/api/postcode/lookup', async (req: Request, res: Response) => {
     try {
       const { postcode } = req.query;
       
@@ -216,45 +212,25 @@ export function serveStatic(app: Express) {
     }
   });
 
-  // Serve static assets directly (JS, CSS, images, etc.)
-  app.use(express.static(distPath, {
-    // Don't serve index.html for directory requests - we handle that below
-    index: false
-  }));
-
-  // For all non-static requests, serve index.html with dynamic OG tags
-  app.use("*", async (req, res, next) => {
-    const urlPath = req.originalUrl;
-    
-    // Skip static assets - they should have been served above
-    if (isStaticAsset(urlPath)) {
-      return next();
-    }
-    
-    // Skip API calls - they should be handled by tRPC middleware
-    if (urlPath.startsWith('/api/')) {
-      return next();
-    }
-    
+  // Catch-all route for SPA
+  app.get("*", async (req: Request, res: Response) => {
     try {
-      const indexPath = path.resolve(distPath, "index.html");
+      const indexPath = path.join(distPath, "index.html");
       
       if (!fs.existsSync(indexPath)) {
-        console.error(`index.html not found at ${indexPath}`);
-        return res.status(500).send("Server configuration error");
+        return res.status(404).send("index.html not found");
       }
-      
+
       let html = fs.readFileSync(indexPath, "utf-8");
       
-      // Inject dynamic OG meta tags for production
+      // Inject dynamic OG meta tags based on the URL
       const baseUrl = getBaseUrl(req);
-      console.log(`[OG] Injecting tags for: ${urlPath} with base: ${baseUrl}`);
-      html = await injectOGMetaTags(html, urlPath, baseUrl);
+      html = await injectOGMetaTags(html, req.originalUrl, baseUrl);
       
-      res.status(200).set({ "Content-Type": "text/html" }).send(html);
+      res.set({ "Content-Type": "text/html" }).send(html);
     } catch (error) {
-      console.error("[OG] Error serving HTML:", error);
-      next(error);
+      console.error("Error serving static file:", error);
+      res.status(500).send("Internal server error");
     }
   });
 }

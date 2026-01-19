@@ -758,4 +758,5 @@
 - [x] Implement featured image URL resolution with fallback
 - [x] Add canonical URL and absolute URL handling
 - [x] Test the PSTN blog post with social debuggers - All requirements met
+- [x] Fixed vite.ts OG tag injection logic to properly replace meta tags
 - [ ] Add bonus SEO/Social section to blog editor (optional)
