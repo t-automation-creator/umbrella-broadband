@@ -751,3 +751,11 @@
 - [x] Update SME features (remove Cyber Security, add Managed Security Systems)
 - [x] Update PBSA features (add three new features)
 - [x] Add Retail & Hospitality sector with features
+
+## Fix Social Share Preview Images for Blog Posts (Jan 2026)
+- [x] Analyze current blog post structure and meta tag implementation
+- [x] Update blog post page to render OG/Twitter meta tags server-side (already in place)
+- [x] Implement featured image URL resolution with fallback
+- [x] Add canonical URL and absolute URL handling
+- [x] Test the PSTN blog post with social debuggers - All requirements met
+- [ ] Add bonus SEO/Social section to blog editor (optional)
