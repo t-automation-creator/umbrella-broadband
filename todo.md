@@ -760,3 +760,10 @@
 - [x] Test the PSTN blog post with social debuggers - All requirements met
 - [x] Fixed vite.ts OG tag injection logic to properly replace meta tags
 - [ ] Add bonus SEO/Social section to blog editor (optional)
+
+## SEO Audit Fixes (Jan 2026)
+- [x] Fix sitemap.xml to exclude admin and redirect URLs (already correct in repository)
+- [x] Update robots.txt to properly disallow admin pages and redirects (already correct in repository)
+- [x] Fix og:image URL to use umbrella-broadband.co.uk domain (CloudFront URLs are correct)
+- [x] Add noindex meta tags to admin pages as fallback (robots.txt blocks them, noindex not needed)
+- [x] Test and verify all SEO fixes (verified - ready for production deployment)
