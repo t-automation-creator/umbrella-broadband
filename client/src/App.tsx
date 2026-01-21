@@ -1,3 +1,4 @@
+import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -38,6 +39,14 @@ import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
 
+// Redirect component for old URLs
+function Redirect({ to }: { to: string }) {
+  React.useEffect(() => {
+    window.location.href = to;
+  }, [to]);
+  return null;
+}
+
 // Wrapper component for protected admin routes
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
   return (
@@ -73,6 +82,26 @@ function Router() {
       <Route path="/Student-Cribs-Fault-Report/" component={StudentCribsFaultReport} />
       <Route path="/urbanrest-support-redirect/" component={UrbanrestSupportRedirect} />
       <Route path="/resooma-support-redirect/" component={ResoomaSupportRedirect} />
+      
+      {/* GSC 404 URL Redirects */}
+      <Route path="/about-us/" component={() => <Redirect to="/about" />} />
+      <Route path="/about-us" component={() => <Redirect to="/about" />} />
+      <Route path="/education/" component={() => <Redirect to="/services" />} />
+      <Route path="/education" component={() => <Redirect to="/services" />} />
+      <Route path="/video-intercom/" component={() => <Redirect to="/cctv" />} />
+      <Route path="/video-intercom" component={() => <Redirect to="/cctv" />} />
+      <Route path="/enhanced-security/" component={() => <Redirect to="/cctv" />} />
+      <Route path="/enhanced-security" component={() => <Redirect to="/cctv" />} />
+      <Route path="/landlords/" component={() => <Redirect to="/sectors" />} />
+      <Route path="/landlords" component={() => <Redirect to="/sectors" />} />
+      <Route path="/care-sector/" component={() => <Redirect to="/sectors" />} />
+      <Route path="/care-sector" component={() => <Redirect to="/sectors" />} />
+      <Route path="/lan/" component={() => <Redirect to="/solutions" />} />
+      <Route path="/lan" component={() => <Redirect to="/solutions" />} />
+      <Route path="/student-internet/" component={() => <Redirect to="/sectors" />} />
+      <Route path="/student-internet" component={() => <Redirect to="/sectors" />} />
+      <Route path="/managed-broadband-wi-fi/" component={() => <Redirect to="/managed-broadband" />} />
+      <Route path="/managed-broadband-wi-fi" component={() => <Redirect to="/managed-broadband" />} />
       
       {/* Admin login (public) */}
       <Route path="/admin/login" component={AdminLogin} />

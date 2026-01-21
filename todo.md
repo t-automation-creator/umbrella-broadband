@@ -774,3 +774,20 @@
 
 ## Add Facebook Pixel Tracking to Chatbot (Jan 2026)
 - [x] Add Facebook pixel Lead tracking to chatbot sales enquiries
+
+## URL Verification from Google Search Console (Jan 2026)
+- [ ] Test all URLs from GSC to verify they exist
+- [ ] Identify missing pages
+- [ ] Create or fix missing pages
+
+## Add Redirects for GSC 404 URLs (Jan 2026)
+- [x] Add redirects from /about-us/ to /about
+- [x] Add redirects from /education/ to /services
+- [x] Add redirects from /video-intercom/ to /cctv
+- [x] Add redirects from /enhanced-security/ to /cctv
+- [x] Add redirects from /landlords/ to /sectors
+- [x] Add redirects from /care-sector/ to /sectors
+- [x] Add redirects from /lan/ to /solutions
+- [x] Add redirects from /student-internet/ to /sectors
+- [x] Add redirects from /managed-broadband-wi-fi/ to /managed-broadband
+- [x] Test all redirects return 200 status (client-side redirects working)
