@@ -771,3 +771,6 @@
 ## Add Facebook Pixel Lead Tracking (Jan 2026)
 - [x] Add Facebook pixel Lead tracking to enquiries form
 - [x] Test form submission tracking
+
+## Add Facebook Pixel Tracking to Chatbot (Jan 2026)
+- [x] Add Facebook pixel Lead tracking to chatbot sales enquiries

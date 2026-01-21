@@ -204,6 +204,12 @@ export default function ChatBot() {
       toast.success("Thank you! Our team will be in touch shortly.");
       setShowLeadForm(false);
       setLeadSubmitted(true);
+      
+      // Track Lead conversion in Facebook Pixel
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead');
+      }
+      
       setMessages((prev) => [
         ...prev,
         {
