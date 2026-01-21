@@ -23,7 +23,7 @@ export default function Features() {
                 End-to-end broadband and Wi-Fi solutions with custom network design and structured cabling for seamless coverage.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all mt-auto">
-                Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                Explore Connectivity Solutions <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
               </span>
             </div>
           </Link>
@@ -39,7 +39,7 @@ export default function Features() {
                 Comprehensive CCTV, Access Control, and Video Intercom systems designed to protect your properties and tenants.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all mt-auto">
-                Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                Explore Security & Surveillance <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
               </span>
             </div>
           </Link>
@@ -55,7 +55,7 @@ export default function Features() {
                 Professional VoIP and telephony systems that keep your properties connected with reliable, cost-effective voice communications.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all mt-auto">
-                Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                Explore Communication Solutions <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
               </span>
             </div>
           </Link>
@@ -71,7 +71,7 @@ export default function Features() {
                 24/7 monitoring, proactive maintenance, and dedicated UK-based support for all your technology infrastructure.
               </p>
               <span className="inline-flex items-center text-secondary font-medium group-hover:gap-2 transition-all mt-auto">
-                Learn more <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                Explore Support & Management <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
               </span>
             </div>
           </Link>

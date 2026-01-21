@@ -73,7 +73,7 @@ export default function CaseStudyPreview() {
                     href={`/case-studies/${study.slug}`}
                     className="inline-flex items-center text-secondary font-medium text-sm group-hover:gap-2 transition-all mt-auto"
                   >
-                    Read More <ArrowRight className="w-4 h-4 ml-1" />
+                    View {study.title} case study <ArrowRight className="w-4 h-4 ml-1" />
                   </Link>
                 </div>
               </article>

@@ -175,7 +175,7 @@ export default function Blog() {
                           href={`/blog/${getPostSlug(post)}`}
                           className="text-secondary font-semibold flex items-center hover:text-primary transition-colors ml-auto"
                         >
-                          Read More <ArrowRight className="w-4 h-4 ml-1" />
+                          Read {post.title} article <ArrowRight className="w-4 h-4 ml-1" />
                         </Link>
                       </div>
                     </div>

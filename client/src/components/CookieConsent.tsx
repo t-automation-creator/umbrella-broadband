@@ -41,7 +41,7 @@ export default function CookieConsent() {
                 href="/privacy-policy" 
                 className="text-primary hover:underline"
               >
-                Learn more
+                Learn more about our privacy policy
               </a>
             </p>
             <div className="flex gap-2 mt-3">

@@ -791,3 +791,17 @@
 - [x] Add redirects from /student-internet/ to /sectors
 - [x] Add redirects from /managed-broadband-wi-fi/ to /managed-broadband
 - [x] Test all redirects return 200 status (client-side redirects working)
+
+## Fix Links Without Descriptive Text (Jan 2026)
+- [ ] Fix "First Party" link on homepage
+- [ ] Fix "Read More" links on case study pages (3 instances)
+- [ ] Fix "Learn more" link on privacy policy page
+- [ ] Add ESLint rule to prevent non-descriptive link text in future
+
+## Link Accessibility Fixes Completed (Jan 2026)
+- [x] Fixed all non-descriptive link text found by Google Search Console
+- [x] Updated CaseStudyPreview "Read More" → descriptive case study titles
+- [x] Updated Features component "Learn more" → "Explore [feature]"
+- [x] Updated Blog component "Read More" → "Read [article title]"
+- [x] Updated CookieConsent "Learn more" → "Learn more about our privacy policy"
+- [x] Created LINK_ACCESSIBILITY_GUIDE.md for future reference
