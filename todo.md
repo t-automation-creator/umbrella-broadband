@@ -767,3 +767,7 @@
 - [x] Fix og:image URL to use umbrella-broadband.co.uk domain (CloudFront URLs are correct)
 - [x] Add noindex meta tags to admin pages as fallback (robots.txt blocks them, noindex not needed)
 - [x] Test and verify all SEO fixes (verified - ready for production deployment)
+
+## Add Facebook Pixel Lead Tracking (Jan 2026)
+- [x] Add Facebook pixel Lead tracking to enquiries form
+- [x] Test form submission tracking

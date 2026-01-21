@@ -27,6 +27,11 @@ export default function Contact() {
     onSuccess: () => {
       setSubmitted(true);
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      
+      // Track Lead conversion in Facebook Pixel
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead');
+      }
     },
     onError: (error: { message?: string }) => {
       toast.error(error.message || "Failed to send message. Please try again.");
