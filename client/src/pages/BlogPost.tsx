@@ -11,6 +11,15 @@ export default function BlogPost() {
     { slug: params.slug || "" },
     { enabled: !!params.slug }
   );
+  
+  // Fetch all blog posts to show related posts
+  const { data: allPostsData } = trpc.blog.list.useQuery();
+  const allPosts = allPostsData || [];
+  
+  // Get related posts (exclude current post, limit to 3)
+  const relatedPosts = allPosts
+    .filter((p: any) => p.slug !== params.slug && p.published)
+    .slice(0, 3);
 
   const formatDate = (date: Date | string) => {
     return new Date(date).toLocaleDateString('en-GB', {
@@ -181,6 +190,44 @@ export default function BlogPost() {
               }
               return null;
             })()}
+
+            {/* Related Blog Posts */}
+            {relatedPosts.length > 0 && (
+              <div className="mt-16 pt-12 border-t border-gray-200">
+                <h3 className="text-2xl font-bold text-primary mb-8 font-heading">Related Articles</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedPosts.map((relatedPost: any) => (
+                    <Link
+                      key={relatedPost.id}
+                      href={`/blog/${relatedPost.slug}`}
+                      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                    >
+                      {relatedPost.imageUrl && (
+                        <div className="aspect-video overflow-hidden bg-gray-200">
+                          <img
+                            src={relatedPost.imageUrl}
+                            alt={relatedPost.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        {relatedPost.category && (
+                          <span className="text-xs font-semibold text-secondary uppercase">{relatedPost.category}</span>
+                        )}
+                        <h4 className="font-bold text-primary mt-2 group-hover:text-secondary transition-colors line-clamp-2">
+                          {relatedPost.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                          {relatedPost.excerpt}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Share & Navigation */}
             <div className="mt-12 pt-8 border-t border-gray-200">

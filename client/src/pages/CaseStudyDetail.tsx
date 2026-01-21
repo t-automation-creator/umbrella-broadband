@@ -11,6 +11,18 @@ export default function CaseStudyDetail() {
     { slug: params.slug || "" },
     { enabled: !!params.slug }
   );
+  
+  const { data: allCaseStudiesData } = trpc.caseStudies.list.useQuery();
+  const allCaseStudies = allCaseStudiesData || [];
+  
+  const relatedCaseStudies = allCaseStudies
+    .filter((cs: any) => cs.slug !== params.slug)
+    .sort((a: any, b: any) => {
+      const aIsSameIndustry = a.industry === caseStudy?.industry ? 0 : 1;
+      const bIsSameIndustry = b.industry === caseStudy?.industry ? 0 : 1;
+      return aIsSameIndustry - bIsSameIndustry;
+    })
+    .slice(0, 3);
 
   if (isLoading) {
     return (
@@ -167,6 +179,44 @@ export default function CaseStudyDetail() {
                       — {caseStudy.testimonialAuthor}
                     </p>
                   )}
+                </div>
+              </section>
+            )}
+
+            {/* Related Case Studies */}
+            {relatedCaseStudies.length > 0 && (
+              <section className="mt-16 pt-12 border-t border-gray-200">
+                <h2 className="text-2xl font-bold text-primary mb-8 font-heading">Related Case Studies</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {relatedCaseStudies.map((relatedCS) => (
+                    <a
+                      key={relatedCS.id}
+                      href={`/case-studies/${relatedCS.slug}`}
+                      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow block"
+                    >
+                      {relatedCS.imageUrl && (
+                        <div className="aspect-video overflow-hidden bg-gray-200">
+                          <img
+                            src={relatedCS.imageUrl}
+                            alt={relatedCS.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        {relatedCS.industry && (
+                          <span className="text-xs font-semibold text-secondary uppercase">{relatedCS.industry}</span>
+                        )}
+                        <h3 className="font-bold text-primary mt-2 group-hover:text-secondary transition-colors line-clamp-2">
+                          {relatedCS.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+                          Client: {relatedCS.clientName}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </section>
             )}

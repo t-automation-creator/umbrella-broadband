@@ -1,0 +1,25 @@
+{
+  "query": "SELECT id, title, slug FROM blog_posts WHERE published = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, slug FROM blog_posts WHERE published = 1;",
+  "rows": [
+    {
+      "id": "390001",
+      "title": "5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties",
+      "slug": "5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties"
+    },
+    {
+      "id": "570001",
+      "title": "UK Leaseholders: New Rights for Faster Broadband & Connectivity",
+      "slug": "new-broadband-rights-leaseholders"
+    },
+    {
+      "id": "600001",
+      "title": "PSTN Switch-Off 2027: UK VoIP Migration Guide",
+      "slug": "pstn-switch-off-2027-uk-voip-migration-guide"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\n390001\t5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties\t5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties\n570001\tUK Leaseholders: New Rights for Faster Broadband & Connectivity\tnew-broadband-rights-leaseholders\n600001\tPSTN Switch-Off 2027: UK VoIP Migration Guide\tpstn-switch-off-2027-uk-voip-migration-guide\n",
+  "stderr": "",
+  "execution_time_ms": 52
+}

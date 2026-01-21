@@ -1,0 +1,46 @@
+{
+  "query": "SELECT id, title, slug, industry FROM case_studies WHERE published = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, slug, industry FROM case_studies WHERE published = 1;",
+  "rows": [
+    {
+      "id": "120001",
+      "title": "VESTO Stays Achieves Seamless Connectivity for Guests",
+      "slug": "vesto-stays-achieves-seamless-connectivity-for-guests",
+      "industry": "Hospitality / Property Management"
+    },
+    {
+      "id": "150001",
+      "title": "Eliminating Wi-Fi Dead Spots for Student Cribs in Manchester",
+      "slug": "eliminating-wi-fi-dead-spots-for-student-cribs-in-manchester",
+      "industry": "Property Management (Student Accommodation)"
+    },
+    {
+      "id": "180001",
+      "title": "Station House: High-Density Connectivity for 226-Bed Student Accommodation",
+      "slug": "station-house-high-density-connectivity-for-226-bed-student-accommodation",
+      "industry": "Property Management (Student Accommodation)"
+    },
+    {
+      "id": "210001",
+      "title": "Jephson Hotel: Upgrading a Legacy Network to Managed Modern Connectivity",
+      "slug": "jephson-hotel-upgrading-a-legacy-network-to-managed-modern-connectivity",
+      "industry": "Hospitality"
+    },
+    {
+      "id": "210002",
+      "title": "Connectivity Upgrade for 32 Bed Birmingham Property",
+      "slug": "seamless-connectivity-for-40-bed-birmingham-property",
+      "industry": "Property Management / Student Accommodation"
+    },
+    {
+      "id": "240001",
+      "title": "Complete Turnkey Connectivity Solution for Premium Student Accommodation",
+      "slug": "complete-turnkey-connectivity-solution-for-premium-student-accommodation",
+      "industry": "Property Development / Student Accommodation"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\tindustry\n120001\tVESTO Stays Achieves Seamless Connectivity for Guests\tvesto-stays-achieves-seamless-connectivity-for-guests\tHospitality / Property Management\n150001\tEliminating Wi-Fi Dead Spots for Student Cribs in Manchester\teliminating-wi-fi-dead-spots-for-student-cribs-in-manchester\tProperty Management (Student Accommodation)\n180001\tStation House: High-Density Connectivity for 226-Bed Student Accommodation\tstation-house-high-density-connectivity-for-226-bed-student-accommodation\tProperty Management (Student Accommodation)\n210001\tJephson Hotel: Upgrading a Legacy Network to Managed Modern Connectivity\tjephson-hotel-upgrading-a-legacy-network-to-managed-modern-connectivity\tHospitality\n210002\tConnectivity Upgrade for 32 Bed Birmingham Property\tseamless-connectivity-for-40-bed-birmingham-property\tProperty Management / Student Accommodation\n240001\tComplete Turnkey Connectivity Solution for Premium Student Accommodation\tcomplete-turnkey-connectivity-solution-for-premium-student-accommodation\tProperty Development / Student Accommodation\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}
