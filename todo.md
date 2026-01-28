@@ -820,3 +820,4 @@
 - [x] Add scrollable content area for pasted text
 - [x] Keep submit button always visible at bottom
 - [x] Test on different text lengths
+- [x] Polish dialog formatting with proper padding and borders

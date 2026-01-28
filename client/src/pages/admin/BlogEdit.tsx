@@ -339,8 +339,8 @@ function BlogEditContent() {
                 Create with Manus
               </Button>
             </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
-            <DialogHeader>
+          <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col p-0">
+            <DialogHeader className="px-6 pt-6 pb-4 border-b">
               <DialogTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
                 Create with Manus AI
@@ -349,7 +349,7 @@ function BlogEditContent() {
                 Paste your raw text, notes, or ideas below. Manus will generate a complete blog post that you can review and edit.
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-4 py-4 overflow-y-auto flex-1">
+            <div className="space-y-4 px-6 py-4 overflow-y-auto flex-1">
               <Textarea
                 value={rawText}
                 onChange={(e) => setRawText(e.target.value)}
@@ -366,7 +366,7 @@ function BlogEditContent() {
                 Tip: Include key facts, statistics, and main points. The AI will structure them into a professional blog post.
               </p>
             </div>
-            <DialogFooter className="flex-shrink-0">
+            <DialogFooter className="flex-shrink-0 px-6 py-4 border-t bg-muted/30">
               <Button variant="outline" onClick={() => setAiDialogOpen(false)}>
                 Cancel
               </Button>
