@@ -291,7 +291,7 @@ function CaseStudyEditContent() {
               Create with Manus
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
@@ -301,7 +301,7 @@ function CaseStudyEditContent() {
                 Paste your raw text, notes, or project details below. Manus will generate a complete case study that you can review and edit.
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 py-4 overflow-y-auto flex-1">
               <Textarea
                 value={rawText}
                 onChange={(e) => setRawText(e.target.value)}
@@ -316,13 +316,13 @@ Industry: Student Accommodation
 - Results: 99.9% uptime, tenant satisfaction up 40%
 - Quote from property manager about the improvement"
                 rows={10}
-                className="font-mono text-sm"
+                className="font-mono text-sm resize-none"
               />
               <p className="text-sm text-muted-foreground">
                 Tip: Include client name, industry, the problem, your solution, and any results/metrics. The AI will structure them into a professional case study.
               </p>
             </div>
-            <DialogFooter>
+            <DialogFooter className="flex-shrink-0">
               <Button variant="outline" onClick={() => setAiDialogOpen(false)}>
                 Cancel
               </Button>

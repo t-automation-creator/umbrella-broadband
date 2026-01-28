@@ -813,3 +813,10 @@
 - [x] Add related blog post suggestions to blog detail pages
 - [x] Add related case study suggestions to case study pages
 - [x] Test all internal links and verify SEO distribution
+
+## Create with Manus Modal Size Fix (Jan 2026)
+- [x] Fix "Create with Manus" dialog becoming too large when pasting text
+- [x] Add max-height constraint to modal
+- [x] Add scrollable content area for pasted text
+- [x] Keep submit button always visible at bottom
+- [x] Test on different text lengths

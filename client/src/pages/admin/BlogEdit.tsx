@@ -339,7 +339,7 @@ function BlogEditContent() {
                 Create with Manus
               </Button>
             </DialogTrigger>
-          <DialogContent className="sm:max-w-[600px]">
+          <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-primary" />
@@ -349,7 +349,7 @@ function BlogEditContent() {
                 Paste your raw text, notes, or ideas below. Manus will generate a complete blog post that you can review and edit.
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 py-4 overflow-y-auto flex-1">
               <Textarea
                 value={rawText}
                 onChange={(e) => setRawText(e.target.value)}
@@ -360,13 +360,13 @@ function BlogEditContent() {
 - Umbrella Broadband offers 24/7 support
 - Case study: 50-unit HMO in Manchester saw 30% fewer complaints"
                 rows={10}
-                className="font-mono text-sm"
+                className="font-mono text-sm resize-none"
               />
               <p className="text-sm text-muted-foreground">
                 Tip: Include key facts, statistics, and main points. The AI will structure them into a professional blog post.
               </p>
             </div>
-            <DialogFooter>
+            <DialogFooter className="flex-shrink-0">
               <Button variant="outline" onClick={() => setAiDialogOpen(false)}>
                 Cancel
               </Button>
