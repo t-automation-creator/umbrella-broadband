@@ -172,18 +172,18 @@ export default function Blog() {
                       <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">
                         {post.excerpt}
                       </p>
-                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto pt-4 border-t border-gray-100">
                         {post.author && (
-                          <div className="flex items-center text-sm text-gray-500">
-                            <User className="w-4 h-4 mr-1" />
-                            {post.author}
+                          <div className="flex items-center text-sm text-gray-500 shrink-0">
+                            <User className="w-4 h-4 mr-1 shrink-0" />
+                            <span className="truncate max-w-[180px]">{post.author}</span>
                           </div>
                         )}
                         <Link 
                           href={`/blog/${getPostSlug(post)}`}
-                          className="text-secondary font-semibold flex items-center hover:text-primary transition-colors ml-auto"
+                          className="text-secondary font-semibold flex items-center hover:text-primary transition-colors shrink-0"
                         >
-                          Read {post.title} article <ArrowRight className="w-4 h-4 ml-1" />
+                          Read article <ArrowRight className="w-4 h-4 ml-1" />
                         </Link>
                       </div>
                     </div>

@@ -864,3 +864,6 @@
 - [x] Fix published field type mismatch (tinyint to boolean conversion)
 - [x] Test persistence - image prompt persists after navigation
 - [x] Always show AI Image Prompt section (not just when prompt exists)
+
+## Blog Preview Card Fixes
+- [x] Fix author name overlapping with Read link on blog preview cards
