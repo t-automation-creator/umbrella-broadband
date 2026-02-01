@@ -209,7 +209,16 @@ export default function BlogPost() {
                             alt={relatedPost.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                             loading="lazy"
+                            onError={(e) => {
+                              const img = e.target as HTMLImageElement;
+                              img.src = "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800";
+                            }}
                           />
+                        </div>
+                      )}
+                      {!relatedPost.imageUrl && (
+                        <div className="aspect-video overflow-hidden bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                          <span className="text-white text-sm font-semibold text-center px-4">Featured Article</span>
                         </div>
                       )}
                       <div className="p-4">
