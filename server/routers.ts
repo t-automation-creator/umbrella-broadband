@@ -331,7 +331,11 @@ export const appRouter = router({
         if (!post) {
           throw new TRPCError({ code: "NOT_FOUND", message: "Post not found" });
         }
-        return post;
+        // Convert tinyint to boolean for frontend
+        return {
+          ...post,
+          published: Boolean(post.published),
+        };
       }),
 
     // Admin: Create post
@@ -345,6 +349,7 @@ export const appRouter = router({
           sources: z.string().optional(),
           category: z.string().optional(),
           imageUrl: z.string().optional(),
+          imagePrompt: z.string().optional(),
           author: z.string().optional(),
           published: z.boolean().default(false),
         })
@@ -359,7 +364,14 @@ export const appRouter = router({
           }
         }
         
-        const id = await createBlogPost(input);
+        // Convert boolean to number for tinyint column
+        const { published, ...rest } = input;
+        const data = {
+          ...rest,
+          published: published ? 1 : 0,
+        };
+        
+        const id = await createBlogPost(data);
         return { id };
       }),
 
@@ -375,25 +387,32 @@ export const appRouter = router({
           sources: z.string().nullable().optional(),
           category: z.string().nullable().optional(),
           imageUrl: z.string().nullable().optional(),
+          imagePrompt: z.string().nullable().optional(),
           author: z.string().nullable().optional(),
           published: z.boolean().optional(),
         })
       )
       .mutation(async ({ input }) => {
-        const { id, ...data } = input;
+        const { id, published, ...rest } = input;
         
         // Validate image URL if provided
-        if (data.imageUrl) {
-          const isValid = await validateImageUrl(data.imageUrl);
+        if (rest.imageUrl) {
+          const isValid = await validateImageUrl(rest.imageUrl);
           if (!isValid) {
-            console.warn(`[Blog Update] Image URL validation failed: ${data.imageUrl}`);
+            console.warn(`[Blog Update] Image URL validation failed: ${rest.imageUrl}`);
             // Record the failed validation attempt
-            recordImageUrlChange(id, null, data.imageUrl, false);
+            recordImageUrlChange(id, null, rest.imageUrl, false);
           } else {
             // Record successful update
-            recordImageUrlChange(id, null, data.imageUrl, true);
+            recordImageUrlChange(id, null, rest.imageUrl, true);
           }
         }
+        
+        // Convert boolean to number for tinyint column
+        const data = {
+          ...rest,
+          ...(published !== undefined && { published: published ? 1 : 0 }),
+        };
         
         await updateBlogPost(id, data);
         return { success: true };
@@ -876,6 +895,64 @@ Content Preview: ${input.content.substring(0, 500)}`;
           return JSON.parse(cleanContent);
         } catch {
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse SEO optimization response" });
+        }
+      }),
+
+    // Regenerate image prompt from existing content
+    regenerateImagePrompt: adminProcedure
+      .input(z.object({
+        content: z.string().min(50),
+        title: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        const forgeUrl = process.env.BUILT_IN_FORGE_API_URL;
+        const forgeKey = process.env.BUILT_IN_FORGE_API_KEY;
+        
+        if (!forgeUrl || !forgeKey) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "AI service not configured" });
+        }
+
+        const systemPrompt = `You are an image prompt specialist for Umbrella Broadband, a UK-based internet service provider.
+
+Given a blog post title and content, create a detailed image generation prompt for a featured image. Return a JSON object with this exact field:
+- imagePrompt: A detailed image generation prompt (80-120 words) for creating a tech-infused, web-optimized featured image at 800x450 pixels (16:9 ratio). IMPORTANT: DO NOT include any text, titles, or typography in the image - headings will be overlaid as HTML. The image MUST include: 1) The Umbrella Broadband logo (a shield/umbrella icon in teal/blue) positioned subtly in a corner, 2) Tech elements relevant to the topic (fibre optic cables with light trails, network routers, ethernet connections, WiFi signals, server racks, or connectivity symbols), 3) Visual representation of the technology solution (no text labels), 4) Professional corporate aesthetic with blues, teals, and whites. Style: modern tech photography or sleek digital illustration with depth and lighting effects. Always end with "NO TEXT IN IMAGE, featuring Umbrella Broadband logo only, tech-infused, web-optimized for desktop and mobile, 800x450 pixels, 16:9 ratio, high quality, professional corporate aesthetic".
+
+Return ONLY valid JSON, no markdown code blocks.`;
+
+        const userContent = `Title: ${input.title}\n\nContent Preview: ${input.content.substring(0, 1000)}`;
+
+        const response = await fetch(`${forgeUrl}/v1/chat/completions`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${forgeKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userContent },
+            ],
+            max_tokens: 500,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Image prompt generation failed" });
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+        
+        if (!content) {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "No image prompt generated" });
+        }
+
+        try {
+          const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          return JSON.parse(cleanContent);
+        } catch {
+          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse image prompt response" });
         }
       }),
   }),

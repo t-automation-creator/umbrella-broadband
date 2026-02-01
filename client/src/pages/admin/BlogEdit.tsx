@@ -70,6 +70,7 @@ function BlogEditContent() {
       setContent(existingPost.content || "");
       setCategory(existingPost.category || "");
       setImageUrl(existingPost.imageUrl || "");
+      setImagePrompt(existingPost.imagePrompt || "");
       setAuthor(existingPost.author || "");
       setPublished(existingPost.published);
       setSources(existingPost.sources || "");
@@ -151,6 +152,18 @@ function BlogEditContent() {
     },
     onError: (error: { message?: string }) => {
       toast.error(error.message || "Failed to generate excerpt");
+    },
+  });
+
+  const regenerateImagePromptMutation = trpc.ai.regenerateImagePrompt.useMutation({
+    onSuccess: (data: { imagePrompt: string }) => {
+      if (data.imagePrompt) {
+        setImagePrompt(data.imagePrompt);
+        toast.success("Image prompt generated!");
+      }
+    },
+    onError: (error: { message?: string }) => {
+      toast.error(error.message || "Failed to generate image prompt");
     },
   });
 
@@ -245,6 +258,7 @@ function BlogEditContent() {
         content: content.trim() || undefined,
         category: category.trim() || undefined,
         imageUrl: imageUrl.trim() || undefined,
+        imagePrompt: imagePrompt.trim() || undefined,
         author: author.trim() || undefined,
         sources: sources.trim() || undefined,
         published,
@@ -258,6 +272,7 @@ function BlogEditContent() {
         content: content.trim() || null,
         category: category.trim() || null,
         imageUrl: imageUrl.trim() || null,
+        imagePrompt: imagePrompt.trim() || null,
         author: author.trim() || null,
         sources: sources.trim() || null,
         published,
@@ -501,33 +516,60 @@ function BlogEditContent() {
             </div>
 
             {/* AI Generated Image Prompt */}
-            {imagePrompt && (
-              <div className="space-y-2 p-4 bg-muted/50 rounded-lg border border-dashed">
-                <div className="flex items-center justify-between">
-                  <Label className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    AI Image Prompt (for Nano Banana)
-                  </Label>
+            <div className="space-y-2 p-4 bg-muted/50 rounded-lg border border-dashed">
+              <div className="flex items-center justify-between">
+                <Label className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  AI Image Prompt (for Nano Banana)
+                </Label>
+                <div className="flex gap-2">
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     onClick={() => {
-                      navigator.clipboard.writeText(imagePrompt);
-                      toast.success("Image prompt copied to clipboard!");
+                      if (!content || content.length < 50) {
+                        toast.error("Add more content first (at least 50 characters)");
+                        return;
+                      }
+                      regenerateImagePromptMutation.mutate({ content, title });
                     }}
+                    disabled={regenerateImagePromptMutation.isPending || !content || content.length < 50}
                   >
-                    Copy
+                    {regenerateImagePromptMutation.isPending ? (
+                      <><Loader2 className="h-3 w-3 animate-spin mr-1" />Generating...</>
+                    ) : (
+                      <><Wand2 className="h-3 w-3 mr-1" />{imagePrompt ? "Regenerate" : "Generate"}</>
+                    )}
                   </Button>
+                  {imagePrompt && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        navigator.clipboard.writeText(imagePrompt);
+                        toast.success("Image prompt copied to clipboard!");
+                      }}
+                    >
+                      Copy
+                    </Button>
+                  )}
                 </div>
+              </div>
+              {imagePrompt ? (
                 <p className="text-sm text-muted-foreground bg-background p-3 rounded border">
                   {imagePrompt}
                 </p>
-                <p className="text-xs text-muted-foreground">
-                  Use this prompt with Nano Banana in Manus to generate a featured image, then paste the URL above.
+              ) : (
+                <p className="text-sm text-muted-foreground bg-background p-3 rounded border italic">
+                  No image prompt generated yet. Click "Generate" to create one based on your content.
                 </p>
-              </div>
-            )}
+              )}
+              <p className="text-xs text-muted-foreground">
+                Use this prompt with Nano Banana in Manus to generate a featured image, then paste the URL above.
+              </p>
+            </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">

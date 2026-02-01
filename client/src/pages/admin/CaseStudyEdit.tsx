@@ -69,7 +69,7 @@ function CaseStudyEditContent() {
       setTestimonial(existingCaseStudy.testimonial || "");
       setTestimonialAuthor(existingCaseStudy.testimonialAuthor || "");
       setImageUrl(existingCaseStudy.imageUrl || "");
-      setPublished(existingCaseStudy.published);
+      setPublished(Boolean(existingCaseStudy.published));
     }
   }, [existingCaseStudy]);
 

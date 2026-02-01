@@ -1,6 +1,11 @@
 import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, blogPosts, InsertBlogPost, contactSubmissions, InsertContactSubmission } from "../drizzle/schema";
+import { users, blogPosts, contactSubmissions } from "../drizzle/schema";
+import type { InferInsertModel } from "drizzle-orm";
+
+type InsertUser = InferInsertModel<typeof users>;
+type InsertBlogPost = InferInsertModel<typeof blogPosts>;
+type InsertContactSubmission = InferInsertModel<typeof contactSubmissions>;
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -61,11 +66,11 @@ export async function upsertUser(user: InsertUser): Promise<void> {
     }
 
     if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
+      values.lastSignedIn = new Date().toISOString();
     }
 
     if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
+      updateSet.lastSignedIn = new Date().toISOString();
     }
 
     await db.insert(users).values(values).onDuplicateKeyUpdate({
@@ -96,7 +101,7 @@ export async function getAllBlogPosts(publishedOnly = false) {
   if (!db) return [];
 
   if (publishedOnly) {
-    return db.select().from(blogPosts).where(eq(blogPosts.published, true)).orderBy(desc(blogPosts.createdAt));
+    return db.select().from(blogPosts).where(eq(blogPosts.published, 1)).orderBy(desc(blogPosts.createdAt));
   }
   return db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
 }
@@ -168,7 +173,7 @@ export async function markContactAsRead(id: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  await db.update(contactSubmissions).set({ read: true }).where(eq(contactSubmissions.id, id));
+  await db.update(contactSubmissions).set({ read: 1 }).where(eq(contactSubmissions.id, id));
 }
 
 export async function deleteContactSubmission(id: number) {
@@ -180,14 +185,14 @@ export async function deleteContactSubmission(id: number) {
 
 // ==================== ADMIN SESSIONS ====================
 
-import { adminSessions, InsertAdminSession } from "../drizzle/schema";
+import { adminSessions } from "../drizzle/schema";
 import { gt, lt } from "drizzle-orm";
 
 export async function createAdminSession(token: string, expiresAt: Date) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  await db.insert(adminSessions).values({ token, expiresAt });
+  await db.insert(adminSessions).values({ token, expiresAt: expiresAt.toISOString() });
 }
 
 export async function getAdminSession(token: string) {
@@ -202,7 +207,7 @@ export async function getAdminSession(token: string) {
   
   const session = result[0];
   // Check if session is expired
-  if (new Date() > session.expiresAt) {
+  if (new Date() > new Date(session.expiresAt)) {
     // Delete expired session
     await deleteAdminSession(token);
     return undefined;
@@ -222,7 +227,7 @@ export async function cleanupExpiredSessions() {
   const db = await getDb();
   if (!db) return;
 
-  await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date()));
+  await db.delete(adminSessions).where(lt(adminSessions.expiresAt, new Date().toISOString()));
 }
 
 
@@ -235,7 +240,7 @@ export async function getAllCaseStudies(publishedOnly = false) {
   if (!db) return [];
 
   if (publishedOnly) {
-    return db.select().from(caseStudies).where(eq(caseStudies.published, true)).orderBy(desc(caseStudies.createdAt));
+    return db.select().from(caseStudies).where(eq(caseStudies.published, 1)).orderBy(desc(caseStudies.createdAt));
   }
   return db.select().from(caseStudies).orderBy(desc(caseStudies.createdAt));
 }

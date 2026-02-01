@@ -855,3 +855,12 @@
 - [ ] Ensure image prompts are generated for draft blogs
 - [ ] Test image prompt generation functionality
 - [ ] Verify prompts can be used to generate images
+
+## AI Image Prompt Persistence
+- [x] Add imagePrompt field to blogPosts database schema
+- [x] Update blog create/update procedures to save imagePrompt
+- [x] Update BlogEdit component to load imagePrompt from database
+- [x] Add Regenerate button for image prompt
+- [x] Fix published field type mismatch (tinyint to boolean conversion)
+- [x] Test persistence - image prompt persists after navigation
+- [x] Always show AI Image Prompt section (not just when prompt exists)

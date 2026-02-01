@@ -19,6 +19,7 @@ export const blogPosts = mysqlTable("blog_posts", {
 	content: text(),
 	category: varchar({ length: 100 }),
 	imageUrl: text(),
+	imagePrompt: text(),
 	author: varchar({ length: 100 }),
 	published: tinyint().default(0).notNull(),
 	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
