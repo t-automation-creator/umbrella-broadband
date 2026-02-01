@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, title, slug FROM blog_posts ORDER BY createdAt DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, slug FROM blog_posts ORDER BY createdAt DESC;",
+  "rows": [
+    {
+      "id": "630001",
+      "title": "Managed Broadband & Wi-Fi Solutions for UK Serviced Accommodation",
+      "slug": "managed-connectivity-serviced-accommodation-developers-guide"
+    },
+    {
+      "id": "600001",
+      "title": "PSTN Switch-Off 2027: UK VoIP Migration Guide",
+      "slug": "pstn-switch-off-2027-uk-voip-migration-guide"
+    },
+    {
+      "id": "570001",
+      "title": "UK Leaseholders: New Rights for Faster Broadband & Connectivity",
+      "slug": "new-broadband-rights-leaseholders"
+    },
+    {
+      "id": "480001",
+      "title": "The Hidden Costs of Building Wide Internet Exclusivity Deals",
+      "slug": "hidden-costs-building-wide-internet-exclusivity-deals"
+    },
+    {
+      "id": "390001",
+      "title": "5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties",
+      "slug": "5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tslug\n630001\tManaged Broadband & Wi-Fi Solutions for UK Serviced Accommodation\tmanaged-connectivity-serviced-accommodation-developers-guide\n600001\tPSTN Switch-Off 2027: UK VoIP Migration Guide\tpstn-switch-off-2027-uk-voip-migration-guide\n570001\tUK Leaseholders: New Rights for Faster Broadband & Connectivity\tnew-broadband-rights-leaseholders\n480001\tThe Hidden Costs of Building Wide Internet Exclusivity Deals\thidden-costs-building-wide-internet-exclusivity-deals\n390001\t5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties\t5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties\n",
+  "stderr": "",
+  "execution_time_ms": 111
+}

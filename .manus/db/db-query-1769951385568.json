@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = 'pstn-switch-off-2027-uk-voip-migration-guide'; UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = 'uk-leaseholders-new-rights-for-faster-broadband-connectivity'; UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = '5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = 'pstn-switch-off-2027-uk-voip-migration-guide'; UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = 'uk-leaseholders-new-rights-for-faster-broadband-connectivity'; UPDATE blog_posts SET imageUrl = 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200' WHERE slug = '5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties';",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 83
+}

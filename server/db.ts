@@ -228,7 +228,7 @@ export async function cleanupExpiredSessions() {
 
 // ==================== CASE STUDIES ====================
 
-import { caseStudies, InsertCaseStudy } from "../drizzle/schema";
+import { caseStudies } from "../drizzle/schema";
 
 export async function getAllCaseStudies(publishedOnly = false) {
   const db = await getDb();
@@ -256,7 +256,7 @@ export async function getCaseStudyBySlug(slug: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function createCaseStudy(caseStudy: InsertCaseStudy) {
+export async function createCaseStudy(caseStudy: any) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -264,7 +264,7 @@ export async function createCaseStudy(caseStudy: InsertCaseStudy) {
   return result[0].insertId;
 }
 
-export async function updateCaseStudy(id: number, caseStudy: Partial<InsertCaseStudy>) {
+export async function updateCaseStudy(id: number, caseStudy: Partial<any>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -281,7 +281,7 @@ export async function deleteCaseStudy(id: number) {
 
 // ==================== CHAT LEADS ====================
 
-import { chatLeads, InsertChatLead } from "../drizzle/schema";
+import { chatLeads } from "../drizzle/schema";
 
 export async function getAllChatLeads() {
   const db = await getDb();
@@ -298,7 +298,7 @@ export async function getChatLeadById(id: number) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-export async function createChatLead(lead: InsertChatLead) {
+export async function createChatLead(lead: any) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
@@ -306,7 +306,7 @@ export async function createChatLead(lead: InsertChatLead) {
   return result[0].insertId;
 }
 
-export async function updateChatLead(id: number, lead: Partial<InsertChatLead>) {
+export async function updateChatLead(id: number, lead: Partial<any>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 

@@ -43,6 +43,13 @@
       "when": 1766928094082,
       "tag": "0005_fuzzy_the_initiative",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1769952354832,
+      "tag": "0006_lush_genesis",
+      "breakpoints": true
     }
   ]
 }

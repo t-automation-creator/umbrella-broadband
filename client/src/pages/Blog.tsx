@@ -17,33 +17,33 @@ const generateSlug = (title: string) => {
 const staticPosts = [
   {
     id: 1,
-    title: "The Importance of Proactive Network Management",
-    slug: "the-importance-of-proactive-network-management",
-    excerpt: "Why waiting for something to break isn't an option. Learn how managed services keep your business connected and secure 24/7.",
-    createdAt: new Date("2024-10-15"),
-    author: "Tech Team",
-    category: "Technology",
-    imageUrl: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=800"
+    title: "PSTN Switch-Off 2027: UK VoIP Migration Guide",
+    slug: "pstn-switch-off-2027-uk-voip-migration-guide",
+    excerpt: "The UK's PSTN switch-off by January 2027 mandates all businesses migrate from analogue landlines to VoIP. Learn how Umbrella Broadband offers seamless connectivity and managed services for a smooth digital transition.",
+    createdAt: new Date("2026-01-19"),
+    author: "Umbrella Broadband Team",
+    category: "Business Solutions",
+    imageUrl: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: 2,
-    title: "Why Managed Wi-Fi is Essential for HMOs",
-    slug: "why-managed-wi-fi-is-essential-for-hmos",
-    excerpt: "Landlords are increasingly turning to managed Wi-Fi solutions to attract tenants and reduce maintenance headaches. Here's why.",
-    createdAt: new Date("2024-09-28"),
-    author: "Sarah Jenkins",
-    category: "Property Management",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800"
+    title: "UK Leaseholders: New Rights for Faster Broadband & Connectivity",
+    slug: "uk-leaseholders-new-rights-for-faster-broadband-connectivity",
+    excerpt: "The UK government is consulting on new rights for leaseholders to access better broadband. Discover how this could impact property owners, residents, and connectivity in multi-dwelling units.",
+    createdAt: new Date("2026-01-09"),
+    author: "Umbrella Broadband Team",
+    category: "Industry News",
+    imageUrl: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: 3,
-    title: "Securing Your Business Network in 2025",
-    slug: "securing-your-business-network-in-2025",
-    excerpt: "Cyber threats are evolving. Learn about the latest security protocols and hardware necessary to protect your business data.",
-    createdAt: new Date("2024-09-10"),
-    author: "Security Ops",
-    category: "Cyber Security",
-    imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800"
+    title: "5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties",
+    slug: "5-ways-managed-wifi-reduces-landlord-headaches-and-improves-uk-properties",
+    excerpt: "Discover how implementing a professionally managed WiFi solution can drastically cut down on common landlord issues, boost property value, and enhance tenant satisfaction in the UK.",
+    createdAt: new Date("2025-12-17"),
+    author: "Umbrella Broadband Team",
+    category: "Property Management",
+    imageUrl: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: 4,

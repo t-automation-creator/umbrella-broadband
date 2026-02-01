@@ -1,125 +1,91 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean } from "drizzle-orm/mysql-core";
+import { mysqlTable, mysqlSchema, AnyMySqlColumn, index, int, varchar, timestamp, text, mysqlEnum, tinyint } from "drizzle-orm/mysql-core"
+import { sql } from "drizzle-orm"
 
-/**
- * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
- */
-export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
-  id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
-  name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
-});
-
-export type User = typeof users.$inferSelect;
-export type InsertUser = typeof users.$inferInsert;
-
-/**
- * Blog posts table for the CMS
- */
-export const blogPosts = mysqlTable("blog_posts", {
-  id: int("id").autoincrement().primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  excerpt: text("excerpt"),
-  content: text("content"), // Supports HTML: <a>, <strong>, <em>, <ul>, <ol>, <li>, <h2>, <h3>, <h4>, <p>
-  sources: text("sources"), // JSON array of sources: [{title: string, url: string}]
-  category: varchar("category", { length: 100 }),
-  imageUrl: text("imageUrl"),
-  author: varchar("author", { length: 100 }),
-  published: boolean("published").default(false).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export type BlogPost = typeof blogPosts.$inferSelect;
-export type InsertBlogPost = typeof blogPosts.$inferInsert;
-
-/**
- * Contact form submissions
- */
-export const contactSubmissions = mysqlTable("contact_submissions", {
-  id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 320 }).notNull(),
-  phone: varchar("phone", { length: 50 }),
-  company: varchar("company", { length: 255 }),
-  message: text("message").notNull(),
-  read: boolean("read").default(false).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
-
-export type ContactSubmission = typeof contactSubmissions.$inferSelect;
-export type InsertContactSubmission = typeof contactSubmissions.$inferInsert;
-
-/**
- * Admin sessions table for password-based authentication
- * Persists sessions to database so they survive server restarts and work across deployments
- */
 export const adminSessions = mysqlTable("admin_sessions", {
-  id: int("id").autoincrement().primaryKey(),
-  token: varchar("token", { length: 128 }).notNull().unique(),
-  expiresAt: timestamp("expiresAt").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+	id: int().autoincrement().notNull(),
+	token: varchar({ length: 128 }).notNull(),
+	expiresAt: timestamp({ mode: 'string' }).notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+},
+(table) => [
+	index("admin_sessions_token_unique").on(table.token),
+]);
 
-export type AdminSession = typeof adminSessions.$inferSelect;
-export type InsertAdminSession = typeof adminSessions.$inferInsert;
+export const blogPosts = mysqlTable("blog_posts", {
+	id: int().autoincrement().notNull(),
+	title: varchar({ length: 255 }).notNull(),
+	slug: varchar({ length: 255 }).notNull(),
+	excerpt: text(),
+	content: text(),
+	category: varchar({ length: 100 }),
+	imageUrl: text(),
+	author: varchar({ length: 100 }),
+	published: tinyint().default(0).notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+	sources: text(),
+},
+(table) => [
+	index("blog_posts_slug_unique").on(table.slug),
+]);
 
-
-/**
- * Case studies table for showcasing client success stories
- */
 export const caseStudies = mysqlTable("case_studies", {
-  id: int("id").autoincrement().primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-  slug: varchar("slug", { length: 255 }).notNull().unique(),
-  clientName: varchar("clientName", { length: 255 }).notNull(),
-  industry: varchar("industry", { length: 100 }),
-  challenge: text("challenge"),
-  solution: text("solution"),
-  results: text("results"),
-  testimonial: text("testimonial"),
-  testimonialAuthor: varchar("testimonialAuthor", { length: 255 }),
-  imageUrl: text("imageUrl"),
-  published: boolean("published").default(false).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
+	id: int().autoincrement().notNull(),
+	title: varchar({ length: 255 }).notNull(),
+	slug: varchar({ length: 255 }).notNull(),
+	clientName: varchar({ length: 255 }).notNull(),
+	industry: varchar({ length: 100 }),
+	challenge: text(),
+	solution: text(),
+	results: text(),
+	testimonial: text(),
+	testimonialAuthor: varchar({ length: 255 }),
+	imageUrl: text(),
+	published: tinyint().default(0).notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+},
+(table) => [
+	index("case_studies_slug_unique").on(table.slug),
+]);
 
-export type CaseStudy = typeof caseStudies.$inferSelect;
-export type InsertCaseStudy = typeof caseStudies.$inferInsert;
-
-
-/**
- * Chat leads captured from the AI chatbot
- * Stores visitor information when they show buying intent
- */
 export const chatLeads = mysqlTable("chat_leads", {
-  id: int("id").autoincrement().primaryKey(),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 320 }),
-  phone: varchar("phone", { length: 50 }),
-  company: varchar("company", { length: 255 }),
-  serviceInterest: varchar("serviceInterest", { length: 100 }), // broadband, voip, security, management
-  propertyType: varchar("propertyType", { length: 100 }), // HMO, student, commercial, residential
-  conversationSummary: text("conversationSummary"), // AI-generated summary of the chat
-  status: mysqlEnum("status", ["new", "contacted", "qualified", "converted", "closed"]).default("new").notNull(),
-  notes: text("notes"), // Admin notes
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+	id: int().autoincrement().notNull(),
+	name: varchar({ length: 255 }),
+	email: varchar({ length: 320 }),
+	phone: varchar({ length: 50 }),
+	company: varchar({ length: 255 }),
+	serviceInterest: varchar({ length: 100 }),
+	propertyType: varchar({ length: 100 }),
+	conversationSummary: text(),
+	status: mysqlEnum(['new','contacted','qualified','converted','closed']).default('new').notNull(),
+	notes: text(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
 });
 
-export type ChatLead = typeof chatLeads.$inferSelect;
-export type InsertChatLead = typeof chatLeads.$inferInsert;
+export const contactSubmissions = mysqlTable("contact_submissions", {
+	id: int().autoincrement().notNull(),
+	name: varchar({ length: 255 }).notNull(),
+	email: varchar({ length: 320 }).notNull(),
+	phone: varchar({ length: 50 }),
+	company: varchar({ length: 255 }),
+	message: text().notNull(),
+	read: tinyint().default(0).notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+});
+
+export const users = mysqlTable("users", {
+	id: int().autoincrement().notNull(),
+	openId: varchar({ length: 64 }).notNull(),
+	name: text(),
+	email: varchar({ length: 320 }),
+	loginMethod: varchar({ length: 64 }),
+	role: mysqlEnum(['user','admin']).default('user').notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+	lastSignedIn: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+},
+(table) => [
+	index("users_openId_unique").on(table.openId),
+]);

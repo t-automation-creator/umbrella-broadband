@@ -1,0 +1,35 @@
+{
+  "query": "SELECT id, title, imageUrl FROM blog_posts LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user sJbh4k7T5NyPGPf.root --database Fvbi7sdgjcoSVSNraU9FRD --execute SELECT id, title, imageUrl FROM blog_posts LIMIT 10;",
+  "rows": [
+    {
+      "id": "390001",
+      "title": "5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1766051808965-landlord_professional_web_optimized.webp"
+    },
+    {
+      "id": "480001",
+      "title": "The Hidden Costs of Building Wide Internet Exclusivity Deals",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1766926496428-hidden_costs_connectivity_web_optimized.webp"
+    },
+    {
+      "id": "570001",
+      "title": "UK Leaseholders: New Rights for Faster Broadband & Connectivity",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1767953911856-leaseholder_broadband_rights_web_optimized.webp"
+    },
+    {
+      "id": "600001",
+      "title": "PSTN Switch-Off 2027: UK VoIP Migration Guide",
+      "imageUrl": "https://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1768859970542-pstn_to_voip_transition_800x450.webp"
+    },
+    {
+      "id": "630001",
+      "title": "Managed Broadband & Wi-Fi Solutions for UK Serviced Accommodation",
+      "imageUrl": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\timageUrl\n390001\t5 Ways Managed WiFi Reduces Landlord Headaches and Improves UK Properties\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1766051808965-landlord_professional_web_optimized.webp\n480001\tThe Hidden Costs of Building Wide Internet Exclusivity Deals\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1766926496428-hidden_costs_connectivity_web_optimized.webp\n570001\tUK Leaseholders: New Rights for Faster Broadband & Connectivity\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1767953911856-leaseholder_broadband_rights_web_optimized.webp\n600001\tPSTN Switch-Off 2027: UK VoIP Migration Guide\thttps://d2xsxph8kpxj0f.cloudfront.net/310519663092990071/Fvbi7sdgjcoSVSNraU9FRD/images/1768859970542-pstn_to_voip_transition_800x450.webp\n630001\tManaged Broadband & Wi-Fi Solutions for UK Serviced Accommodation\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 54
+}

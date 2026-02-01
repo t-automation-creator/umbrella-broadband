@@ -827,3 +827,16 @@
 - [x] Remove aggressive onError fallback that replaces original images
 - [x] Restore original images without random Unsplash replacement
 - [x] Test blog images display with correct originals
+
+## Blog Images Not Displaying - Debug (Feb 2026)
+- [ ] Check database for actual image URLs
+- [ ] Verify S3 storage URLs are accessible
+- [ ] Add proper image error handling and fallback
+- [ ] Test images display correctly
+
+
+## Fallback Images for Blog Posts (Feb 2026)
+- [x] Add fallback Unsplash images to blog posts
+- [x] Update blog post titles and excerpts
+- [x] Fix TypeScript schema errors (tinyint import)
+- [x] Verify fallback images display correctly on blog page
