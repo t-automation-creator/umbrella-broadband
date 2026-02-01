@@ -649,8 +649,16 @@ Return ONLY valid JSON, no markdown code blocks.`;
         try {
           // Clean up potential markdown code blocks
           const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-          return JSON.parse(cleanContent);
-        } catch {
+          const parsed = JSON.parse(cleanContent);
+          
+          // Ensure imagePrompt is always present
+          if (!parsed.imagePrompt && parsed.title) {
+            parsed.imagePrompt = `Professional tech-infused featured image for "${parsed.title}" - 800x450px, featuring Umbrella Broadband logo, modern connectivity tech elements, professional corporate aesthetic with blues and teals, NO TEXT IN IMAGE`;
+          }
+          
+          return parsed;
+        } catch (error) {
+          console.error("[AI Generation Error]", error);
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
         }
       }),
@@ -712,8 +720,16 @@ Return ONLY valid JSON, no markdown code blocks.`;
         try {
           // Clean up potential markdown code blocks
           const cleanContent = content.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-          return JSON.parse(cleanContent);
-        } catch {
+          const parsed = JSON.parse(cleanContent);
+          
+          // Ensure imagePrompt is always present
+          if (!parsed.imagePrompt && parsed.title) {
+            parsed.imagePrompt = `Professional tech-infused featured image for "${parsed.title}" - 800x450px, featuring Umbrella Broadband logo, modern connectivity tech elements, professional corporate aesthetic with blues and teals, NO TEXT IN IMAGE`;
+          }
+          
+          return parsed;
+        } catch (error) {
+          console.error("[AI Generation Error]", error);
           throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to parse AI response" });
         }
       }),

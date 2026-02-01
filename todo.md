@@ -848,3 +848,10 @@
 - [x] Set up image CDN with automatic fallback to Unsplash
 - [x] Add image health check monitoring
 - [x] Document image management best practices
+
+
+## Image Prompt Generation Restoration (Feb 2026)
+- [ ] Restore image prompt generation in "Create with Manus" feature
+- [ ] Ensure image prompts are generated for draft blogs
+- [ ] Test image prompt generation functionality
+- [ ] Verify prompts can be used to generate images
