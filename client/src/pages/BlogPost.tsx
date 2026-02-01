@@ -202,16 +202,20 @@ export default function BlogPost() {
                       href={`/blog/${relatedPost.slug}`}
                       className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                     >
-                      {relatedPost.imageUrl && (
-                        <div className="aspect-video overflow-hidden bg-gray-200">
+                      <div className="aspect-video overflow-hidden bg-gray-200">
+                        {relatedPost.imageUrl ? (
                           <img
                             src={relatedPost.imageUrl}
                             alt={relatedPost.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                             loading="lazy"
                           />
-                        </div>
-                      )}
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                            <span className="text-sm font-semibold text-gray-600">Featured Article</span>
+                          </div>
+                        )}
+                      </div>
                       <div className="p-4">
                         {relatedPost.category && (
                           <span className="text-xs font-semibold text-secondary uppercase">{relatedPost.category}</span>

@@ -821,3 +821,9 @@
 - [x] Keep submit button always visible at bottom
 - [x] Test on different text lengths
 - [x] Polish dialog formatting with proper padding and borders
+
+## Revert Blog Images to Originals (Feb 2026)
+- [x] Identify original blog post images from database
+- [x] Remove aggressive onError fallback that replaces original images
+- [x] Restore original images without random Unsplash replacement
+- [x] Test blog images display with correct originals

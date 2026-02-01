@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
-import { Calendar, User, ArrowRight } from "lucide-react";
+import { Calendar, User, ArrowRight, Image as ImageIcon } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
 
@@ -139,11 +139,19 @@ export default function Blog() {
                 {posts.map((post) => (
                   <article key={post.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
                     <Link href={`/blog/${getPostSlug(post)}`} className="block">
-                      <div className="aspect-video overflow-hidden">
-                        <img loading="lazy" src={post.imageUrl || "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1600"} 
-                          alt={post.title} 
-                          className="w-full h-full object-contain bg-gray-100"
-                        />
+                      <div className="aspect-video overflow-hidden bg-gray-100">
+                        {post.imageUrl ? (
+                          <img 
+                            loading="lazy" 
+                            src={post.imageUrl}
+                            alt={post.title} 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <ImageIcon className="w-12 h-12 text-gray-400" />
+                          </div>
+                        )}
                       </div>
                     </Link>
                     <div className="p-6 flex-grow flex flex-col">
