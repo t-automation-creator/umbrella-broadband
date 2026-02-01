@@ -39,6 +39,7 @@ import sharp from "sharp";
 import { sendSalesEnquiry, sendSalesConfirmation } from "./services/email";
 import { sendSupportTicketToTeam, sendSupportConfirmationToCustomer } from "./services/support-email";
 import { urlValidationRouter } from "./routers/url-validation";
+import { validateImageUrl, recordImageUrlChange } from "./utils/imageValidator";
 
 // Admin session cookie name
 const ADMIN_SESSION_COOKIE = "admin_session";
@@ -349,6 +350,15 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input }) => {
+        // Validate image URL if provided
+        if (input.imageUrl) {
+          const isValid = await validateImageUrl(input.imageUrl);
+          if (!isValid) {
+            console.warn(`[Blog Create] Image URL validation failed: ${input.imageUrl}`);
+            // Continue anyway but log the warning
+          }
+        }
+        
         const id = await createBlogPost(input);
         return { id };
       }),
@@ -371,6 +381,20 @@ export const appRouter = router({
       )
       .mutation(async ({ input }) => {
         const { id, ...data } = input;
+        
+        // Validate image URL if provided
+        if (data.imageUrl) {
+          const isValid = await validateImageUrl(data.imageUrl);
+          if (!isValid) {
+            console.warn(`[Blog Update] Image URL validation failed: ${data.imageUrl}`);
+            // Record the failed validation attempt
+            recordImageUrlChange(id, null, data.imageUrl, false);
+          } else {
+            // Record successful update
+            recordImageUrlChange(id, null, data.imageUrl, true);
+          }
+        }
+        
         await updateBlogPost(id, data);
         return { success: true };
       }),
