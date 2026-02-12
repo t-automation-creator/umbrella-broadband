@@ -867,3 +867,13 @@
 
 ## Blog Preview Card Fixes
 - [x] Fix author name overlapping with Read link on blog preview cards
+
+
+## Sitemap Cleanup (Feb 2026)
+- [x] Remove admin routes from sitemap
+- [x] Remove redirect-only pages from sitemap
+- [x] Remove legacy/alias URLs from sitemap
+- [x] Remove trailing-slash duplicates from sitemap
+- [x] Verify robots.txt properly disallows admin and redirect pages
+- [x] Test sitemap generation and validate XML
+- [x] Updated sitemap with 22 clean, indexable URLs
