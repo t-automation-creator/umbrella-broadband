@@ -39,6 +39,32 @@ async function startServer() {
   const app = express();
   app.disable('x-powered-by'); // Disable Express signature
   const server = createServer(app);
+
+  // CRITICAL: Sitemap route MUST be registered FIRST, before ANY other middleware,
+  // to override the platform's auto-generated sitemap that includes admin pages.
+  const SITEMAP_XML = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://umbrella-broadband.co.uk/</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/about</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/sectors</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/solutions</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/services</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/starlink</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/managed-broadband</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/voip</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/cctv</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/access-control</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/contact</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/support</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/case-studies</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/blog</loc><lastmod>2026-02-13</lastmod></url>
+</urlset>`;
+
+  app.get('/sitemap.xml', (_req, res) => {
+    res.set('Content-Type', 'application/xml');
+    res.set('Cache-Control', 'public, max-age=86400');
+    res.send(SITEMAP_XML);
+  });
   
   // Start URL validation scheduler
   startValidationScheduler(24 * 60); // Run validation once per day (1440 minutes)
@@ -98,10 +124,7 @@ async function startServer() {
     next();
   });
   
-  // Sitemap endpoint - DISABLED: Using static file instead
-  // app.get('/sitemap.xml', (_req, res) => {
-  //   res.type('application/xml').send(generateSitemap());
-  // });
+  // Note: Sitemap is handled by the early route registered at the top of startServer()
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
