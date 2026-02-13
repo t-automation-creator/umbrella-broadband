@@ -10,7 +10,7 @@ import { startValidationScheduler } from "../services/validation-scheduler";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
-import { generateSitemap } from "./sitemap";
+// import { generateSitemap } from "./sitemap"; // Disabled: using static sitemap.xml instead
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -98,10 +98,10 @@ async function startServer() {
     next();
   });
   
-  // Sitemap endpoint
-  app.get('/sitemap.xml', (_req, res) => {
-    res.type('application/xml').send(generateSitemap());
-  });
+  // Sitemap endpoint - DISABLED: Using static file instead
+  // app.get('/sitemap.xml', (_req, res) => {
+  //   res.type('application/xml').send(generateSitemap());
+  // });
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);

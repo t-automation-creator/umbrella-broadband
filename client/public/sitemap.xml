@@ -1,159 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/</loc>
-    <lastmod>2026-02-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <!-- Main Pages -->
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/about</loc>
-    <lastmod>2026-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://umbrella-broadband.co.uk/</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/sectors</loc>
-    <lastmod>2026-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://umbrella-broadband.co.uk/about</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/solutions</loc>
-    <lastmod>2026-01-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://umbrella-broadband.co.uk/sectors</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/services</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Service Pages -->
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/starlink</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/solutions</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/managed-broadband</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/services</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/voip</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/starlink</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/cctv</loc>
-    <lastmod>2026-02-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/managed-broadband</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/access-control</loc>
-    <lastmod>2026-02-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Sector-Specific Pages -->
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/education</loc>
-    <lastmod>2026-01-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/voip</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/video-intercom</loc>
-    <lastmod>2026-02-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/cctv</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/enhanced-security</loc>
-    <lastmod>2026-02-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/access-control</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/landlords</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/contact</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/care-sector</loc>
-    <lastmod>2026-01-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/support</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/lan</loc>
-    <lastmod>2026-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/case-studies</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
   <url>
-    <loc>https://www.umbrella-broadband.co.uk/student-internet</loc>
-    <lastmod>2026-01-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://umbrella-broadband.co.uk/blog</loc>
+    <lastmod>2026-02-13</lastmod>
   </url>
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/managed-broadband-wi-fi</loc>
-    <lastmod>2026-02-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Content Pages -->
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/blog</loc>
-    <lastmod>2026-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/case-studies</loc>
-    <lastmod>2026-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Support & Contact Pages -->
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/support</loc>
-    <lastmod>2026-02-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.umbrella-broadband.co.uk/contact</loc>
-    <lastmod>2026-02-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <!-- NOTE: The following pages are NOT included in sitemap as they should not be indexed:
-       - /admin/* (admin pages - dashboard, login, blog, contacts, case-studies, settings, chat-leads)
-       - /api/* (API endpoints)
-       - /support-redirect/ (external redirect)
-       - /Student-Cribs-Fault-Report/ (external redirect)
-       - /urbanrest-support-redirect/ (external redirect)
-       - /resooma-support-redirect/ (external redirect)
-       - /about-us/ and /about-us (legacy aliases that redirect to /about)
-       
-       Duplicate URLs with trailing slashes have been removed. Only the version WITHOUT
-       trailing slashes is included in the sitemap to prevent duplicate content issues.
-  -->
 </urlset>
