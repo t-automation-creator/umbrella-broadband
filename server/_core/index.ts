@@ -10,6 +10,7 @@ import { startValidationScheduler } from "../services/validation-scheduler";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { generateSitemap } from "./sitemap";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -97,6 +98,11 @@ async function startServer() {
     next();
   });
   
+  // Sitemap endpoint
+  app.get('/sitemap.xml', (_req, res) => {
+    res.type('application/xml').send(generateSitemap());
+  });
+  
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
   
@@ -114,6 +120,13 @@ async function startServer() {
   } else {
     serveStatic(app);
   }
+  
+  // Note: Sitemap route is defined above and takes precedence over static file serving
+  
+  // 404 handler for undefined routes (before error handler)
+  app.use((req: express.Request, res: express.Response) => {
+    res.status(404).json({ error: 'Not found' });
+  });
   
   // Error handling middleware - sanitize error messages in production
   app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
