@@ -30,6 +30,11 @@ import CookieConsent from "./components/CookieConsent";
 // in the main bundle and adding them to the sitemap.
 const AdminApp = lazy(() => import("./admin/AdminApp"));
 
+// Build the admin wildcard path at runtime via concatenation so the Manus platform
+// sitemap scanner cannot find it as a static path:"..." string in the compiled bundle.
+// Without this, the scanner literally includes "/admin/*?" as a URL in the sitemap.
+const ADMIN_PATH = ["/adm", "in/*?"].join("");
+
 function Router() {
   return (
     <Switch>
@@ -56,10 +61,9 @@ function Router() {
           They must NOT be defined here as React routes because the Manus platform
           sitemap scanner picks up every path: "..." in the compiled bundle. */}
 
-      {/* Admin — single wildcard route with lazy-loading to keep admin paths out of main bundle.
-          Uses /*? (optional wildcard) to match /admin and all sub-paths.
-          NOT using "nest" prop so that child routes can keep using absolute paths. */}
-      <Route path="/admin/*?">
+      {/* Admin — wildcard route with lazy-loading to keep admin paths out of main bundle.
+          Path is constructed at runtime to prevent the sitemap scanner from finding it. */}
+      <Route path={ADMIN_PATH}>
         {() => (
           <Suspense fallback={
             <div className="min-h-screen bg-gray-100 flex items-center justify-center">
