@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
@@ -26,14 +26,30 @@ import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
 
 // Lazy-load admin app so its route definitions are in a separate code-split chunk.
-// This prevents the Manus platform sitemap scanner from finding admin paths
-// in the main bundle and adding them to the sitemap.
 const AdminApp = lazy(() => import("./admin/AdminApp"));
 
-// Build the admin wildcard path at runtime via concatenation so the Manus platform
-// sitemap scanner cannot find it as a static path:"..." string in the compiled bundle.
-// Without this, the scanner literally includes "/admin/*?" as a URL in the sitemap.
-const ADMIN_PATH = ["/adm", "in/*?"].join("");
+// Fallback route that handles admin URLs without using a path prop.
+// The Manus platform sitemap scanner picks up every path:"..." string in the
+// compiled bundle (even obfuscated ones). By using a pathless <Route> fallback
+// and checking the URL manually, we avoid any scannable path string entirely.
+function FallbackRoute() {
+  const [location] = useLocation();
+  if (location.startsWith("/admin")) {
+    return (
+      <Suspense fallback={
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+          <div className="flex flex-col items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            <p className="mt-4 text-gray-600">Loading...</p>
+          </div>
+        </div>
+      }>
+        <AdminApp />
+      </Suspense>
+    );
+  }
+  return <NotFound />;
+}
 
 function Router() {
   return (
@@ -61,26 +77,11 @@ function Router() {
           They must NOT be defined here as React routes because the Manus platform
           sitemap scanner picks up every path: "..." in the compiled bundle. */}
 
-      {/* Admin — wildcard route with lazy-loading to keep admin paths out of main bundle.
-          Path is constructed at runtime to prevent the sitemap scanner from finding it. */}
-      <Route path={ADMIN_PATH}>
-        {() => (
-          <Suspense fallback={
-            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-              <div className="flex flex-col items-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                <p className="mt-4 text-gray-600">Loading...</p>
-              </div>
-            </div>
-          }>
-            <AdminApp />
-          </Suspense>
-        )}
-      </Route>
-
       <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
+
+      {/* Fallback: handles admin URLs (checked inside component) and 404s.
+          No path prop = nothing for the sitemap scanner to find. */}
+      <Route component={FallbackRoute} />
     </Switch>
   );
 }
