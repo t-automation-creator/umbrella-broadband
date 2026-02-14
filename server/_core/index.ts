@@ -40,24 +40,69 @@ async function startServer() {
   app.disable('x-powered-by'); // Disable Express signature
   const server = createServer(app);
 
-  // CRITICAL: Sitemap route MUST be registered FIRST, before ANY other middleware,
-  // to override the platform's auto-generated sitemap that includes admin pages.
+  // ============================================================
+  // TRAILING SLASH STRIPPING (must be first middleware)
+  // Redirects /about/ -> /about, /services/ -> /services, etc.
+  // Prevents trailing-slash duplicates from appearing in sitemap.
+  // ============================================================
+  app.use((req, res, next) => {
+    if (req.path !== '/' && req.path.endsWith('/')) {
+      const cleanPath = req.path.slice(0, -1);
+      const query = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+      return res.redirect(301, cleanPath + query);
+    }
+    next();
+  });
+
+  // ============================================================
+  // SERVER-SIDE 301 REDIRECTS
+  // These were previously React Router <Route> entries which caused
+  // the Manus platform sitemap scanner to include them in the sitemap.
+  // Moving them to Express server-side redirects removes them from
+  // the React bundle so the platform scanner cannot find them.
+  // ============================================================
+
+  // Support redirect pages (redirect to external Monday.com forms)
+  app.get('/support-redirect', (_req, res) => res.redirect(301, 'https://forms.monday.com/forms/236f7d6c52a0be10dd9a6541dfc318e9?r=use1'));
+  app.get('/Student-Cribs-Fault-Report', (_req, res) => res.redirect(301, 'https://wkf.ms/4dfAxf7'));
+  app.get('/urbanrest-support-redirect', (_req, res) => res.redirect(301, 'https://forms.monday.com/forms/354bc6605fbffcfc231c6c54b88c69e9?r=use1'));
+  app.get('/resooma-support-redirect', (_req, res) => res.redirect(301, 'https://forms.monday.com/forms/d94222cdbf7f7ad9647ba19a9be84e53?r=use1'));
+
+  // Legacy about page alias
+  app.get('/about-us', (_req, res) => res.redirect(301, '/about'));
+
+  // Legacy sector/service pages (from GSC 404 URLs)
+  app.get('/education', (_req, res) => res.redirect(301, '/services'));
+  app.get('/video-intercom', (_req, res) => res.redirect(301, '/cctv'));
+  app.get('/enhanced-security', (_req, res) => res.redirect(301, '/cctv'));
+  app.get('/landlords', (_req, res) => res.redirect(301, '/sectors'));
+  app.get('/care-sector', (_req, res) => res.redirect(301, '/sectors'));
+  app.get('/lan', (_req, res) => res.redirect(301, '/solutions'));
+  app.get('/student-internet', (_req, res) => res.redirect(301, '/sectors'));
+  app.get('/managed-broadband-wi-fi', (_req, res) => res.redirect(301, '/managed-broadband'));
+
+  // ============================================================
+  // SITEMAP — Hardcoded static sitemap with only the 14 public URLs.
+  // Registered early to attempt to override the platform's auto-generated sitemap.
+  // The primary fix is removing routes from the React bundle (above),
+  // but this serves as a belt-and-suspenders approach.
+  // ============================================================
   const SITEMAP_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://umbrella-broadband.co.uk/</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/about</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/sectors</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/solutions</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/services</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/starlink</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/managed-broadband</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/voip</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/cctv</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/access-control</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/contact</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/support</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/case-studies</loc><lastmod>2026-02-13</lastmod></url>
-  <url><loc>https://umbrella-broadband.co.uk/blog</loc><lastmod>2026-02-13</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/about</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/sectors</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/solutions</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/services</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/starlink</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/managed-broadband</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/voip</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/cctv</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/access-control</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/contact</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/support</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/case-studies</loc><lastmod>2026-02-14</lastmod></url>
+  <url><loc>https://umbrella-broadband.co.uk/blog</loc><lastmod>2026-02-14</lastmod></url>
 </urlset>`;
 
   app.get('/sitemap.xml', (_req, res) => {
@@ -65,7 +110,7 @@ async function startServer() {
     res.set('Cache-Control', 'public, max-age=86400');
     res.send(SITEMAP_XML);
   });
-  
+
   // Start URL validation scheduler
   startValidationScheduler(24 * 60); // Run validation once per day (1440 minutes)
   // Configure body parser with larger size limit for file uploads

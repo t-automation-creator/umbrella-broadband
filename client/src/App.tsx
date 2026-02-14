@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -18,43 +18,17 @@ import AccessControl from "./pages/AccessControl";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-import AdminLogin from "./pages/admin/Login";
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminBlogList from "./pages/admin/BlogList";
-import AdminBlogEdit from "./pages/admin/BlogEdit";
-import AdminContacts from "./pages/admin/Contacts";
-import AdminSettings from "./pages/admin/Settings";
-import AdminCaseStudiesList from "./pages/admin/CaseStudiesList";
-import AdminCaseStudyEdit from "./pages/admin/CaseStudyEdit";
-import AdminChatLeads from "./pages/admin/ChatLeads";
-import AdminAuthGuard from "./components/AdminAuthGuard";
 import CaseStudies from "./pages/CaseStudies";
 import Support from "./pages/Support";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
-import SupportRedirect from "./pages/SupportRedirect";
-import StudentCribsFaultReport from "./pages/StudentCribsFaultReport";
-import UrbanrestSupportRedirect from "./pages/UrbanrestSupportRedirect";
-import ResoomaSupportRedirect from "./pages/ResoomaSupportRedirect";
 import ChatBot from "./components/ChatBot";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
 
-// Redirect component for old URLs
-function Redirect({ to }: { to: string }) {
-  React.useEffect(() => {
-    window.location.href = to;
-  }, [to]);
-  return null;
-}
-
-// Wrapper component for protected admin routes
-function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
-  return (
-    <AdminAuthGuard>
-      <Component />
-    </AdminAuthGuard>
-  );
-}
+// Lazy-load admin app so its route definitions are in a separate code-split chunk.
+// This prevents the Manus platform sitemap scanner from finding admin paths
+// in the main bundle and adding them to the sitemap.
+const AdminApp = lazy(() => import("./admin/AdminApp"));
 
 function Router() {
   return (
@@ -76,68 +50,30 @@ function Router() {
       <Route path="/case-studies/:slug" component={CaseStudyDetail} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
-      
-      {/* Redirect routes */}
-      <Route path="/support-redirect/" component={SupportRedirect} />
-      <Route path="/Student-Cribs-Fault-Report/" component={StudentCribsFaultReport} />
-      <Route path="/urbanrest-support-redirect/" component={UrbanrestSupportRedirect} />
-      <Route path="/resooma-support-redirect/" component={ResoomaSupportRedirect} />
-      
-      {/* GSC 404 URL Redirects */}
-      <Route path="/about-us/" component={() => <Redirect to="/about" />} />
-      <Route path="/about-us" component={() => <Redirect to="/about" />} />
-      <Route path="/education/" component={() => <Redirect to="/services" />} />
-      <Route path="/education" component={() => <Redirect to="/services" />} />
-      <Route path="/video-intercom/" component={() => <Redirect to="/cctv" />} />
-      <Route path="/video-intercom" component={() => <Redirect to="/cctv" />} />
-      <Route path="/enhanced-security/" component={() => <Redirect to="/cctv" />} />
-      <Route path="/enhanced-security" component={() => <Redirect to="/cctv" />} />
-      <Route path="/landlords/" component={() => <Redirect to="/sectors" />} />
-      <Route path="/landlords" component={() => <Redirect to="/sectors" />} />
-      <Route path="/care-sector/" component={() => <Redirect to="/sectors" />} />
-      <Route path="/care-sector" component={() => <Redirect to="/sectors" />} />
-      <Route path="/lan/" component={() => <Redirect to="/solutions" />} />
-      <Route path="/lan" component={() => <Redirect to="/solutions" />} />
-      <Route path="/student-internet/" component={() => <Redirect to="/sectors" />} />
-      <Route path="/student-internet" component={() => <Redirect to="/sectors" />} />
-      <Route path="/managed-broadband-wi-fi/" component={() => <Redirect to="/managed-broadband" />} />
-      <Route path="/managed-broadband-wi-fi" component={() => <Redirect to="/managed-broadband" />} />
-      
-      {/* Admin login (public) */}
-      <Route path="/admin/login" component={AdminLogin} />
-      
-      {/* Protected admin routes */}
-      <Route path="/admin">
-        {() => <ProtectedAdminRoute component={AdminDashboard} />}
+
+      {/* All redirect routes (support-redirect, legacy URLs, trailing-slash duplicates)
+          have been moved to Express server-side 301 redirects in server/_core/index.ts.
+          They must NOT be defined here as React routes because the Manus platform
+          sitemap scanner picks up every path: "..." in the compiled bundle. */}
+
+      {/* Admin — single wildcard route with lazy-loading to keep admin paths out of main bundle.
+          Uses /*? (optional wildcard) to match /admin and all sub-paths.
+          NOT using "nest" prop so that child routes can keep using absolute paths. */}
+      <Route path="/admin/*?">
+        {() => (
+          <Suspense fallback={
+            <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+              <div className="flex flex-col items-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                <p className="mt-4 text-gray-600">Loading...</p>
+              </div>
+            </div>
+          }>
+            <AdminApp />
+          </Suspense>
+        )}
       </Route>
-      <Route path="/admin/blog">
-        {() => <ProtectedAdminRoute component={AdminBlogList} />}
-      </Route>
-      <Route path="/admin/blog/new">
-        {() => <ProtectedAdminRoute component={AdminBlogEdit} />}
-      </Route>
-      <Route path="/admin/blog/:id">
-        {() => <ProtectedAdminRoute component={AdminBlogEdit} />}
-      </Route>
-      <Route path="/admin/contacts">
-        {() => <ProtectedAdminRoute component={AdminContacts} />}
-      </Route>
-      <Route path="/admin/settings">
-        {() => <ProtectedAdminRoute component={AdminSettings} />}
-      </Route>
-      <Route path="/admin/case-studies">
-        {() => <ProtectedAdminRoute component={AdminCaseStudiesList} />}
-      </Route>
-      <Route path="/admin/case-studies/new">
-        {() => <ProtectedAdminRoute component={AdminCaseStudyEdit} />}
-      </Route>
-      <Route path="/admin/case-studies/:id">
-        {() => <ProtectedAdminRoute component={AdminCaseStudyEdit} />}
-      </Route>
-      <Route path="/admin/chat-leads">
-        {() => <ProtectedAdminRoute component={AdminChatLeads} />}
-      </Route>
-      
+
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
