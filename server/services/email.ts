@@ -19,9 +19,14 @@ export type EmailType = "sales" | "support";
 
 // Recipient email addresses
 const EMAIL_RECIPIENTS = {
-  sales: "taylor.deakyne@gmail.com",
+  sales: "enquiries@umbrella-broadband.co.uk",
   support: "support@umbrella-broadband.co.uk",
 };
+
+// CC recipients for sales emails
+const SALES_CC_RECIPIENTS = [
+  "gavin@umbrella-broadband.co.uk",
+];
 
 // CC recipients for support emails
 const SUPPORT_CC_RECIPIENTS = [
@@ -63,8 +68,15 @@ export async function sendEmail(
 
     const recipient = payload.to || EMAIL_RECIPIENTS[type];
     
-    // Add CC recipients for support emails (only when sending to support inbox, not customer confirmations)
-    const ccRecipients = type === "support" && !payload.to ? SUPPORT_CC_RECIPIENTS : undefined;
+    // Add CC recipients (only when sending to team inbox, not customer confirmations)
+    let ccRecipients: string[] | undefined;
+    if (!payload.to) {
+      if (type === "support") {
+        ccRecipients = SUPPORT_CC_RECIPIENTS;
+      } else if (type === "sales") {
+        ccRecipients = SALES_CC_RECIPIENTS;
+      }
+    }
     
     debugLog(`Sending ${type} email from: ${RESEND_FROM}`);
     debugLog(`To: ${recipient}, CC: ${ccRecipients?.join(', ') || 'none'}`);
