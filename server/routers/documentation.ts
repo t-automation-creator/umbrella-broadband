@@ -1,4 +1,4 @@
-import { router, adminProcedure } from "../_core/trpc";
+import { router, protectedProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { documentationContent } from "../data/documentation";
 
@@ -12,19 +12,23 @@ const documentationStore = documentationContent;
 
 export const documentationRouter = router({
   // Get all documentation
-  getAll: adminProcedure.query(() => {
+  getAll: protectedProcedure.query(({ ctx }) => {
+    // Only allow admins to view documentation
+    if (ctx.user.role !== 'admin') {
+      throw new Error('Only admins can access documentation');
+    }
     return documentationStore;
   }),
 
   // Get single section by ID
-  getSection: adminProcedure
+  getSection: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(({ input }) => {
       return documentationStore.find((doc) => doc.id === input.id);
     }),
 
   // Search documentation
-  search: adminProcedure
+  search: protectedProcedure
     .input(z.object({ query: z.string().min(1) }))
     .query(({ input }) => {
       const query = input.query.toLowerCase();
