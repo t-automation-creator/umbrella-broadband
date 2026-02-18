@@ -1,24 +1,30 @@
 import { useState, useMemo } from "react";
 import { trpc } from "@/lib/trpc";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, ChevronDown, ChevronUp, BookOpen, FileText, Cog, Users, Mail, AlertCircle } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Search, BookOpen, FileText, Cog, Users, Mail, AlertCircle, ChevronRight } from "lucide-react";
 
 const categoryIcons: Record<string, React.ReactNode> = {
-  "Overview": <BookOpen className="h-4 w-4" />,
-  "Pages": <FileText className="h-4 w-4" />,
-  "Features": <Cog className="h-4 w-4" />,
-  "Admin": <Users className="h-4 w-4" />,
-  "Technical": <Cog className="h-4 w-4" />,
-  "Maintenance": <AlertCircle className="h-4 w-4" />,
+  "Overview": <BookOpen className="h-8 w-8" />,
+  "Pages": <FileText className="h-8 w-8" />,
+  "Features": <Cog className="h-8 w-8" />,
+  "Admin": <Users className="h-8 w-8" />,
+  "Technical": <Cog className="h-8 w-8" />,
+  "Maintenance": <AlertCircle className="h-8 w-8" />,
+};
+
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  "Overview": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
+  "Pages": { bg: "bg-indigo-50", text: "text-indigo-700", border: "border-indigo-200" },
+  "Features": { bg: "bg-cyan-50", text: "text-cyan-700", border: "border-cyan-200" },
+  "Admin": { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200" },
+  "Technical": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
+  "Maintenance": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
 };
 
 export default function Documentation() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["intro"]));
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Fetch all documentation
   const { data: allDocs, isLoading } = trpc.admin.documentation.getAll.useQuery();
@@ -36,204 +42,168 @@ export default function Documentation() {
     return allDocs || [];
   }, [searchQuery, searchResults, allDocs]);
 
+  // Get unique categories and group docs
   const categories = useMemo(() => {
-    const cats = new Set<string>();
+    const catMap = new Map<string, any[]>();
     docs.forEach((doc: any) => {
-      if (doc.category) cats.add(doc.category);
+      const cat = doc.category || "Other";
+      if (!catMap.has(cat)) {
+        catMap.set(cat, []);
+      }
+      catMap.get(cat)!.push(doc);
     });
-    return Array.from(cats).sort();
+    return Array.from(catMap.entries()).sort((a, b) => a[0].localeCompare(b[0]));
   }, [docs]);
 
-  const filteredDocs = useMemo(() => {
-    if (!activeCategory) return docs;
-    return docs.filter((doc: any) => doc.category === activeCategory);
-  }, [docs, activeCategory]);
-
-  const toggleSection = (id: string) => {
-    const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedSections(newExpanded);
-  };
+  const filteredCategories = useMemo(() => {
+    if (!selectedCategory) return categories;
+    return categories.filter(([cat]) => cat === selectedCategory);
+  }, [categories, selectedCategory]);
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold">Documentation</h1>
-        <p className="text-muted-foreground">
-          Complete handover guide for the Umbrella Broadband website. Search or browse by category.
-        </p>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Hero Banner */}
+      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 overflow-hidden">
+        {/* Decorative background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+          <div className="max-w-3xl mx-auto text-center space-y-6">
+            {/* Title */}
+            <h1 className="text-4xl sm:text-5xl font-bold text-white">Documentation</h1>
+            <p className="text-lg sm:text-xl text-blue-100">
+              Everything you need to manage and maintain the Umbrella Broadband website.
+            </p>
+
+            {/* Search Bar */}
+            <div className="mt-8 relative max-w-2xl mx-auto">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Input
+                  placeholder="Search the documentation..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setSelectedCategory(null);
+                  }}
+                  className="pl-12 pr-4 py-3 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-0 text-base"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Search Bar */}
-      <Card className="border-2">
-        <CardContent className="pt-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-            <Input
-              placeholder="Search documentation by title, content, or keywords..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-11"
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Category Tabs */}
-      {!searchQuery && categories.length > 0 && (
-        <div className="border-b">
-          <Tabs value={activeCategory || "all"} onValueChange={(v) => setActiveCategory(v === "all" ? null : v)}>
-            <TabsList className="w-full justify-start bg-transparent border-b rounded-none h-auto p-0">
-              <TabsTrigger
-                value="all"
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-4 py-3"
-              >
-                All ({docs.length})
-              </TabsTrigger>
-              {categories.map((cat) => (
-                <TabsTrigger
-                  key={cat}
-                  value={cat}
-                  className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent px-4 py-3"
-                >
-                  <div className="flex items-center gap-2">
-                    {categoryIcons[cat]}
-                    {cat} ({docs.filter((d: any) => d.category === cat).length})
-                  </div>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
-      )}
-
-      {/* Documentation Sections */}
-      <div className="space-y-3">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           </div>
-        ) : filteredDocs && filteredDocs.length > 0 ? (
-          filteredDocs.map((doc: any) => (
-            <Card
-              key={doc.id}
-              className="overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => toggleSection(doc.id)}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      {doc.category && (
-                        <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded">
-                          {doc.category}
-                        </span>
-                      )}
-                      {doc.matchType && searchQuery && (
-                        <span className="inline-block px-2 py-1 bg-amber-100 text-amber-900 text-xs font-medium rounded">
-                          Match: {doc.matchType}
-                        </span>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg">{doc.title}</CardTitle>
-                  </div>
-                  <div className="flex-shrink-0 mt-1">
-                    {expandedSections.has(doc.id) ? (
-                      <ChevronUp className="h-5 w-5 text-muted-foreground" />
-                    ) : (
-                      <ChevronDown className="h-5 w-5 text-muted-foreground" />
-                    )}
-                  </div>
-                </div>
-              </CardHeader>
+        ) : filteredCategories.length === 0 ? (
+          <div className="text-center py-20">
+            <AlertCircle className="h-12 w-12 text-slate-300 mx-auto mb-4" />
+            <p className="text-slate-500 text-lg">
+              {searchQuery.length > 0
+                ? "No documentation found matching your search."
+                : "No documentation available."}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {filteredCategories.map(([category, categoryDocs]) => {
+              const colors = categoryColors[category] || categoryColors["Overview"];
+              const icon = categoryIcons[category] || <BookOpen className="h-8 w-8" />;
 
-              {expandedSections.has(doc.id) && (
-                <CardContent className="space-y-4 border-t pt-4">
-                  {/* Content */}
-                  {doc.content && (
+              return (
+                <div key={category}>
+                  {/* Category Header */}
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className={`p-2 rounded-lg ${colors.bg}`}>
+                      <div className={colors.text}>{icon}</div>
+                    </div>
                     <div>
-                      <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
-                        {doc.content}
-                      </p>
+                      <h2 className="text-2xl font-bold text-slate-900">{category}</h2>
+                      <p className="text-sm text-slate-500">{categoryDocs.length} items</p>
                     </div>
-                  )}
+                  </div>
 
-                  {/* Items List */}
-                  {doc.items && Array.isArray(doc.items) && doc.items.length > 0 && (
-                    <div className="space-y-3">
-                      {doc.items.map((item: any, idx: number) => (
-                        <div
-                          key={idx}
-                          className="border-l-4 border-primary/30 pl-4 py-2 bg-primary/5 rounded-r"
-                        >
-                          <div className="font-semibold text-sm">{item.name}</div>
-                          {item.description && (
-                            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                  {/* Category Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {categoryDocs.map((doc: any) => (
+                      <Card
+                        key={doc.id}
+                        className={`group cursor-pointer hover:shadow-lg transition-all duration-300 border-2 ${colors.border} ${colors.bg}`}
+                      >
+                        <CardContent className="p-6 space-y-4 h-full flex flex-col">
+                          {/* Icon & Title */}
+                          <div className="space-y-3">
+                            <div className={`inline-flex p-2 rounded-lg ${colors.bg} border ${colors.border}`}>
+                              <div className={colors.text}>{icon}</div>
+                            </div>
+                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                              {doc.title}
+                            </h3>
+                          </div>
+
+                          {/* Description */}
+                          {doc.content && (
+                            <p className="text-sm text-slate-600 line-clamp-3 flex-grow">
+                              {doc.content}
+                            </p>
                           )}
-                          {item.url && (
-                            <a
-                              href={item.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-primary hover:underline mt-2 inline-block"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {item.url} →
-                            </a>
+
+                          {/* Items Preview */}
+                          {doc.items && Array.isArray(doc.items) && doc.items.length > 0 && (
+                            <div className="space-y-2 pt-2 border-t border-slate-200">
+                              {doc.items.slice(0, 2).map((item: any, idx: number) => (
+                                <div key={idx} className="text-xs text-slate-600">
+                                  <span className="font-semibold">{item.name}</span>
+                                </div>
+                              ))}
+                              {doc.items.length > 2 && (
+                                <div className="text-xs text-slate-500 italic">
+                                  +{doc.items.length - 2} more items
+                                </div>
+                              )}
+                            </div>
                           )}
-                          {item.keywords && Array.isArray(item.keywords) && (
-                            <div className="flex flex-wrap gap-1 mt-2">
-                              {item.keywords.map((kw: string, kidx: number) => (
+
+                          {/* Keywords */}
+                          {doc.keywords && Array.isArray(doc.keywords) && doc.keywords.length > 0 && !doc.items && (
+                            <div className="flex flex-wrap gap-1 pt-2 border-t border-slate-200">
+                              {doc.keywords.slice(0, 3).map((kw: string, idx: number) => (
                                 <span
-                                  key={kidx}
-                                  className="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded"
+                                  key={idx}
+                                  className="px-2 py-1 bg-white text-slate-600 text-xs rounded border border-slate-200"
                                 >
                                   {kw}
                                 </span>
                               ))}
+                              {doc.keywords.length > 3 && (
+                                <span className="px-2 py-1 text-slate-500 text-xs">
+                                  +{doc.keywords.length - 3}
+                                </span>
+                              )}
                             </div>
                           )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
 
-                  {/* Keywords */}
-                  {doc.keywords && Array.isArray(doc.keywords) && doc.keywords.length > 0 && !doc.items && (
-                    <div>
-                      <div className="text-xs font-semibold text-muted-foreground mb-2">Keywords</div>
-                      <div className="flex flex-wrap gap-2">
-                        {doc.keywords.map((keyword: string, idx: number) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
-                          >
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              )}
-            </Card>
-          ))
-        ) : (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <AlertCircle className="h-8 w-8 text-muted-foreground mx-auto mb-3 opacity-50" />
-              <p className="text-muted-foreground">
-                {searchQuery.length > 0
-                  ? "No documentation found matching your search."
-                  : "No documentation available."}
-              </p>
-            </CardContent>
-          </Card>
+                          {/* Read More Link */}
+                          <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all pt-2">
+                            Read more
+                            <ChevronRight className="h-4 w-4" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </div>
