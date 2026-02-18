@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
+// OAuth routes removed - using password-based admin authentication only
 import { startValidationScheduler } from "../services/validation-scheduler";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
@@ -171,8 +171,7 @@ async function startServer() {
   
   // Note: Sitemap is handled by the early route registered at the top of startServer()
   
-  // OAuth callback under /api/oauth/callback
-  registerOAuthRoutes(app);
+  // OAuth removed - using password-based admin authentication only
   
   // tRPC API
   app.use(
