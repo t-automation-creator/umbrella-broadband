@@ -173,6 +173,11 @@ const adminProcedure = publicProcedure.use(async ({ ctx, next }) => {
     }
   }
   
+  // Fall back to OAuth admin check
+  if (ctx.user?.role === "admin") {
+    return next({ ctx });
+  }
+  
   throw new TRPCError({ code: "UNAUTHORIZED", message: "Admin login required" });
 });
 
