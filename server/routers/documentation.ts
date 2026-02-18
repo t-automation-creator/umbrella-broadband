@@ -23,14 +23,20 @@ export const documentationRouter = router({
   // Get single section by ID
   getSection: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ input }) => {
+    .query(({ input, ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Only admins can access documentation');
+      }
       return documentationStore.find((doc) => doc.id === input.id);
     }),
 
   // Search documentation
   search: protectedProcedure
     .input(z.object({ query: z.string().min(1) }))
-    .query(({ input }) => {
+    .query(({ input, ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Only admins can access documentation');
+      }
       const query = input.query.toLowerCase();
       const results: any[] = [];
 
@@ -59,7 +65,7 @@ export const documentationRouter = router({
         // Search in items (for sections with items array)
         if ('items' in section && section.items && Array.isArray(section.items)) {
           const matchedItems: any[] = [];
-          (section.items as any[]).forEach((item: any, idx: number) => {
+          (section.items as any[]).forEach((item: any) => {
             const itemMatches = 
               (item.name && item.name.toLowerCase().includes(query)) ||
               (item.description && item.description.toLowerCase().includes(query)) ||
@@ -81,7 +87,7 @@ export const documentationRouter = router({
     }),
 
   // Update section (for real-time updates when content changes)
-  updateSection: adminProcedure
+  updateSection: protectedProcedure
     .input(z.object({
       id: z.string(),
       title: z.string().optional(),
@@ -89,7 +95,10 @@ export const documentationRouter = router({
       items: z.any().optional(),
       keywords: z.array(z.string()).optional(),
     }))
-    .mutation(({ input }) => {
+    .mutation(({ input, ctx }) => {
+      if (ctx.user.role !== 'admin') {
+        throw new Error('Only admins can access documentation');
+      }
       const sectionIndex = documentationStore.findIndex((doc) => doc.id === input.id);
       if (sectionIndex === -1) {
         throw new Error("Section not found");
