@@ -63,7 +63,7 @@ export default function Documentation() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Hero Banner */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 overflow-hidden">
         {/* Decorative background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
@@ -74,7 +74,7 @@ export default function Documentation() {
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Title */}
             <h1 className="text-4xl sm:text-5xl font-bold text-white">Documentation</h1>
-            <p className="text-lg sm:text-xl text-blue-100">
+            <p className="text-lg sm:text-xl text-slate-200">
               Everything you need to manage and maintain the Umbrella Broadband website.
             </p>
 
@@ -89,7 +89,7 @@ export default function Documentation() {
                     setSearchQuery(e.target.value);
                     setSelectedCategory(null);
                   }}
-                  className="pl-12 pr-4 py-3 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-0 text-base"
+                  className="pl-12 pr-4 py-3 rounded-full border-0 shadow-lg focus:ring-2 focus:ring-slate-400 focus:ring-offset-0 text-base"
                 />
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Documentation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-700"></div>
           </div>
         ) : filteredCategories.length === 0 ? (
           <div className="text-center py-20">
@@ -144,7 +144,7 @@ export default function Documentation() {
                             <div className={`inline-flex p-2 rounded-lg ${colors.bg} border ${colors.border}`}>
                               <div className={colors.text}>{icon}</div>
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-slate-700 transition-colors">
                               {doc.title}
                             </h3>
                           </div>
@@ -192,7 +192,7 @@ export default function Documentation() {
                           )}
 
                           {/* Read More Link */}
-                          <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all pt-2">
+                          <div className="flex items-center gap-2 text-slate-700 font-semibold text-sm group-hover:gap-3 transition-all pt-2">
                             Read more
                             <ChevronRight className="h-4 w-4" />
                           </div>
