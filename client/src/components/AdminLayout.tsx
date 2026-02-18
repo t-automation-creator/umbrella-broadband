@@ -13,7 +13,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Briefcase, FolderOpen, ChevronDown, MessageCircle, Users } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Briefcase, FolderOpen, ChevronDown, MessageCircle, Users, Book } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "wouter";
 import { DashboardLayoutSkeleton } from "@/components/DashboardLayoutSkeleton";
@@ -268,6 +268,18 @@ function AdminLayoutContent({
                   <Link href="/admin/settings">
                     <Settings className="h-5 w-5" />
                     <span>Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location === "/admin/documentation"}
+                  tooltip="Documentation"
+                >
+                  <Link href="/admin/documentation">
+                    <Book className="h-5 w-5" />
+                    <span>Documentation</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

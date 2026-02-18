@@ -10,6 +10,7 @@ import AdminCaseStudiesList from "../pages/admin/CaseStudiesList";
 import AdminCaseStudyEdit from "../pages/admin/CaseStudyEdit";
 import AdminChatLeads from "../pages/admin/ChatLeads";
 import AdminManagement from "../pages/admin/AdminManagement";
+import Documentation from "../pages/admin/Documentation";
 import AdminAuthGuard from "../components/AdminAuthGuard";
 
 function ProtectedAdminRoute({ component: Component }: { component: React.ComponentType }) {
@@ -73,6 +74,9 @@ export default function AdminApp() {
       </Route>
       <Route path="/admin/admin-accounts">
         {() => <ProtectedAdminRoute component={AdminManagement} />}
+      </Route>
+      <Route path="/admin/documentation">
+        {() => <ProtectedAdminRoute component={Documentation} />}
       </Route>
     </Switch>
   );

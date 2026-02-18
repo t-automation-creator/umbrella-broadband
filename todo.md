@@ -881,3 +881,8 @@
 - [x] Change sales email sender from support@umbrella-broadband.co.uk to enquiries@umbrella-broadband.co.uk
 - [x] Replace favicon with cleaner white wifi icon on blue background
 - [x] Fix email address text wrapping - keep on one line
+
+## Documentation Module
+- [ ] Create documentation database table and import handover content
+- [ ] Build searchable documentation UI component in admin panel
+- [ ] Add real-time update hooks for site changes

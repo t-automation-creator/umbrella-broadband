@@ -40,6 +40,7 @@ import { sendSalesEnquiry, sendSalesConfirmation } from "./services/email";
 import { sendSupportTicketToTeam, sendSupportConfirmationToCustomer } from "./services/support-email";
 import { urlValidationRouter } from "./routers/url-validation";
 import { adminManagementRouter } from "./routers/admin-management";
+import { documentationRouter } from "./routers/documentation";
 import { validateImageUrl, recordImageUrlChange } from "./utils/imageValidator";
 
 // Admin session cookie name
@@ -299,6 +300,8 @@ export const appRouter = router({
         
         return { success: true, message: "Password changed successfully" };
       }),
+    management: adminManagementRouter,
+    documentation: documentationRouter,
   }),
 
   // Blog posts router
