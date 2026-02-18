@@ -886,3 +886,15 @@
 - [x] Create documentation database table and import handover content
 - [x] Build searchable documentation UI component in admin panel
 - [x] Add real-time update hooks for site changes
+
+
+## Remove OAuth Login - Admin Panel Only (Feb 2026)
+- [x] Audit current authentication setup and identify OAuth dependencies
+- [x] Remove OAuth login flow and redirect logic from frontend
+- [x] Remove OAuth backend procedures and context from server
+- [x] Ensure password-based admin login is the only authentication method
+- [x] Fix documentation router to use adminProcedure instead of protectedProcedure
+- [x] Verify documentation module works without OAuth redirect
+- [x] Test search functionality in documentation module
+- [x] Verify admin login works with correct credentials (admin.x.admin / Xtd1982!)
+- [x] Test complete admin panel flow - login → documentation → search

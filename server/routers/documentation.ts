@@ -1,6 +1,25 @@
-import { router, protectedProcedure } from "../_core/trpc";
+import { router, publicProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { documentationContent } from "../data/documentation";
+import { TRPCError } from "@trpc/server";
+import { getAdminSession } from "../db";
+
+const ADMIN_SESSION_COOKIE = "admin_session";
+
+// Admin-only procedure for documentation access
+const adminDocProcedure = publicProcedure.use(async ({ ctx, next }) => {
+  const adminSession = ctx.req.cookies?.[ADMIN_SESSION_COOKIE];
+  
+  // Check if user has valid admin session in database
+  if (adminSession) {
+    const session = await getAdminSession(adminSession);
+    if (session) {
+      return next({ ctx });
+    }
+  }
+  
+  throw new TRPCError({ code: "UNAUTHORIZED", message: "Admin login required" });
+});
 
 /**
  * Documentation module - searchable handover documentation
@@ -12,31 +31,21 @@ const documentationStore = documentationContent;
 
 export const documentationRouter = router({
   // Get all documentation
-  getAll: protectedProcedure.query(({ ctx }) => {
-    // Only allow admins to view documentation
-    if (ctx.user.role !== 'admin') {
-      throw new Error('Only admins can access documentation');
-    }
+  getAll: adminDocProcedure.query(() => {
     return documentationStore;
   }),
 
   // Get single section by ID
-  getSection: protectedProcedure
+  getSection: adminDocProcedure
     .input(z.object({ id: z.string() }))
-    .query(({ input, ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Only admins can access documentation');
-      }
+    .query(({ input }) => {
       return documentationStore.find((doc) => doc.id === input.id);
     }),
 
   // Search documentation
-  search: protectedProcedure
+  search: adminDocProcedure
     .input(z.object({ query: z.string().min(1) }))
-    .query(({ input, ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Only admins can access documentation');
-      }
+    .query(({ input }) => {
       const query = input.query.toLowerCase();
       const results: any[] = [];
 
@@ -86,8 +95,8 @@ export const documentationRouter = router({
       return results;
     }),
 
-  // Update section (for real-time updates when content changes)
-  updateSection: protectedProcedure
+  // Update section (for real-time updates when site content changes)
+  updateSection: adminDocProcedure
     .input(z.object({
       id: z.string(),
       title: z.string().optional(),
@@ -95,10 +104,7 @@ export const documentationRouter = router({
       items: z.any().optional(),
       keywords: z.array(z.string()).optional(),
     }))
-    .mutation(({ input, ctx }) => {
-      if (ctx.user.role !== 'admin') {
-        throw new Error('Only admins can access documentation');
-      }
+    .mutation(({ input }) => {
       const sectionIndex = documentationStore.findIndex((doc) => doc.id === input.id);
       if (sectionIndex === -1) {
         throw new Error("Section not found");
