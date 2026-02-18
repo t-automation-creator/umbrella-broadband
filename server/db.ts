@@ -1,6 +1,6 @@
 import { eq, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { users, blogPosts, contactSubmissions } from "../drizzle/schema";
+import { users, blogPosts, contactSubmissions, adminAccounts } from "../drizzle/schema";
 import type { InferInsertModel } from "drizzle-orm";
 
 type InsertUser = InferInsertModel<typeof users>;
@@ -323,4 +323,61 @@ export async function deleteChatLead(id: number) {
   if (!db) throw new Error("Database not available");
 
   await db.delete(chatLeads).where(eq(chatLeads.id, id));
+}
+
+
+// ==================== ADMIN ACCOUNTS ====================
+
+export async function getAllAdminAccounts() {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(adminAccounts).where(eq(adminAccounts.isActive, 1)).orderBy(desc(adminAccounts.createdAt));
+}
+
+export async function getAdminAccountById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(adminAccounts).where(eq(adminAccounts.id, id)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getAdminAccountByUsername(username: string) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db.select().from(adminAccounts).where(eq(adminAccounts.username, username)).limit(1);
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createAdminAccount(account: any) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(adminAccounts).values(account);
+  return result[0].insertId;
+}
+
+export async function updateAdminAccount(id: number, account: Partial<any>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db.update(adminAccounts).set(account).where(eq(adminAccounts.id, id));
+}
+
+export async function deleteAdminAccount(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // Soft delete - set isActive to 0
+  await db.update(adminAccounts).set({ isActive: 0 }).where(eq(adminAccounts.id, id));
+}
+
+export async function countActiveAdminAccounts() {
+  const db = await getDb();
+  if (!db) return 0;
+
+  const result = await db.select().from(adminAccounts).where(eq(adminAccounts.isActive, 1));
+  return result.length;
 }

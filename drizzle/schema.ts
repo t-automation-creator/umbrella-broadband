@@ -90,3 +90,17 @@ export const users = mysqlTable("users", {
 (table) => [
 	index("users_openId_unique").on(table.openId),
 ]);
+
+export const adminAccounts = mysqlTable("admin_accounts", {
+	id: int().autoincrement().notNull(),
+	username: varchar({ length: 100 }).notNull(),
+	passwordHash: varchar({ length: 255 }).notNull(),
+	name: varchar({ length: 255 }),
+	email: varchar({ length: 320 }),
+	isActive: tinyint().default(1).notNull(),
+	createdAt: timestamp({ mode: 'string' }).default('CURRENT_TIMESTAMP').notNull(),
+	updatedAt: timestamp({ mode: 'string' }).defaultNow().onUpdateNow().notNull(),
+},
+(table) => [
+	index("admin_accounts_username_unique").on(table.username),
+]);

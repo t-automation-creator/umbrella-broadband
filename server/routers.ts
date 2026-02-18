@@ -39,6 +39,7 @@ import sharp from "sharp";
 import { sendSalesEnquiry, sendSalesConfirmation } from "./services/email";
 import { sendSupportTicketToTeam, sendSupportConfirmationToCustomer } from "./services/support-email";
 import { urlValidationRouter } from "./routers/url-validation";
+import { adminManagementRouter } from "./routers/admin-management";
 import { validateImageUrl, recordImageUrlChange } from "./utils/imageValidator";
 
 // Admin session cookie name
@@ -521,6 +522,8 @@ export const appRouter = router({
         await deleteContactSubmission(input.id);
         return { success: true };
       }),
+
+    management: adminManagementRouter,
   }),
 
   // Case studies router
