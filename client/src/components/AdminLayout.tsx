@@ -13,7 +13,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/useMobile";
-import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Briefcase, FolderOpen, ChevronDown, MessageCircle } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, FileText, Mail, Home, Settings, Briefcase, FolderOpen, ChevronDown, MessageCircle, Users } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "wouter";
 import { DashboardLayoutSkeleton } from "@/components/DashboardLayoutSkeleton";
@@ -244,6 +244,18 @@ function AdminLayoutContent({
                   <Link href="/admin/chat-leads">
                     <MessageCircle className="h-5 w-5" />
                     <span>Chat Leads</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location === "/admin/admin-accounts"}
+                  tooltip="Admin Accounts"
+                >
+                  <Link href="/admin/admin-accounts">
+                    <Users className="h-5 w-5" />
+                    <span>Admin Accounts</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
