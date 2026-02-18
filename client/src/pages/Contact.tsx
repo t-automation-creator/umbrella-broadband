@@ -106,7 +106,7 @@ export default function Contact() {
                       <Mail className="w-6 h-6 text-secondary mr-4 mt-1 flex-shrink-0" />
                       <div>
                         <span className="block font-semibold text-gray-800">Email</span>
-                        <a href="mailto:enquiries@umbrella-broadband.co.uk" className="text-gray-600 hover:text-secondary transition-colors">enquiries@umbrella-broadband.co.uk</a>
+                        <a href="mailto:enquiries@umbrella-broadband.co.uk" className="text-gray-600 hover:text-secondary transition-colors whitespace-nowrap">enquiries@umbrella-broadband.co.uk</a>
                       </div>
                     </li>
                     <li className="flex items-start">
