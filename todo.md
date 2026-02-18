@@ -878,3 +878,4 @@
 - [x] Test sitemap generation and validate XML
 - [x] Updated sitemap with 22 clean, indexable URLs
 - [x] Update sales email routing: all non-support emails go to enquiries@umbrella-broadband.co.uk and CC gavin@umbrella-broadband.co.uk
+- [x] Change sales email sender from support@umbrella-broadband.co.uk to enquiries@umbrella-broadband.co.uk

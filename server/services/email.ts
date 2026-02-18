@@ -43,9 +43,11 @@ function getResendClient() {
   return new Resend(apiKey);
 }
 
-// Sender email - use env var or hardcoded verified domain
-// Format: "Display Name <email@domain.com>"
-const RESEND_FROM = process.env.RESEND_FROM || "Umbrella Broadband <support@umbrella-broadband.co.uk>";
+// Sender email addresses per type
+const SENDER_ADDRESSES = {
+  sales: "Umbrella Broadband <enquiries@umbrella-broadband.co.uk>",
+  support: "Umbrella Broadband <support@umbrella-broadband.co.uk>",
+};
 
 // Email payload interface
 export interface EmailPayload {
@@ -78,10 +80,10 @@ export async function sendEmail(
       }
     }
     
-    debugLog(`Sending ${type} email from: ${RESEND_FROM}`);
+    const fromAddress = SENDER_ADDRESSES[type];
+    debugLog(`Sending ${type} email from: ${fromAddress}`);
     debugLog(`To: ${recipient}, CC: ${ccRecipients?.join(', ') || 'none'}`);
     const resend = getResendClient();
-    const fromAddress = "Umbrella Broadband <support@umbrella-broadband.co.uk>";
     debugLog(`About to send with from: ${fromAddress}`);
     const { data, error } = await resend.emails.send({
       from: fromAddress,
